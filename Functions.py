@@ -75,6 +75,13 @@ def clean(df):
 # TODO: TASK1-C-extend
 def clean_multi(df):
     """
+    clean function eliminates columns that are not needed, rows with no freetext or sentiment, lowercase and strips
+    trailing blank spaces in the sentiment column, and separates the sentiment into three boolean columns (pos, neg, neu)
+
+    : param df: panda dataframe
+
+    : return: panda dataframe with [id(int), freetext(String), Positive(bool), Negative(bool), Neutral(bool)]
+
     input: panda_df
     output: cleaned panda_df with (id, freetext, Sentiment)
     """
