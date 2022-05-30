@@ -12,7 +12,7 @@ eng_sheet_name = 'Result 1'
 
 df = Functions.init(eng_file_name, eng_sheet_name)
 
-df = Functions.clean(df)
+Functions.clean_multi(df, "EN")
 
-Functions.process(df)
-print(df)
+#df = Functions.process(df)
+#print(df)

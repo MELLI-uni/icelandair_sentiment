@@ -13,7 +13,8 @@ STOPWORDS = STOPWORDS.union(set(['icelandair']))
 
 import spacy
 
-#import time
+eng_conjunction = {"but", "conversly", "however"}
+isk_conjuction = {}
 
 # Dataframe Initialization
 def init(file_name, sheet_name):
@@ -73,7 +74,7 @@ def clean(df):
 
 # TASK1-placeholder
 # TODO: TASK1-C-extend
-def clean_multi(df):
+def clean_multi(df, lang):
     """
     clean function eliminates columns that are not needed, rows with no freetext or sentiment, lowercase and strips
     trailing blank spaces in the sentiment column, and separates the sentiment into three boolean columns (pos, neg, neu)
@@ -103,6 +104,41 @@ def clean_multi(df):
     # Drop all rows with either empty freetext or emtpy sentiment
     df.dropna(subset = ['answer_freetext_value'], inplace=True)
     df.dropna(subset = ['Sentiment'], inplace=True)
+
+    # Find all rows with multiple sentiments and store it to separate dataframe
+    df_temp = df.loc[(df['Sentiment']).str.len() > 1]
+    df.drop(df_temp.index, inplace=True)
+
+    print("\nMultiple Sentiment: " + str(len(df_temp.index)))
+    #print("\nDropped Multiple: " + str(len(df.index)))
+
+    # Check if the number of sentences separated by new line equals number of sentiments
+    # If true, separate freetext and sentiment column into separate rows and appen to original dataframe
+    df_temp['answer_freetext_value'] = list(df_temp['answer_freetext_value'].str.split(r'\n+'))
+    df_multi = df_temp.loc[df_temp['answer_freetext_value'].str.len() == df_temp['Sentiment'].str.len()]
+    print("\nNew Line: " + str(len(df_multi.index)))
+    df_multi = df_multi.explode(['answer_freetext_value', 'Sentiment'])
+    df = pd.concat([df, df_multi], ignore_index=True, sort=False)
+
+    df_temp.drop(df_multi.index, inplace=True)
+    df_temp['answer_freetext_value'] = df_temp['answer_freetext_value'].str[0]
+
+    # Check if the number of sentences separated by punctuation equals number of sentiments and if so store it in df_multi
+    # If true, separate freetext and sentiment column into separate rows and appen to original dataframe
+    df_temp['answer_freetext_value'] = list(df_temp['answer_freetext_value'].str.split('.'))
+    df_multi = df_temp.loc[df_temp['answer_freetext_value'].str.len() == df_temp['Sentiment'].str.len()]
+    print("\nPeriod: " + str(len(df_multi.index)))
+    df_multi = df_multi.explode(['answer_freetext_value', 'Sentiment'])
+    df = pd.concat([df, df_multi], ignore_index=True, sort=False)
+
+    # TODO: Make columns of new line, period, etc and then compare to number of sentiments
+
+    df_temp.drop(df_multi.index, inplace=True)
+    df_temp['answer_freetext_value'] = df_temp['answer_freetext_value'].str[0]
+
+    print("\nLeft: " + str(len(df_temp.index)))
+
+    df_temp.to_excel("text.xlsx")
 
     # Create new column of Positive, Negative, Neutral Boolean
     pos = df['Sentiment'].str.contains('positive', regex=False).astype(int)
