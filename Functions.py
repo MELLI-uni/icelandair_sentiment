@@ -9,11 +9,13 @@ import xlwings as xws
 import gensim
 from gensim.parsing.preprocessing import remove_stopwords
 from gensim.parsing.preprocessing import STOPWORDS
+STOPWORDS = STOPWORDS.union(set(['icelandair']))
 
 import spacy
 
-# Open xlsx file
-# Reference: https://davidhamann.de/2018/02/21/read-password-protected-excel-files-into-pandas-dataframe/
+#import time
+
+# Dataframe Initialization
 def init(file_name, sheet_name):
     """
     init function launches a password-protected excel file for the user to open and changes it into a datafram
@@ -30,14 +32,15 @@ def init(file_name, sheet_name):
     df = sheet.options(pd.DataFrame, index=False, header=True).value
     return(df)
 
-# Eliminate columns not needed
-# LowerCase & Strip trailing blank space in Sentiment
-# Eliminate rows with no freetext or Sentiment
-# Sentiment into Boolean column of Positive, Negative, Neutral
+# Data Cleaning
 def clean(df):
     """
-    input: panda_df
-    output: cleaned panda_df with (id, freetext, Sentiment)
+    clean function eliminates columns that are not needed, rows with no freetext or sentiment, lowercase and strips
+    trailing blank spaces in the sentiment column, and separates the sentiment into three boolean columns (pos, neg, neu)
+
+    : param df: panda dataframe
+
+    : return: panda dataframe with [id(int), freetext(String), Positive(bool), Negative(bool), Neutral(bool)]
     """
 
     header = list(df.columns)
@@ -68,6 +71,7 @@ def clean(df):
 
     return df
 
+# TODO: TASK1-C-extend
 def clean_multi(df):
     """
     input: panda_df
@@ -111,21 +115,38 @@ def process(df):
     : return: Pandas dataframe with processed free-text
     """
 
-    # Eliminate named entities and join to one string
-    nlp = spacy.load('en_core_web_sm')
-    df['Change'] = df['answer_freetext_value'].apply(lambda x: " ".join([ent.text for ent in nlp(x) if not ent.ent_type_]))
+    #t0 = time.time()
 
-    df['Change'] = df['Change'].apply(lambda x: [item for item in x.split() if item.lower() not in STOPWORDS])
+    eng_NE = spacy.load('en_core_web_sm')
+
+    df['Change'] = df['answer_freetext_value'].apply(lambda x: [str(ent.lemma_) for ent in eng_NE(x) if 
+                                                                (not ent.ent_type_ 
+                                                                and not re.findall("\s", str(ent.text)) 
+                                                                and str(ent.text).lower() not in STOPWORDS)
+                                                                ])
     del df['answer_freetext_value']
-    print(df)
-    #text = "Her check in Frankfurt in bad mood: Check in Frankfurt very unfriendly! No upgrade available inspire  of  information on board and by service center! The young man told me that there is no upgrade for 2 of my children available, because he cannot handle any payment. As multi flying passenger I was very much astonished! Big complain of mine (3th time with icelandair business  5 persons!)"
-    #filtered_sentence = remove_stopwords(text)
-
-    # Eliminate named entities
-    # nlp = spacy.load('en_core_web_sm')
-    # document = nlp(text)
-
     
-    # text_no_namedentities = [str(ent.text) for ent in document if not ent.ent_type_]
-    # filtered_sentence = remove_stopwords(text_no_namedentities)
+    #df['Change'] = df['answer_freetext_value'].apply(lambda x: " ".join([ent.text for ent in nlp(x) if not ent.ent_type_]))
+
+    #df['Change'] = df['Change'].apply(lambda x: [item for item in x.split() if item.lower() not in STOPWORDS])
+    #del df['answer_freetext_value']
+    #print(df)
+    #text = "Her check in Frankfurt in bad mood: Check in Frankfurt very unfriendly! No upgrade available inspire  of  information on board and by service center! The young man told me that there is no upgrade for 2 of my children available, because he cannot handle any payment. As multi flying passenger I was very much astonished! Big complain of mine (3th time with icelandair business  5 persons!)"
+
+    #text_no_namedentities = [str(ent.text) for ent in document if not ent.ent_type_]
+
+    #text_no_namedentities = []
+    # filtered_sentence =  []
+    # for ent in eng_NE(text):
+    #     token = str(ent.text)
+    #     if not ent.ent_type_ and not re.findall("\s", token):
+    #         if token.lower() not in STOPWORDS:
+    #             filtered_sentence.append(str(ent.lemma_))
+
+    #filtered_sentence = remove_stopwords(text_no_namedentities)
+
     # print(filtered_sentence)
+
+    # print("Run Time: " + str(time.time() - t0))
+
+    return df

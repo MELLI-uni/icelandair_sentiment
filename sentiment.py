@@ -14,6 +14,5 @@ df = Functions.init(eng_file_name, eng_sheet_name)
 
 df = Functions.clean(df)
 
-#print(df)
-
 Functions.process(df)
+print(df)
