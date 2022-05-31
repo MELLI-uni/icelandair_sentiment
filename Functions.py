@@ -1,4 +1,5 @@
 from tokenize import String
+from itertools import groupby
 import numpy as np
 import pandas as pd
 pd.set_option('mode.chained_assignment', None)
@@ -73,7 +74,7 @@ def clean(df):
     return df
 
 # TASK1-placeholder
-# TODO: TASK1-C-extend
+# TODO: TASK1-B3-extend
 def clean_multi(df, lang):
     """
     clean function eliminates columns that are not needed, rows with no freetext or sentiment, lowercase and strips
@@ -110,35 +111,29 @@ def clean_multi(df, lang):
     df.drop(df_temp.index, inplace=True)
 
     print("\nMultiple Sentiment: " + str(len(df_temp.index)))
-    #print("\nDropped Multiple: " + str(len(df.index)))
 
-    # Check if the number of sentences separated by new line equals number of sentiments
-    # If true, separate freetext and sentiment column into separate rows and appen to original dataframe
-    df_temp['answer_freetext_value'] = list(df_temp['answer_freetext_value'].str.split(r'\n+'))
-    df_multi = df_temp.loc[df_temp['answer_freetext_value'].str.len() == df_temp['Sentiment'].str.len()]
-    print("\nNew Line: " + str(len(df_multi.index)))
-    df_multi = df_multi.explode(['answer_freetext_value', 'Sentiment'])
-    df = pd.concat([df, df_multi], ignore_index=True, sort=False)
+    df_count = df_temp[['Sentiment', 'answer_freetext_value']].copy()   # Create a copy of the dataframe with multiple sentiments
+    df_count['answer_freetext_value'] = df_count['answer_freetext_value'].str.replace(r'(\s*[Tt]hank [Yy]ou)\.\s*','', regex=True)  # Replace all 'Thank you.' to blank space
+    
+    df_count['Sentiment'] = df_count['Sentiment'].str.len() # Count number of sentiments
+    df_count['New Line'] = df_count['answer_freetext_value'].str.split(r'\n+').str.len()    # Count number of sentences separated by new line
+    df_count['Period'] = df_count['answer_freetext_value'].str.strip('\.$').str.split(r'(?<=[a-zA-Z])\.').str.len() # Count number of sentences separated by period
+    # Reference for lookbehind https://www.geeksforgeeks.org/python-regex-lookbehind/
 
-    df_temp.drop(df_multi.index, inplace=True)
-    df_temp['answer_freetext_value'] = df_temp['answer_freetext_value'].str[0]
+    df_count['Elim'] = df_temp['Sentiment'].apply(lambda x: [i[0] for i in groupby(x)]).str.len()   # Remove consecutive duplicates in sentiment list
+    #df_count['Word'] = df_count['answer_freetext_value'].str.split().str.len()
+    #df_count['Else'] = df_count['answer_freetext_value'].str.slice()
 
-    # Check if the number of sentences separated by punctuation equals number of sentiments and if so store it in df_multi
-    # If true, separate freetext and sentiment column into separate rows and appen to original dataframe
-    df_temp['answer_freetext_value'] = list(df_temp['answer_freetext_value'].str.split('.'))
-    df_multi = df_temp.loc[df_temp['answer_freetext_value'].str.len() == df_temp['Sentiment'].str.len()]
-    print("\nPeriod: " + str(len(df_multi.index)))
-    df_multi = df_multi.explode(['answer_freetext_value', 'Sentiment'])
-    df = pd.concat([df, df_multi], ignore_index=True, sort=False)
+    df_count.loc[(df_count['Sentiment'] == df_count['New Line']), 'Type'] = 'New Line'
+    df_count.loc[(df_count['Sentiment'] == df_count['Period']) & (df_count['Type'].isnull()), 'Type'] = 'Period'
 
-    # TODO: Make columns of new line, period, etc and then compare to number of sentiments
+    df_count.loc[(df_count['Elim'] == df_count['New Line']), 'Type'] = 'New Line'
+    df_count.loc[(df_count['Elim'] == df_count['New Line']), 'Sentiment'] = df_count['Elim']    # Replace sentiment label with duplicate removed list
+    del df_count['Elim']
+    #df_count.loc[(df_count['Sentiment'] == df_count['Comma']) & (df_count['Type'].isnull()), 'Type'] = 'Comma'
 
-    df_temp.drop(df_multi.index, inplace=True)
-    df_temp['answer_freetext_value'] = df_temp['answer_freetext_value'].str[0]
-
-    print("\nLeft: " + str(len(df_temp.index)))
-
-    df_temp.to_excel("text.xlsx")
+    #df_temp.to_excel("compare.xlsx")
+    df_count.to_excel("text.xlsx")
 
     # Create new column of Positive, Negative, Neutral Boolean
     pos = df['Sentiment'].str.contains('positive', regex=False).astype(int)
