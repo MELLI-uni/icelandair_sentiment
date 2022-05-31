@@ -14,9 +14,6 @@ STOPWORDS = STOPWORDS.union(set(['icelandair']))
 
 import spacy
 
-eng_conjunction = {"but", "conversly", "however"}
-isk_conjuction = {}
-
 # Dataframe Initialization
 def init(file_name, sheet_name):
     """
@@ -49,7 +46,6 @@ def clean(df):
 
     # Leave only id, freetext, Sentiment column
     to_leave = ['id', 'answer_freetext_value', 'Sentiment']
-    #to_leave = ['id', 'Sentiment']  #temp
 
     for h in header:
         if h not in to_leave:
@@ -113,27 +109,37 @@ def clean_multi(df, lang):
     print("\nMultiple Sentiment: " + str(len(df_temp.index)))
 
     df_count = df_temp[['Sentiment', 'answer_freetext_value']].copy()   # Create a copy of the dataframe with multiple sentiments
-    df_count['answer_freetext_value'] = df_count['answer_freetext_value'].str.replace(r'(\s*[Tt]hank [Yy]ou)\.\s*','', regex=True)  # Replace all 'Thank you.' to blank space
+    df_count['answer_freetext_value'] = df_count['answer_freetext_value'].str.replace(r'\s*([Tt]hank [Yy]ou)\.\s*','', regex=True)  # Replace all 'Thank you.' to blank space
     
-    df_count['Sentiment'] = df_count['Sentiment'].str.len() # Count number of sentiments
-    df_count['New Line'] = df_count['answer_freetext_value'].str.split(r'\n+').str.len()    # Count number of sentences separated by new line
-    df_count['Period'] = df_count['answer_freetext_value'].str.strip('\.$').str.split(r'(?<=[a-zA-Z])\.').str.len() # Count number of sentences separated by period
-    # Reference for lookbehind https://www.geeksforgeeks.org/python-regex-lookbehind/
+    df_count['Sentiment'] = df_count['Sentiment'] # Count number of sentiments
+    df_count['New Line'] = df_count['answer_freetext_value'].str.split(r'\n+')    # Count number of sentences separated by new line
+    df_count['Period'] = df_count['answer_freetext_value'].str.strip('\.$').str.split(r'(?<=[a-zA-Z])\.') # Count number of sentences separated by period
+    #df_count['Word'] = df_count['answer_freetext_value'].str.split()  # Count number of words in the sentence
+    #df_count['Word'] = df_count['Word'].apply(lambda x: [' '.join(i.tolist()) for i in (np.array_split(np.array(x), 2))])
+    #df_count['Wordc'] = df_count.apply(lambda x: np.array(x['Word']))
+    
+    df_count['Elim'] = df_temp['Sentiment'].apply(lambda x: [i[0] for i in groupby(x)])   # Remove consecutive duplicates in sentiment list
 
-    df_count['Elim'] = df_temp['Sentiment'].apply(lambda x: [i[0] for i in groupby(x)]).str.len()   # Remove consecutive duplicates in sentiment list
-    #df_count['Word'] = df_count['answer_freetext_value'].str.split().str.len()
-    #df_count['Else'] = df_count['answer_freetext_value'].str.slice()
+    df_count.loc[(df_count['Sentiment'].str.len() == df_count['New Line'].str.len()), 'Type'] = 'New Line'
+    df_count.loc[(df_count['Sentiment'].str.len() == df_count['Period'].str.len()) & (df_count['Type'].isnull()), 'Type'] = 'Period'
 
-    df_count.loc[(df_count['Sentiment'] == df_count['New Line']), 'Type'] = 'New Line'
-    df_count.loc[(df_count['Sentiment'] == df_count['Period']) & (df_count['Type'].isnull()), 'Type'] = 'Period'
-
-    df_count.loc[(df_count['Elim'] == df_count['New Line']), 'Type'] = 'New Line'
-    df_count.loc[(df_count['Elim'] == df_count['New Line']), 'Sentiment'] = df_count['Elim']    # Replace sentiment label with duplicate removed list
+    df_count.loc[(df_count['Elim'].str.len() == df_count['New Line'].str.len()), 'Type'] = 'New Line'
+    df_count.loc[(df_count['Elim'].str.len() == df_count['New Line'].str.len()), 'Sentiment'] = df_count['Elim']    # Replace sentiment label with duplicate removed list
     del df_count['Elim']
-    #df_count.loc[(df_count['Sentiment'] == df_count['Comma']) & (df_count['Type'].isnull()), 'Type'] = 'Comma'
+
+    df_temp['Sentiment'] = df_count['Sentiment']
+    df_temp.loc[(df_count['Type'] == 'New Line'), 'answer_freetext_value'] = df_count['New Line'][df_count['Type'] == 'New Line']
+    df_temp.loc[(df_count['Type'] == 'Period'), 'answer_freetext_value'] = df_count['Period'][df_count['Type'] == 'Period']
+    df_temp['Type'] = df_count['Type']
+
+    df_temp.dropna(subset = ['Type'], inplace=True)
+    del df_temp['Type']
+
+    df_temp = df_temp.explode(['Sentiment', 'answer_freetext_value'])
+    df = pd.concat([df, df_temp], ignore_index=True, sort=False)
 
     #df_temp.to_excel("compare.xlsx")
-    df_count.to_excel("text.xlsx")
+    #df_count.to_excel("text.xlsx")
 
     # Create new column of Positive, Negative, Neutral Boolean
     pos = df['Sentiment'].str.contains('positive', regex=False).astype(int)
@@ -141,6 +147,8 @@ def clean_multi(df, lang):
     neu = df['Sentiment'].str.contains('neutral', regex=False).astype(int)
     df['Positive'], df['Negative'], df['Neutral'] = [pos, neg, neu]
     del df['Sentiment']
+
+    df.to_excel("final.xlsx")
 
     return df
 
