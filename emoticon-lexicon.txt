@@ -1,0 +1,154 @@
+:‑)	Smiley, happy face
+:-]	Smiley, happy face
+:->	Smiley, happy face
+8-)	Smiley, happy face
+:-}	Smiley, happy face
+:o)	Smiley, happy face
+:c)	Smiley, happy face
+:^)	Smiley, happy face
+=]	Smiley, happy face
+=)	Smiley, happy face
+:)	Smiley, happy face
+:]	Smiley, happy face
+:>	Smiley, happy face
+8)	Smiley, happy face
+:}	Smiley, happy face
+:‑D	Laughing, big grin, grinning with glasses
+8‑D	Laughing, big grin, grinning with glasses
+3	Laughing, big grin, grinning with glasses
+B^D	Laughing, big grin, grinning with glasses
+c:	Laughing, big grin, grinning with glasses
+C:	Laughing, big grin, grinning with glasses
+:D	Laughing, big grin, grinning with glasses
+8D	Laughing, big grin, grinning with glasses
+x‑D	Laughing
+X‑D	Laughing
+xD	Laughing
+XD	Laughing
+:-))	Very happy or double chin
+:‑(	Frown, sad, angry, pouting
+:‑c	Frown, sad, angry, pouting
+:‑<	Frown, sad, angry, pouting
+:‑[	Frown, sad, angry, pouting
+:-||	Frown, sad, angry, pouting
+>:[	Frown, sad, angry, pouting
+:{	Frown, sad, angry, pouting
+:@	Frown, sad, angry, pouting
+:(	Frown, sad, angry, pouting
+;(	Frown, sad, angry, pouting
+:(	Frown, sad, angry, pouting
+:c	Frown, sad, angry, pouting
+:<	Frown, sad, angry, pouting
+:[	Frown, sad, angry, pouting
+:'‑(	Crying
+:=(	Crying
+:'(	Crying
+:'‑)	Tears of happiness
+":""D"	Tears of happiness
+:')	Tears of happiness
+D‑':	Horror, disgust, sadness, great dismay (right to left)
+D:<	Horror, disgust, sadness, great dismay (right to left)
+D:	Horror, disgust, sadness, great dismay (right to left)
+D8	Horror, disgust, sadness, great dismay (right to left)
+D;	Horror, disgust, sadness, great dismay (right to left)
+D=	Horror, disgust, sadness, great dismay (right to left)
+DX	Horror, disgust, sadness, great dismay (right to left)
+:‑O	Surprise, shock, yawn
+:‑o	Surprise, shock, yawn
+:-0	Surprise, shock, yawn
+8‑0	Surprise, shock, yawn
+>:O	Surprise, shock, yawn
+:O	Surprise, shock, yawn
+:o	Surprise, shock, yawn
+0	Surprise, shock, yawn
+:-3	Cat face, curled mouth, cutesy, playful, mischievous
+3	Cat face, curled mouth, cutesy, playful, mischievous
+x3	Cat face, curled mouth, cutesy, playful, mischievous
+:3	Cat face, curled mouth, cutesy, playful, mischievous
+X3	Cat face, curled mouth, cutesy, playful, mischievous
+>:3	Lion smile, evil cat
+:-*	Kiss
+:×	Kiss
+:*	Kiss
+;‑)	Wink, smirk
+*-)	Wink, smirk
+;‑]	Wink, smirk
+;^)	Wink, smirk
+:‑,	Wink, smirk
+;D	Wink, smirk
+;3	Wink, smirk
+;)	Wink, smirk
+*)	Wink, smirk
+;]	Wink, smirk
+;>	Wink, smirk
+:‑P	Tongue sticking out, cheeky/playful, blowing a raspberry
+X‑P	Tongue sticking out, cheeky/playful, blowing a raspberry
+x‑p	Tongue sticking out, cheeky/playful, blowing a raspberry
+:‑p	Tongue sticking out, cheeky/playful, blowing a raspberry
+:‑Þ	Tongue sticking out, cheeky/playful, blowing a raspberry
+:‑þ	Tongue sticking out, cheeky/playful, blowing a raspberry
+:‑b	Tongue sticking out, cheeky/playful, blowing a raspberry
+d:	Tongue sticking out, cheeky/playful, blowing a raspberry
+>:P	Tongue sticking out, cheeky/playful, blowing a raspberry
+:P	Tongue sticking out, cheeky/playful, blowing a raspberry
+XP	Tongue sticking out, cheeky/playful, blowing a raspberry
+xp	Tongue sticking out, cheeky/playful, blowing a raspberry
+:p	Tongue sticking out, cheeky/playful, blowing a raspberry
+:Þ	Tongue sticking out, cheeky/playful, blowing a raspberry
+:þ	Tongue sticking out, cheeky/playful, blowing a raspberry
+:b	Tongue sticking out, cheeky/playful, blowing a raspberry
+:-/	Skeptical, annoyed, undecided, uneasy, hesitant
+:‑.	Skeptical, annoyed, undecided, uneasy, hesitant
+>:\	Skeptical, annoyed, undecided, uneasy, hesitant
+>:/	Skeptical, annoyed, undecided, uneasy, hesitant
+:\	Skeptical, annoyed, undecided, uneasy, hesitant
+=/	Skeptical, annoyed, undecided, uneasy, hesitant
+:L	Skeptical, annoyed, undecided, uneasy, hesitant
+:S	Skeptical, annoyed, undecided, uneasy, hesitant
+:/	Skeptical, annoyed, undecided, uneasy, hesitant
+:‑|	Straight face no expression, indecision
+:|	Straight face no expression, indecision
+:$	Embarrassed, blushing
+://)	Embarrassed, blushing
+://3	Embarrassed, blushing
+:‑X	Sealed lips, wearing braces, tongue-tied
+:‑#	Sealed lips, wearing braces, tongue-tied
+:‑&	Sealed lips, wearing braces, tongue-tied
+:X	Sealed lips, wearing braces, tongue-tied
+:#	Sealed lips, wearing braces, tongue-tied
+:&	Sealed lips, wearing braces, tongue-tied
+O:‑)	Angel, halo, saint, innocent
+0:‑3	Angel, halo, saint, innocent
+0:‑)	Angel, halo, saint, innocent
+0;^)	Angel, halo, saint, innocent
+O:)	Angel, halo, saint, innocent
+00:03:00	Angel, halo, saint, innocent
+0:)	Angel, halo, saint, innocent
+>:‑)	Evil, devilish
+}:‑)	Evil, devilish
+3:‑)	Evil, devilish
+>;‑)	Evil, devilish
+>:3	Evil, devilish
+>:)	Evil, devilish
+}:)	Evil, devilish
+3:)	Evil, devilish
+>;)	Evil, devilish
+;3	Evil, devilish
+|;‑)	Cool, bored, yawning
+|‑O	Cool, bored, yawning
+B-)	Cool, bored, yawning
+:‑J	Tongue-in-cheek
+#‑)	Partied all night
+%‑)	Drunk, confused
+%)	Drunk, confused
+:‑###..	Being sick
+:###..	Being sick
+<:‑|	Dumb, dunce-like
+',:-|	Scepticism, disbelief, disapproval
+',:-l	Scepticism, disbelief, disapproval
+:E	Grimacing, nervous, awkward
+8-X	Skull and crossbones
+8=X	Skull and crossbones
+x-3	Skull and crossbones
+x=3	Skull and crossbones
+~:>	Chicken
