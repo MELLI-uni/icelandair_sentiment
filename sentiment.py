@@ -1,6 +1,7 @@
 import nltk
 from nltk import word_tokenize
 from nltk.stem import WordNetLemmatizer
+from itertools import chain
 
 import numpy as np
 import pandas as pd
@@ -27,4 +28,7 @@ isk_sheet_name = 'Result 1'
 # 
 # Accuracy.accuracy(test_actual, test_incorrect)
 
+Functions.clean_multi(df, "EN")
+
+#df = Functions.process(df)
 #print(df)
