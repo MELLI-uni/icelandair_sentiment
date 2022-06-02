@@ -69,8 +69,6 @@ def clean(df):
 
     return df
 
-# TASK1-placeholder
-# TODO: TASK1-B3-extend
 def clean_multi(df, lang):
     """
     clean function eliminates columns that are not needed, rows with no freetext or sentiment, lowercase and strips
@@ -137,9 +135,6 @@ def clean_multi(df, lang):
 
     df_temp = df_temp.explode(['Sentiment', 'answer_freetext_value'])
     df = pd.concat([df, df_temp], ignore_index=True, sort=False)
-
-    #df_temp.to_excel("compare.xlsx")
-    #df_count.to_excel("text.xlsx")
 
     # Create new column of Positive, Negative, Neutral Boolean
     pos = df['Sentiment'].str.contains('positive', regex=False).astype(int)
