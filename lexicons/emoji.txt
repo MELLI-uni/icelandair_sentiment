@@ -1,0 +1,783 @@
+Emoji 16.0
+🫨	Shaking Face
+🩵	Light Blue Heart
+🩶	Grey Heart
+🩷	Pink Heart
+🫸	Rightwards Pushing Hand
+🫷	Leftwards Pushing Hand
+🫎	Moose
+🫏	Donkey
+🪽	Wing
+🪿	Goose
+🪼	Jellyfish
+🫚	Ginger
+🪻	Hyacinth
+🫛	Pea Pod
+🪭	Folding Hand Fan
+🪮	Hair Pick
+🪇	Maracas
+🪈	Flute
+🪯	Khanda
+🛜	Wireless
+🐦‍⬛	Black Bird
+🫸🏻	Rightwards Pushing Hand: Light Skin Tone
+🫸🏼	Rightwards Pushing Hand: Medium-Light Skin Tone
+🫸🏽	Rightwards Pushing Hand: Medium Skin Tone
+🫸🏾	Rightwards Pushing Hand: Medium-Dark Skin Tone
+🫸🏿	Rightwards Pushing Hand: Dark Skin Tone
+🫷🏻	Leftwards Pushing Hand: Light Skin Tone
+🫷🏼	Leftwards Pushing Hand: Medium-Light Skin Tone
+🫷🏽	Leftwards Pushing Hand: Medium Skin Tone
+🫷🏾	Leftwards Pushing Hand: Medium-Dark Skin Tone
+🫷🏿	Leftwards Pushing Hand: Dark Skin Tone
+Unicode	Emoji 14.0 Data Files
+Unicode	Emoji 14.0 Chart with recommended CLDR Keywords
+😶‍🌫️	Face in Clouds
+😮‍💨	Face Exhaling
+😵‍💫	Face with Spiral Eyes
+❤️‍🔥	Heart on Fire
+❤️‍🩹	Mending Heart
+🧔‍♂️	Man: Beard
+🧔🏻‍♂️	Man: Light Skin Tone, Beard
+🧔🏼‍♂️	Man: Medium-Light Skin Tone, Beard
+🧔🏽‍♂️	Man: Medium Skin Tone, Beard
+🧔🏾‍♂️	Man: Medium-Dark Skin Tone, Beard
+🧔🏿‍♂️	Man: Dark Skin Tone, Beard
+🧔‍♀️	Woman: Beard
+🧔🏻‍♀️	Woman: Light Skin Tone, Beard
+🧔🏼‍♀️	Woman: Medium-Light Skin Tone, Beard
+🧔🏽‍♀️	Woman: Medium Skin Tone, Beard
+🧔🏾‍♀️	Woman: Medium-Dark Skin Tone, Beard
+🧔🏿‍♀️	Woman: Dark Skin Tone, Beard
+💏🏻	Kiss: Light Skin Tone
+💏🏼	Kiss: Medium-Light Skin Tone
+💏🏽	Kiss: Medium Skin Tone
+💏🏾	Kiss: Medium-Dark Skin Tone
+💏🏿	Kiss: Dark Skin Tone
+🧑🏻‍❤️‍💋‍🧑🏼	Kiss: Person, Person, Light Skin Tone, Medium-Light Skin Tone
+🧑🏻‍❤️‍💋‍🧑🏽	Kiss: Person, Person, Light Skin Tone, Medium Skin Tone
+🧑🏻‍❤️‍💋‍🧑🏾	Kiss: Person, Person, Light Skin Tone, Medium-Dark Skin Tone
+🧑🏻‍❤️‍💋‍🧑🏿	Kiss: Person, Person, Light Skin Tone, Dark Skin Tone
+🧑🏼‍❤️‍💋‍🧑🏻	Kiss: Person, Person, Medium-Light Skin Tone, Light Skin Tone
+🧑🏼‍❤️‍💋‍🧑🏽	Kiss: Person, Person, Medium-Light Skin Tone, Medium Skin Tone
+🧑🏼‍❤️‍💋‍🧑🏾	Kiss: Person, Person, Medium-Light Skin Tone, Medium-Dark Skin Tone
+🧑🏼‍❤️‍💋‍🧑🏿	Kiss: Person, Person, Medium-Light Skin Tone, Dark Skin Tone
+🧑🏽‍❤️‍💋‍🧑🏻	Kiss: Person, Person, Medium Skin Tone, Light Skin Tone
+🧑🏽‍❤️‍💋‍🧑🏼	Kiss: Person, Person, Medium Skin Tone, Medium-Light Skin Tone
+🧑🏽‍❤️‍💋‍🧑🏾	Kiss: Person, Person, Medium Skin Tone, Medium-Dark Skin Tone
+🧑🏽‍❤️‍💋‍🧑🏿	Kiss: Person, Person, Medium Skin Tone, Dark Skin Tone
+🧑🏾‍❤️‍💋‍🧑🏻	Kiss: Person, Person, Medium-Dark Skin Tone, Light Skin Tone
+🧑🏾‍❤️‍💋‍🧑🏼	Kiss: Person, Person, Medium-Dark Skin Tone, Medium-Light Skin Tone
+🧑🏾‍❤️‍💋‍🧑🏽	Kiss: Person, Person, Medium-Dark Skin Tone, Medium Skin Tone
+🧑🏾‍❤️‍💋‍🧑🏿	Kiss: Person, Person, Medium-Dark Skin Tone, Dark Skin Tone
+🧑🏿‍❤️‍💋‍🧑🏻	Kiss: Person, Person, Dark Skin Tone, Light Skin Tone
+🧑🏿‍❤️‍💋‍🧑🏼	Kiss: Person, Person, Dark Skin Tone, Medium-Light Skin Tone
+🧑🏿‍❤️‍💋‍🧑🏽	Kiss: Person, Person, Dark Skin Tone, Medium Skin Tone
+🧑🏿‍❤️‍💋‍🧑🏾	Kiss: Person, Person, Dark Skin Tone, Medium-Dark Skin Tone
+👩🏻‍❤️‍💋‍👨🏻	Kiss: Woman, Man, Light Skin Tone
+👩🏻‍❤️‍💋‍👨🏼	Kiss: Woman, Man, Light Skin Tone, Medium-Light Skin Tone
+👩🏻‍❤️‍💋‍👨🏽	Kiss: Woman, Man, Light Skin Tone, Medium Skin Tone
+👩🏻‍❤️‍💋‍👨🏾	Kiss: Woman, Man, Light Skin Tone, Medium-Dark Skin Tone
+👩🏻‍❤️‍💋‍👨🏿	Kiss: Woman, Man, Light Skin Tone, Dark Skin Tone
+👩🏼‍❤️‍💋‍👨🏻	Kiss: Woman, Man, Medium-Light Skin Tone, Light Skin Tone
+👩🏼‍❤️‍💋‍👨🏼	Kiss: Woman, Man, Medium-Light Skin Tone
+👩🏼‍❤️‍💋‍👨🏽	Kiss: Woman, Man, Medium-Light Skin Tone, Medium Skin Tone
+👩🏼‍❤️‍💋‍👨🏾	Kiss: Woman, Man, Medium-Light Skin Tone, Medium-Dark Skin Tone
+👩🏼‍❤️‍💋‍👨🏿	Kiss: Woman, Man, Medium-Light Skin Tone, Dark Skin Tone
+👩🏽‍❤️‍💋‍👨🏻	Kiss: Woman, Man, Medium Skin Tone, Light Skin Tone
+👩🏽‍❤️‍💋‍👨🏼	Kiss: Woman, Man, Medium Skin Tone, Medium-Light Skin Tone
+👩🏽‍❤️‍💋‍👨🏽	Kiss: Woman, Man, Medium Skin Tone
+👩🏽‍❤️‍💋‍👨🏾	Kiss: Woman, Man, Medium Skin Tone, Medium-Dark Skin Tone
+👩🏽‍❤️‍💋‍👨🏿	Kiss: Woman, Man, Medium Skin Tone, Dark Skin Tone
+👩🏾‍❤️‍💋‍👨🏻	Kiss: Woman, Man, Medium-Dark Skin Tone, Light Skin Tone
+👩🏾‍❤️‍💋‍👨🏼	Kiss: Woman, Man, Medium-Dark Skin Tone, Medium-Light Skin Tone
+👩🏾‍❤️‍💋‍👨🏽	Kiss: Woman, Man, Medium-Dark Skin Tone, Medium Skin Tone
+👩🏾‍❤️‍💋‍👨🏾	Kiss: Woman, Man, Medium-Dark Skin Tone
+👩🏾‍❤️‍💋‍👨🏿	Kiss: Woman, Man, Medium-Dark Skin Tone, Dark Skin Tone
+👩🏿‍❤️‍💋‍👨🏻	Kiss: Woman, Man, Dark Skin Tone, Light Skin Tone
+👩🏿‍❤️‍💋‍👨🏼	Kiss: Woman, Man, Dark Skin Tone, Medium-Light Skin Tone
+👩🏿‍❤️‍💋‍👨🏽	Kiss: Woman, Man, Dark Skin Tone, Medium Skin Tone
+👩🏿‍❤️‍💋‍👨🏾	Kiss: Woman, Man, Dark Skin Tone, Medium-Dark Skin Tone
+👩🏿‍❤️‍💋‍👨🏿	Kiss: Woman, Man, Dark Skin Tone
+👨🏻‍❤️‍💋‍👨🏻	Kiss: Man, Man, Light Skin Tone
+👨🏻‍❤️‍💋‍👨🏼	Kiss: Man, Man, Light Skin Tone, Medium-Light Skin Tone
+👨🏻‍❤️‍💋‍👨🏽	Kiss: Man, Man, Light Skin Tone, Medium Skin Tone
+👨🏻‍❤️‍💋‍👨🏾	Kiss: Man, Man, Light Skin Tone, Medium-Dark Skin Tone
+👨🏻‍❤️‍💋‍👨🏿	Kiss: Man, Man, Light Skin Tone, Dark Skin Tone
+👨🏼‍❤️‍💋‍👨🏻	Kiss: Man, Man, Medium-Light Skin Tone, Light Skin Tone
+👨🏼‍❤️‍💋‍👨🏼	Kiss: Man, Man, Medium-Light Skin Tone
+👨🏼‍❤️‍💋‍👨🏽	Kiss: Man, Man, Medium-Light Skin Tone, Medium Skin Tone
+👨🏼‍❤️‍💋‍👨🏾	Kiss: Man, Man, Medium-Light Skin Tone, Medium-Dark Skin Tone
+👨🏼‍❤️‍💋‍👨🏿	Kiss: Man, Man, Medium-Light Skin Tone, Dark Skin Tone
+👨🏽‍❤️‍💋‍👨🏻	Kiss: Man, Man, Medium Skin Tone, Light Skin Tone
+👨🏽‍❤️‍💋‍👨🏼	Kiss: Man, Man, Medium Skin Tone, Medium-Light Skin Tone
+👨🏽‍❤️‍💋‍👨🏽	Kiss: Man, Man, Medium Skin Tone
+👨🏽‍❤️‍💋‍👨🏾	Kiss: Man, Man, Medium Skin Tone, Medium-Dark Skin Tone
+👨🏽‍❤️‍💋‍👨🏿	Kiss: Man, Man, Medium Skin Tone, Dark Skin Tone
+👨🏾‍❤️‍💋‍👨🏻	Kiss: Man, Man, Medium-Dark Skin Tone, Light Skin Tone
+👨🏾‍❤️‍💋‍👨🏼	Kiss: Man, Man, Medium-Dark Skin Tone, Medium-Light Skin Tone
+👨🏾‍❤️‍💋‍👨🏽	Kiss: Man, Man, Medium-Dark Skin Tone, Medium Skin Tone
+👨🏾‍❤️‍💋‍👨🏾	Kiss: Man, Man, Medium-Dark Skin Tone
+👨🏾‍❤️‍💋‍👨🏿	Kiss: Man, Man, Medium-Dark Skin Tone, Dark Skin Tone
+👨🏿‍❤️‍💋‍👨🏻	Kiss: Man, Man, Dark Skin Tone, Light Skin Tone
+👨🏿‍❤️‍💋‍👨🏼	Kiss: Man, Man, Dark Skin Tone, Medium-Light Skin Tone
+👨🏿‍❤️‍💋‍👨🏽	Kiss: Man, Man, Dark Skin Tone, Medium Skin Tone
+👨🏿‍❤️‍💋‍👨🏾	Kiss: Man, Man, Dark Skin Tone, Medium-Dark Skin Tone
+👨🏿‍❤️‍💋‍👨🏿	Kiss: Man, Man, Dark Skin Tone
+👩🏻‍❤️‍💋‍👩🏻	Kiss: Woman, Woman, Light Skin Tone
+👩🏻‍❤️‍💋‍👩🏼	Kiss: Woman, Woman, Light Skin Tone, Medium-Light Skin Tone
+👩🏻‍❤️‍💋‍👩🏽	Kiss: Woman, Woman, Light Skin Tone, Medium Skin Tone
+👩🏻‍❤️‍💋‍👩🏾	Kiss: Woman, Woman, Light Skin Tone, Medium-Dark Skin Tone
+👩🏻‍❤️‍💋‍👩🏿	Kiss: Woman, Woman, Light Skin Tone, Dark Skin Tone
+👩🏼‍❤️‍💋‍👩🏻	Kiss: Woman, Woman, Medium-Light Skin Tone, Light Skin Tone
+👩🏼‍❤️‍💋‍👩🏼	Kiss: Woman, Woman, Medium-Light Skin Tone
+👩🏼‍❤️‍💋‍👩🏽	Kiss: Woman, Woman, Medium-Light Skin Tone, Medium Skin Tone
+👩🏼‍❤️‍💋‍👩🏾	Kiss: Woman, Woman, Medium-Light Skin Tone, Medium-Dark Skin Tone
+👩🏼‍❤️‍💋‍👩🏿	Kiss: Woman, Woman, Medium-Light Skin Tone, Dark Skin Tone
+👩🏽‍❤️‍💋‍👩🏻	Kiss: Woman, Woman, Medium Skin Tone, Light Skin Tone
+👩🏽‍❤️‍💋‍👩🏼	Kiss: Woman, Woman, Medium Skin Tone, Medium-Light Skin Tone
+👩🏽‍❤️‍💋‍👩🏽	Kiss: Woman, Woman, Medium Skin Tone
+👩🏽‍❤️‍💋‍👩🏾	Kiss: Woman, Woman, Medium Skin Tone, Medium-Dark Skin Tone
+👩🏽‍❤️‍💋‍👩🏿	Kiss: Woman, Woman, Medium Skin Tone, Dark Skin Tone
+👩🏾‍❤️‍💋‍👩🏻	Kiss: Woman, Woman, Medium-Dark Skin Tone, Light Skin Tone
+👩🏾‍❤️‍💋‍👩🏼	Kiss: Woman, Woman, Medium-Dark Skin Tone, Medium-Light Skin Tone
+👩🏾‍❤️‍💋‍👩🏽	Kiss: Woman, Woman, Medium-Dark Skin Tone, Medium Skin Tone
+👩🏾‍❤️‍💋‍👩🏾	Kiss: Woman, Woman, Medium-Dark Skin Tone
+👩🏾‍❤️‍💋‍👩🏿	Kiss: Woman, Woman, Medium-Dark Skin Tone, Dark Skin Tone
+👩🏿‍❤️‍💋‍👩🏻	Kiss: Woman, Woman, Dark Skin Tone, Light Skin Tone
+👩🏿‍❤️‍💋‍👩🏼	Kiss: Woman, Woman, Dark Skin Tone, Medium-Light Skin Tone
+👩🏿‍❤️‍💋‍👩🏽	Kiss: Woman, Woman, Dark Skin Tone, Medium Skin Tone
+👩🏿‍❤️‍💋‍👩🏾	Kiss: Woman, Woman, Dark Skin Tone, Medium-Dark Skin Tone
+👩🏿‍❤️‍💋‍👩🏿	Kiss: Woman, Woman, Dark Skin Tone
+💑🏻	Couple with Heart: Light Skin Tone
+💑🏼	Couple with Heart: Medium-Light Skin Tone
+💑🏽	Couple with Heart: Medium Skin Tone
+💑🏾	Couple with Heart: Medium-Dark Skin Tone
+💑🏿	Couple with Heart: Dark Skin Tone
+🧑🏻‍❤️‍🧑🏼	Couple with Heart: Person, Person, Light Skin Tone, Medium-Light Skin Tone
+🧑🏻‍❤️‍🧑🏽	Couple with Heart: Person, Person, Light Skin Tone, Medium Skin Tone
+🧑🏻‍❤️‍🧑🏾	Couple with Heart: Person, Person, Light Skin Tone, Medium-Dark Skin Tone
+🧑🏻‍❤️‍🧑🏿	Couple with Heart: Person, Person, Light Skin Tone, Dark Skin Tone
+🧑🏼‍❤️‍🧑🏻	Couple with Heart: Person, Person, Medium-Light Skin Tone, Light Skin Tone
+🧑🏼‍❤️‍🧑🏽	Couple with Heart: Person, Person, Medium-Light Skin Tone, Medium Skin Tone
+🧑🏼‍❤️‍🧑🏾	Couple with Heart: Person, Person, Medium-Light Skin Tone, Medium-Dark Skin Tone
+🧑🏼‍❤️‍🧑🏿	Couple with Heart: Person, Person, Medium-Light Skin Tone, Dark Skin Tone
+🧑🏽‍❤️‍🧑🏻	Couple with Heart: Person, Person, Medium Skin Tone, Light Skin Tone
+🧑🏽‍❤️‍🧑🏼	Couple with Heart: Person, Person, Medium Skin Tone, Medium-Light Skin Tone
+🧑🏽‍❤️‍🧑🏾	Couple with Heart: Person, Person, Medium Skin Tone, Medium-Dark Skin Tone
+🧑🏽‍❤️‍🧑🏿	Couple with Heart: Person, Person, Medium Skin Tone, Dark Skin Tone
+🧑🏾‍❤️‍🧑🏻	Couple with Heart: Person, Person, Medium-Dark Skin Tone, Light Skin Tone
+🧑🏾‍❤️‍🧑🏼	Couple with Heart: Person, Person, Medium-Dark Skin Tone, Medium-Light Skin Tone
+🧑🏾‍❤️‍🧑🏽	Couple with Heart: Person, Person, Medium-Dark Skin Tone, Medium Skin Tone
+🧑🏾‍❤️‍🧑🏿	Couple with Heart: Person, Person, Medium-Dark Skin Tone, Dark Skin Tone
+🧑🏿‍❤️‍🧑🏻	Couple with Heart: Person, Person, Dark Skin Tone, Light Skin Tone
+🧑🏿‍❤️‍🧑🏼	Couple with Heart: Person, Person, Dark Skin Tone, Medium-Light Skin Tone
+🧑🏿‍❤️‍🧑🏽	Couple with Heart: Person, Person, Dark Skin Tone, Medium Skin Tone
+🧑🏿‍❤️‍🧑🏾	Couple with Heart: Person, Person, Dark Skin Tone, Medium-Dark Skin Tone
+👩🏻‍❤️‍👨🏻	Couple with Heart: Woman, Man, Light Skin Tone
+👩🏻‍❤️‍👨🏼	Couple with Heart: Woman, Man, Light Skin Tone, Medium-Light Skin Tone
+👩🏻‍❤️‍👨🏽	Couple with Heart: Woman, Man, Light Skin Tone, Medium Skin Tone
+👩🏻‍❤️‍👨🏾	Couple with Heart: Woman, Man, Light Skin Tone, Medium-Dark Skin Tone
+👩🏻‍❤️‍👨🏿	Couple with Heart: Woman, Man, Light Skin Tone, Dark Skin Tone
+👩🏼‍❤️‍👨🏻	Couple with Heart: Woman, Man, Medium-Light Skin Tone, Light Skin Tone
+👩🏼‍❤️‍👨🏼	Couple with Heart: Woman, Man, Medium-Light Skin Tone
+👩🏼‍❤️‍👨🏽	Couple with Heart: Woman, Man, Medium-Light Skin Tone, Medium Skin Tone
+👩🏼‍❤️‍👨🏾	Couple with Heart: Woman, Man, Medium-Light Skin Tone, Medium-Dark Skin Tone
+👩🏼‍❤️‍👨🏿	Couple with Heart: Woman, Man, Medium-Light Skin Tone, Dark Skin Tone
+👩🏽‍❤️‍👨🏻	Couple with Heart: Woman, Man, Medium Skin Tone, Light Skin Tone
+👩🏽‍❤️‍👨🏼	Couple with Heart: Woman, Man, Medium Skin Tone, Medium-Light Skin Tone
+👩🏽‍❤️‍👨🏽	Couple with Heart: Woman, Man, Medium Skin Tone
+👩🏽‍❤️‍👨🏾	Couple with Heart: Woman, Man, Medium Skin Tone, Medium-Dark Skin Tone
+👩🏽‍❤️‍👨🏿	Couple with Heart: Woman, Man, Medium Skin Tone, Dark Skin Tone
+👩🏾‍❤️‍👨🏻	Couple with Heart: Woman, Man, Medium-Dark Skin Tone, Light Skin Tone
+👩🏾‍❤️‍👨🏼	Couple with Heart: Woman, Man, Medium-Dark Skin Tone, Medium-Light Skin Tone
+👩🏾‍❤️‍👨🏽	Couple with Heart: Woman, Man, Medium-Dark Skin Tone, Medium Skin Tone
+👩🏾‍❤️‍👨🏾	Couple with Heart: Woman, Man, Medium-Dark Skin Tone
+👩🏾‍❤️‍👨🏿	Couple with Heart: Woman, Man, Medium-Dark Skin Tone, Dark Skin Tone
+👩🏿‍❤️‍👨🏻	Couple with Heart: Woman, Man, Dark Skin Tone, Light Skin Tone
+👩🏿‍❤️‍👨🏼	Couple with Heart: Woman, Man, Dark Skin Tone, Medium-Light Skin Tone
+👩🏿‍❤️‍👨🏽	Couple with Heart: Woman, Man, Dark Skin Tone, Medium Skin Tone
+👩🏿‍❤️‍👨🏾	Couple with Heart: Woman, Man, Dark Skin Tone, Medium-Dark Skin Tone
+👩🏿‍❤️‍👨🏿	Couple with Heart: Woman, Man, Dark Skin Tone
+👨🏻‍❤️‍👨🏻	Couple with Heart: Man, Man, Light Skin Tone
+👨🏻‍❤️‍👨🏼	Couple with Heart: Man, Man, Light Skin Tone, Medium-Light Skin Tone
+👨🏻‍❤️‍👨🏽	Couple with Heart: Man, Man, Light Skin Tone, Medium Skin Tone
+👨🏻‍❤️‍👨🏾	Couple with Heart: Man, Man, Light Skin Tone, Medium-Dark Skin Tone
+👨🏻‍❤️‍👨🏿	Couple with Heart: Man, Man, Light Skin Tone, Dark Skin Tone
+👨🏼‍❤️‍👨🏻	Couple with Heart: Man, Man, Medium-Light Skin Tone, Light Skin Tone
+👨🏼‍❤️‍👨🏼	Couple with Heart: Man, Man, Medium-Light Skin Tone
+👨🏼‍❤️‍👨🏽	Couple with Heart: Man, Man, Medium-Light Skin Tone, Medium Skin Tone
+👨🏼‍❤️‍👨🏾	Couple with Heart: Man, Man, Medium-Light Skin Tone, Medium-Dark Skin Tone
+👨🏼‍❤️‍👨🏿	Couple with Heart: Man, Man, Medium-Light Skin Tone, Dark Skin Tone
+👨🏽‍❤️‍👨🏻	Couple with Heart: Man, Man, Medium Skin Tone, Light Skin Tone
+👨🏽‍❤️‍👨🏼	Couple with Heart: Man, Man, Medium Skin Tone, Medium-Light Skin Tone
+👨🏽‍❤️‍👨🏽	Couple with Heart: Man, Man, Medium Skin Tone
+👨🏽‍❤️‍👨🏾	Couple with Heart: Man, Man, Medium Skin Tone, Medium-Dark Skin Tone
+👨🏽‍❤️‍👨🏿	Couple with Heart: Man, Man, Medium Skin Tone, Dark Skin Tone
+👨🏾‍❤️‍👨🏻	Couple with Heart: Man, Man, Medium-Dark Skin Tone, Light Skin Tone
+👨🏾‍❤️‍👨🏼	Couple with Heart: Man, Man, Medium-Dark Skin Tone, Medium-Light Skin Tone
+👨🏾‍❤️‍👨🏽	Couple with Heart: Man, Man, Medium-Dark Skin Tone, Medium Skin Tone
+👨🏾‍❤️‍👨🏾	Couple with Heart: Man, Man, Medium-Dark Skin Tone
+👨🏾‍❤️‍👨🏿	Couple with Heart: Man, Man, Medium-Dark Skin Tone, Dark Skin Tone
+👨🏿‍❤️‍👨🏻	Couple with Heart: Man, Man, Dark Skin Tone, Light Skin Tone
+👨🏿‍❤️‍👨🏼	Couple with Heart: Man, Man, Dark Skin Tone, Medium-Light Skin Tone
+👨🏿‍❤️‍👨🏽	Couple with Heart: Man, Man, Dark Skin Tone, Medium Skin Tone
+👨🏿‍❤️‍👨🏾	Couple with Heart: Man, Man, Dark Skin Tone, Medium-Dark Skin Tone
+👨🏿‍❤️‍👨🏿	Couple with Heart: Man, Man, Dark Skin Tone
+👩🏻‍❤️‍👩🏻	Couple with Heart: Woman, Woman, Light Skin Tone
+👩🏻‍❤️‍👩🏼	Couple with Heart: Woman, Woman, Light Skin Tone, Medium-Light Skin Tone
+👩🏻‍❤️‍👩🏽	Couple with Heart: Woman, Woman, Light Skin Tone, Medium Skin Tone
+👩🏻‍❤️‍👩🏾	Couple with Heart: Woman, Woman, Light Skin Tone, Medium-Dark Skin Tone
+👩🏻‍❤️‍👩🏿	Couple with Heart: Woman, Woman, Light Skin Tone, Dark Skin Tone
+👩🏼‍❤️‍👩🏻	Couple with Heart: Woman, Woman, Medium-Light Skin Tone, Light Skin Tone
+👩🏼‍❤️‍👩🏼	Couple with Heart: Woman, Woman, Medium-Light Skin Tone
+👩🏼‍❤️‍👩🏽	Couple with Heart: Woman, Woman, Medium-Light Skin Tone, Medium Skin Tone
+👩🏼‍❤️‍👩🏾	Couple with Heart: Woman, Woman, Medium-Light Skin Tone, Medium-Dark Skin Tone
+👩🏼‍❤️‍👩🏿	Couple with Heart: Woman, Woman, Medium-Light Skin Tone, Dark Skin Tone
+👩🏽‍❤️‍👩🏻	Couple with Heart: Woman, Woman, Medium Skin Tone, Light Skin Tone
+👩🏽‍❤️‍👩🏼	Couple with Heart: Woman, Woman, Medium Skin Tone, Medium-Light Skin Tone
+👩🏽‍❤️‍👩🏽	Couple with Heart: Woman, Woman, Medium Skin Tone
+👩🏽‍❤️‍👩🏾	Couple with Heart: Woman, Woman, Medium Skin Tone, Medium-Dark Skin Tone
+👩🏽‍❤️‍👩🏿	Couple with Heart: Woman, Woman, Medium Skin Tone, Dark Skin Tone
+👩🏾‍❤️‍👩🏻	Couple with Heart: Woman, Woman, Medium-Dark Skin Tone, Light Skin Tone
+👩🏾‍❤️‍👩🏼	Couple with Heart: Woman, Woman, Medium-Dark Skin Tone, Medium-Light Skin Tone
+👩🏾‍❤️‍👩🏽	Couple with Heart: Woman, Woman, Medium-Dark Skin Tone, Medium Skin Tone
+👩🏾‍❤️‍👩🏾	Couple with Heart: Woman, Woman, Medium-Dark Skin Tone
+👩🏾‍❤️‍👩🏿	Couple with Heart: Woman, Woman, Medium-Dark Skin Tone, Dark Skin Tone
+👩🏿‍❤️‍👩🏻	Couple with Heart: Woman, Woman, Dark Skin Tone, Light Skin Tone
+👩🏿‍❤️‍👩🏼	Couple with Heart: Woman, Woman, Dark Skin Tone, Medium-Light Skin Tone
+👩🏿‍❤️‍👩🏽	Couple with Heart: Woman, Woman, Dark Skin Tone, Medium Skin Tone
+👩🏿‍❤️‍👩🏾	Couple with Heart: Woman, Woman, Dark Skin Tone, Medium-Dark Skin Tone
+👩🏿‍❤️‍👩🏿	Couple with Heart: Woman, Woman, Dark Skin Tone
+🥲	Smiling Face with Tear
+🥸	Disguised Face
+🤌	Pinched Fingers
+🫀	Anatomical Heart
+🫁	Lungs
+🥷	Ninja
+🫂	People Hugging
+🦬	Bison
+🦣	Mammoth
+🦫	Beaver
+🦤	Dodo
+🪶	Feather
+🦭	Seal
+🪲	Beetle
+🪳	Cockroach
+🪰	Fly
+🪱	Worm
+🪴	Potted Plant
+🫐	Blueberries
+🫒	Olive
+🫑	Bell Pepper
+🫓	Flatbread
+🫔	Tamale
+🫕	Fondue
+🫖	Teapot
+🧋	Bubble Tea
+🪨	Rock
+🪵	Wood
+🛖	Hut
+🛻	Pickup Truck
+🛼	Roller Skate
+🪄	Magic Wand
+🪅	Piñata
+🪆	Nesting Dolls
+🪡	Sewing Needle
+🪢	Knot
+🩴	Thong Sandal
+🪖	Military Helmet
+🪗	Accordion
+🪘	Long Drum
+🪙	Coin
+🪃	Boomerang
+🪚	Carpentry Saw
+🪛	Screwdriver
+🪝	Hook
+🪜	Ladder
+🛗	Elevator
+🪞	Mirror
+🪟	Window
+🪠	Plunger
+🪤	Mouse Trap
+🪣	Bucket
+🪥	Toothbrush
+🪦	Headstone
+🪧	Placard
+⚧️	Transgender Symbol
+🤌🏻	Pinched Fingers: Light Skin Tone
+🤌🏼	Pinched Fingers: Medium-Light Skin Tone
+🤌🏽	Pinched Fingers: Medium Skin Tone
+🤌🏾	Pinched Fingers: Medium-Dark Skin Tone
+🤌🏿	Pinched Fingers: Dark Skin Tone
+🥷🏻	Ninja: Light Skin Tone
+🥷🏼	Ninja: Medium-Light Skin Tone
+🥷🏽	Ninja: Medium Skin Tone
+🥷🏾	Ninja: Medium-Dark Skin Tone
+🥷🏿	Ninja: Dark Skin Tone
+🤵‍♂️	Man in Tuxedo
+🤵🏻‍♂️	Man in Tuxedo: Light Skin Tone
+🤵🏼‍♂️	Man in Tuxedo: Medium-Light Skin Tone
+🤵🏽‍♂️	Man in Tuxedo: Medium Skin Tone
+🤵🏾‍♂️	Man in Tuxedo: Medium-Dark Skin Tone
+🤵🏿‍♂️	Man in Tuxedo: Dark Skin Tone
+🤵‍♀️	Woman in Tuxedo
+🤵🏻‍♀️	Woman in Tuxedo: Light Skin Tone
+🤵🏼‍♀️	Woman in Tuxedo: Medium-Light Skin Tone
+🤵🏽‍♀️	Woman in Tuxedo: Medium Skin Tone
+🤵🏾‍♀️	Woman in Tuxedo: Medium-Dark Skin Tone
+🤵🏿‍♀️	Woman in Tuxedo: Dark Skin Tone
+👰‍♂️	Man with Veil
+👰🏻‍♂️	Man with Veil: Light Skin Tone
+👰🏼‍♂️	Man with Veil: Medium-Light Skin Tone
+👰🏽‍♂️	Man with Veil: Medium Skin Tone
+👰🏾‍♂️	Man with Veil: Medium-Dark Skin Tone
+👰🏿‍♂️	Man with Veil: Dark Skin Tone
+👰‍♀️	Woman with Veil
+👰🏻‍♀️	Woman with Veil: Light Skin Tone
+👰🏼‍♀️	Woman with Veil: Medium-Light Skin Tone
+👰🏽‍♀️	Woman with Veil: Medium Skin Tone
+👰🏾‍♀️	Woman with Veil: Medium-Dark Skin Tone
+👰🏿‍♀️	Woman with Veil: Dark Skin Tone
+👩‍🍼	Woman Feeding Baby
+👩🏻‍🍼	Woman Feeding Baby: Light Skin Tone
+👩🏼‍🍼	Woman Feeding Baby: Medium-Light Skin Tone
+👩🏽‍🍼	Woman Feeding Baby: Medium Skin Tone
+👩🏾‍🍼	Woman Feeding Baby: Medium-Dark Skin Tone
+👩🏿‍🍼	Woman Feeding Baby: Dark Skin Tone
+👨‍🍼	Man Feeding Baby
+👨🏻‍🍼	Man Feeding Baby: Light Skin Tone
+👨🏼‍🍼	Man Feeding Baby: Medium-Light Skin Tone
+👨🏽‍🍼	Man Feeding Baby: Medium Skin Tone
+👨🏾‍🍼	Man Feeding Baby: Medium-Dark Skin Tone
+👨🏿‍🍼	Man Feeding Baby: Dark Skin Tone
+🧑‍🍼	Person Feeding Baby
+🧑🏻‍🍼	Person Feeding Baby: Light Skin Tone
+🧑🏼‍🍼	Person Feeding Baby: Medium-Light Skin Tone
+🧑🏽‍🍼	Person Feeding Baby: Medium Skin Tone
+🧑🏾‍🍼	Person Feeding Baby: Medium-Dark Skin Tone
+🧑🏿‍🍼	Person Feeding Baby: Dark Skin Tone
+🧑‍🎄	Mx Claus
+🧑🏻‍🎄	Mx Claus: Light Skin Tone
+🧑🏼‍🎄	Mx Claus: Medium-Light Skin Tone
+🧑🏽‍🎄	Mx Claus: Medium Skin Tone
+🧑🏾‍🎄	Mx Claus: Medium-Dark Skin Tone
+🧑🏿‍🎄	Mx Claus: Dark Skin Tone
+🐈‍⬛	Black Cat
+🐻‍❄️	Polar Bear
+🏳️‍⚧️	Transgender Flag
+🧑‍🦰	Person: Red Hair
+🧑🏻‍🦰	Person: Light Skin Tone, Red Hair
+🧑🏼‍🦰	Person: Medium-Light Skin Tone, Red Hair
+🧑🏽‍🦰	Person: Medium Skin Tone, Red Hair
+🧑🏾‍🦰	Person: Medium-Dark Skin Tone, Red Hair
+🧑🏿‍🦰	Person: Dark Skin Tone, Red Hair
+🧑‍🦱	Person: Curly Hair
+🧑🏻‍🦱	Person: Light Skin Tone, Curly Hair
+🧑🏼‍🦱	Person: Medium-Light Skin Tone, Curly Hair
+🧑🏽‍🦱	Person: Medium Skin Tone, Curly Hair
+🧑🏾‍🦱	Person: Medium-Dark Skin Tone, Curly Hair
+🧑🏿‍🦱	Person: Dark Skin Tone, Curly Hair
+🧑‍🦳	Person: White Hair
+🧑🏻‍🦳	Person: Light Skin Tone, White Hair
+🧑🏼‍🦳	Person: Medium-Light Skin Tone, White Hair
+🧑🏽‍🦳	Person: Medium Skin Tone, White Hair
+🧑🏾‍🦳	Person: Medium-Dark Skin Tone, White Hair
+🧑🏿‍🦳	Person: Dark Skin Tone, White Hair
+🧑‍🦲	Person: Bald
+🧑🏻‍🦲	Person: Light Skin Tone, Bald
+🧑🏼‍🦲	Person: Medium-Light Skin Tone, Bald
+🧑🏽‍🦲	Person: Medium Skin Tone, Bald
+🧑🏾‍🦲	Person: Medium-Dark Skin Tone, Bald
+🧑🏿‍🦲	Person: Dark Skin Tone, Bald
+🧑‍⚕️	Health Worker
+🧑🏻‍⚕️	Health Worker: Light Skin Tone
+🧑🏼‍⚕️	Health Worker: Medium-Light Skin Tone
+🧑🏽‍⚕️	Health Worker: Medium Skin Tone
+🧑🏾‍⚕️	Health Worker: Medium-Dark Skin Tone
+🧑🏿‍⚕️	Health Worker: Dark Skin Tone
+🧑‍🎓	Student
+🧑🏻‍🎓	Student: Light Skin Tone
+🧑🏼‍🎓	Student: Medium-Light Skin Tone
+🧑🏽‍🎓	Student: Medium Skin Tone
+🧑🏾‍🎓	Student: Medium-Dark Skin Tone
+🧑🏿‍🎓	Student: Dark Skin Tone
+🧑‍🏫	Teacher
+🧑🏻‍🏫	Teacher: Light Skin Tone
+🧑🏼‍🏫	Teacher: Medium-Light Skin Tone
+🧑🏽‍🏫	Teacher: Medium Skin Tone
+🧑🏾‍🏫	Teacher: Medium-Dark Skin Tone
+🧑🏿‍🏫	Teacher: Dark Skin Tone
+🧑‍⚖️	Judge
+🧑🏻‍⚖️	Judge: Light Skin Tone
+🧑🏼‍⚖️	Judge: Medium-Light Skin Tone
+🧑🏽‍⚖️	Judge: Medium Skin Tone
+🧑🏾‍⚖️	Judge: Medium-Dark Skin Tone
+🧑🏿‍⚖️	Judge: Dark Skin Tone
+🧑‍🌾	Farmer
+🧑🏻‍🌾	Farmer: Light Skin Tone
+🧑🏼‍🌾	Farmer: Medium-Light Skin Tone
+🧑🏽‍🌾	Farmer: Medium Skin Tone
+🧑🏾‍🌾	Farmer: Medium-Dark Skin Tone
+🧑🏿‍🌾	Farmer: Dark Skin Tone
+🧑‍🍳	Cook
+🧑🏻‍🍳	Cook: Light Skin Tone
+🧑🏼‍🍳	Cook: Medium-Light Skin Tone
+🧑🏽‍🍳	Cook: Medium Skin Tone
+🧑🏾‍🍳	Cook: Medium-Dark Skin Tone
+🧑🏿‍🍳	Cook: Dark Skin Tone
+🧑‍🔧	Mechanic
+🧑🏻‍🔧	Mechanic: Light Skin Tone
+🧑🏼‍🔧	Mechanic: Medium-Light Skin Tone
+🧑🏽‍🔧	Mechanic: Medium Skin Tone
+🧑🏾‍🔧	Mechanic: Medium-Dark Skin Tone
+🧑🏿‍🔧	Mechanic: Dark Skin Tone
+🧑‍🏭	Factory Worker
+🧑🏻‍🏭	Factory Worker: Light Skin Tone
+🧑🏼‍🏭	Factory Worker: Medium-Light Skin Tone
+🧑🏽‍🏭	Factory Worker: Medium Skin Tone
+🧑🏾‍🏭	Factory Worker: Medium-Dark Skin Tone
+🧑🏿‍🏭	Factory Worker: Dark Skin Tone
+🧑‍💼	Office Worker
+🧑🏻‍💼	Office Worker: Light Skin Tone
+🧑🏼‍💼	Office Worker: Medium-Light Skin Tone
+🧑🏽‍💼	Office Worker: Medium Skin Tone
+🧑🏾‍💼	Office Worker: Medium-Dark Skin Tone
+🧑🏿‍💼	Office Worker: Dark Skin Tone
+🧑‍🔬	Scientist
+🧑🏻‍🔬	Scientist: Light Skin Tone
+🧑🏼‍🔬	Scientist: Medium-Light Skin Tone
+🧑🏽‍🔬	Scientist: Medium Skin Tone
+🧑🏾‍🔬	Scientist: Medium-Dark Skin Tone
+🧑🏿‍🔬	Scientist: Dark Skin Tone
+🧑‍💻	Technologist
+🧑🏻‍💻	Technologist: Light Skin Tone
+🧑🏼‍💻	Technologist: Medium-Light Skin Tone
+🧑🏽‍💻	Technologist: Medium Skin Tone
+🧑🏾‍💻	Technologist: Medium-Dark Skin Tone
+🧑🏿‍💻	Technologist: Dark Skin Tone
+🧑‍🎤	Singer
+🧑🏻‍🎤	Singer: Light Skin Tone
+🧑🏼‍🎤	Singer: Medium-Light Skin Tone
+🧑🏽‍🎤	Singer: Medium Skin Tone
+🧑🏾‍🎤	Singer: Medium-Dark Skin Tone
+🧑🏿‍🎤	Singer: Dark Skin Tone
+🧑‍🎨	Artist
+🧑🏻‍🎨	Artist: Light Skin Tone
+🧑🏼‍🎨	Artist: Medium-Light Skin Tone
+🧑🏽‍🎨	Artist: Medium Skin Tone
+🧑🏾‍🎨	Artist: Medium-Dark Skin Tone
+🧑🏿‍🎨	Artist: Dark Skin Tone
+🧑‍✈️	Pilot
+🧑🏻‍✈️	Pilot: Light Skin Tone
+🧑🏼‍✈️	Pilot: Medium-Light Skin Tone
+🧑🏽‍✈️	Pilot: Medium Skin Tone
+🧑🏾‍✈️	Pilot: Medium-Dark Skin Tone
+🧑🏿‍✈️	Pilot: Dark Skin Tone
+🧑‍🚀	Astronaut
+🧑🏻‍🚀	Astronaut: Light Skin Tone
+🧑🏼‍🚀	Astronaut: Medium-Light Skin Tone
+🧑🏽‍🚀	Astronaut: Medium Skin Tone
+🧑🏾‍🚀	Astronaut: Medium-Dark Skin Tone
+🧑🏿‍🚀	Astronaut: Dark Skin Tone
+🧑‍🚒	Firefighter
+🧑🏻‍🚒	Firefighter: Light Skin Tone
+🧑🏼‍🚒	Firefighter: Medium-Light Skin Tone
+🧑🏽‍🚒	Firefighter: Medium Skin Tone
+🧑🏾‍🚒	Firefighter: Medium-Dark Skin Tone
+🧑🏿‍🚒	Firefighter: Dark Skin Tone
+🧑‍🦯	Person with White Cane
+🧑🏻‍🦯	Person with White Cane: Light Skin Tone
+🧑🏼‍🦯	Person with White Cane: Medium-Light Skin Tone
+🧑🏽‍🦯	Person with White Cane: Medium Skin Tone
+🧑🏾‍🦯	Person with White Cane: Medium-Dark Skin Tone
+🧑🏿‍🦯	Person with White Cane: Dark Skin Tone
+🧑‍🦼	Person in Motorized Wheelchair
+🧑🏻‍🦼	Person in Motorized Wheelchair: Light Skin Tone
+🧑🏼‍🦼	Person in Motorized Wheelchair: Medium-Light Skin Tone
+🧑🏽‍🦼	Person in Motorized Wheelchair: Medium Skin Tone
+🧑🏾‍🦼	Person in Motorized Wheelchair: Medium-Dark Skin Tone
+🧑🏿‍🦼	Person in Motorized Wheelchair: Dark Skin Tone
+🧑‍🦽	Person in Manual Wheelchair
+🧑🏻‍🦽	Person in Manual Wheelchair: Light Skin Tone
+🧑🏼‍🦽	Person in Manual Wheelchair: Medium-Light Skin Tone
+🧑🏽‍🦽	Person in Manual Wheelchair: Medium Skin Tone
+🧑🏾‍🦽	Person in Manual Wheelchair: Medium-Dark Skin Tone
+🧑🏿‍🦽	Person in Manual Wheelchair: Dark Skin Tone
+🧑🏻‍🤝‍🧑🏼	People Holding Hands: Light Skin Tone, Medium-Light Skin Tone
+🧑🏻‍🤝‍🧑🏽	People Holding Hands: Light Skin Tone, Medium Skin Tone
+🧑🏻‍🤝‍🧑🏾	People Holding Hands: Light Skin Tone, Medium-Dark Skin Tone
+🧑🏻‍🤝‍🧑🏿	People Holding Hands: Light Skin Tone, Dark Skin Tone
+🧑🏼‍🤝‍🧑🏽	People Holding Hands: Medium-Light Skin Tone, Medium Skin Tone
+🧑🏼‍🤝‍🧑🏾	People Holding Hands: Medium-Light Skin Tone, Medium-Dark Skin Tone
+🧑🏼‍🤝‍🧑🏿	People Holding Hands: Medium-Light Skin Tone, Dark Skin Tone
+🧑🏽‍🤝‍🧑🏾	People Holding Hands: Medium Skin Tone, Medium-Dark Skin Tone
+🧑🏽‍🤝‍🧑🏿	People Holding Hands: Medium Skin Tone, Dark Skin Tone
+🧑🏾‍🤝‍🧑🏿	People Holding Hands: Medium-Dark Skin Tone, Dark Skin Tone
+👩🏻‍🤝‍👩🏼	Women Holding Hands: Light Skin Tone, Medium-Light Skin Tone
+👩🏻‍🤝‍👩🏽	Women Holding Hands: Light Skin Tone, Medium Skin Tone
+👩🏻‍🤝‍👩🏾	Women Holding Hands: Light Skin Tone, Medium-Dark Skin Tone
+👩🏻‍🤝‍👩🏿	Women Holding Hands: Light Skin Tone, Dark Skin Tone
+👩🏼‍🤝‍👩🏽	Women Holding Hands: Medium-Light Skin Tone, Medium Skin Tone
+👩🏼‍🤝‍👩🏾	Women Holding Hands: Medium-Light Skin Tone, Medium-Dark Skin Tone
+👩🏼‍🤝‍👩🏿	Women Holding Hands: Medium-Light Skin Tone, Dark Skin Tone
+👩🏽‍🤝‍👩🏾	Women Holding Hands: Medium Skin Tone, Medium-Dark Skin Tone
+👩🏽‍🤝‍👩🏿	Women Holding Hands: Medium Skin Tone, Dark Skin Tone
+👩🏾‍🤝‍👩🏿	Women Holding Hands: Medium-Dark Skin Tone, Dark Skin Tone
+👨🏻‍🤝‍👨🏼	Men Holding Hands: Light Skin Tone, Medium-Light Skin Tone
+👨🏻‍🤝‍👨🏽	Men Holding Hands: Light Skin Tone, Medium Skin Tone
+👨🏻‍🤝‍👨🏾	Men Holding Hands: Light Skin Tone, Medium-Dark Skin Tone
+👨🏻‍🤝‍👨🏿	Men Holding Hands: Light Skin Tone, Dark Skin Tone
+👨🏼‍🤝‍👨🏽	Men Holding Hands: Medium-Light Skin Tone, Medium Skin Tone
+👨🏼‍🤝‍👨🏾	Men Holding Hands: Medium-Light Skin Tone, Medium-Dark Skin Tone
+👨🏼‍🤝‍👨🏿	Men Holding Hands: Medium-Light Skin Tone, Dark Skin Tone
+👨🏽‍🤝‍👨🏾	Men Holding Hands: Medium Skin Tone, Medium-Dark Skin Tone
+👨🏽‍🤝‍👨🏿	Men Holding Hands: Medium Skin Tone, Dark Skin Tone
+👨🏾‍🤝‍👨🏿	Men Holding Hands: Medium-Dark Skin Tone, Dark Skin Tone
+📰 More	About Emoji 12.0
+▶️	All 230 New Emojis For 2019 (video, sample images)
+📋	Unicode Emoji 12.0 Data Files
+📋	Unicode Emoji 11.0 Data Files
+🤩	Star-Struck
+🤪	Zany Face
+🤭	Face with Hand Over Mouth
+🤫	Shushing Face
+🤨	Face with Raised Eyebrow
+🤮	Face Vomiting
+🤯	Exploding Head
+🧐	Face with Monocle
+🤬	Face with Symbols on Mouth
+🧡	Orange Heart
+🤟	Love-You Gesture
+🤲	Palms Up Together
+🧠	Brain
+🧒	Child
+🧑	Person
+🧔	Person: Beard
+🧓	Older Person
+🧕	Woman with Headscarf
+🤱	Breast-Feeding
+🧙	Mage
+🧚	Fairy
+🧛	Vampire
+🧜	Merperson
+🧝	Elf
+🧞	Genie
+🧟	Zombie
+🧖	Person in Steamy Room
+🧗	Person Climbing
+🧘	Person in Lotus Position
+🦓	Zebra
+🦒	Giraffe
+🦔	Hedgehog
+🦕	Sauropod
+🦖	T-Rex
+🦗	Cricket
+🥥	Coconut
+🥦	Broccoli
+🥨	Pretzel
+🥩	Cut of Meat
+🥪	Sandwich
+🥣	Bowl with Spoon
+🥫	Canned Food
+🥟	Dumpling
+🥠	Fortune Cookie
+🥡	Takeout Box
+🥧	Pie
+🥤	Cup with Straw
+🥢	Chopsticks
+🛸	Flying Saucer
+🛷	Sled
+🥌	Curling Stone
+🧣	Scarf
+🧤	Gloves
+🧥	Coat
+🧦	Socks
+🧢	Billed Cap
+🤟🏻	Love-You Gesture: Light Skin Tone
+🤟🏼	Love-You Gesture: Medium-Light Skin Tone
+🤟🏽	Love-You Gesture: Medium Skin Tone
+🤟🏾	Love-You Gesture: Medium-Dark Skin Tone
+🤟🏿	Love-You Gesture: Dark Skin Tone
+🤲🏻	Palms Up Together: Light Skin Tone
+🤲🏼	Palms Up Together: Medium-Light Skin Tone
+🤲🏽	Palms Up Together: Medium Skin Tone
+🤲🏾	Palms Up Together: Medium-Dark Skin Tone
+🤲🏿	Palms Up Together: Dark Skin Tone
+🧒🏻	Child: Light Skin Tone
+🧒🏼	Child: Medium-Light Skin Tone
+🧒🏽	Child: Medium Skin Tone
+🧒🏾	Child: Medium-Dark Skin Tone
+🧒🏿	Child: Dark Skin Tone
+🧑🏻	Person: Light Skin Tone
+🧑🏼	Person: Medium-Light Skin Tone
+🧑🏽	Person: Medium Skin Tone
+🧑🏾	Person: Medium-Dark Skin Tone
+🧑🏿	Person: Dark Skin Tone
+🧔🏻	Person: Light Skin Tone, Beard
+🧔🏼	Person: Medium-Light Skin Tone, Beard
+🧔🏽	Person: Medium Skin Tone, Beard
+🧔🏾	Person: Medium-Dark Skin Tone, Beard
+🧔🏿	Person: Dark Skin Tone, Beard
+🧓🏻	Older Person: Light Skin Tone
+🧓🏼	Older Person: Medium-Light Skin Tone
+🧓🏽	Older Person: Medium Skin Tone
+🧓🏾	Older Person: Medium-Dark Skin Tone
+🧓🏿	Older Person: Dark Skin Tone
+🧕🏻	Woman with Headscarf: Light Skin Tone
+🧕🏼	Woman with Headscarf: Medium-Light Skin Tone
+🧕🏽	Woman with Headscarf: Medium Skin Tone
+🧕🏾	Woman with Headscarf: Medium-Dark Skin Tone
+🧕🏿	Woman with Headscarf: Dark Skin Tone
+🤱🏻	Breast-Feeding: Light Skin Tone
+🤱🏼	Breast-Feeding: Medium-Light Skin Tone
+🤱🏽	Breast-Feeding: Medium Skin Tone
+🤱🏾	Breast-Feeding: Medium-Dark Skin Tone
+🤱🏿	Breast-Feeding: Dark Skin Tone
+🧙🏻	Mage: Light Skin Tone
+🧙🏼	Mage: Medium-Light Skin Tone
+🧙🏽	Mage: Medium Skin Tone
+🧙🏾	Mage: Medium-Dark Skin Tone
+🧙🏿	Mage: Dark Skin Tone
+🧙‍♂️	Man Mage
+🧙🏻‍♂️	Man Mage: Light Skin Tone
+🧙🏼‍♂️	Man Mage: Medium-Light Skin Tone
+🧙🏽‍♂️	Man Mage: Medium Skin Tone
+🧙🏾‍♂️	Man Mage: Medium-Dark Skin Tone
+🧙🏿‍♂️	Man Mage: Dark Skin Tone
+🧙‍♀️	Woman Mage
+🧙🏻‍♀️	Woman Mage: Light Skin Tone
+🧙🏼‍♀️	Woman Mage: Medium-Light Skin Tone
+🧙🏽‍♀️	Woman Mage: Medium Skin Tone
+🧙🏾‍♀️	Woman Mage: Medium-Dark Skin Tone
+🧙🏿‍♀️	Woman Mage: Dark Skin Tone
+🧚🏻	Fairy: Light Skin Tone
+🧚🏼	Fairy: Medium-Light Skin Tone
+🧚🏽	Fairy: Medium Skin Tone
+🧚🏾	Fairy: Medium-Dark Skin Tone
+🧚🏿	Fairy: Dark Skin Tone
+🧚‍♂️	Man Fairy
+🧚🏻‍♂️	Man Fairy: Light Skin Tone
+🧚🏼‍♂️	Man Fairy: Medium-Light Skin Tone
+🧚🏽‍♂️	Man Fairy: Medium Skin Tone
+🧚🏾‍♂️	Man Fairy: Medium-Dark Skin Tone
+🧚🏿‍♂️	Man Fairy: Dark Skin Tone
+🧚‍♀️	Woman Fairy
+🧚🏻‍♀️	Woman Fairy: Light Skin Tone
+🧚🏼‍♀️	Woman Fairy: Medium-Light Skin Tone
+🧚🏽‍♀️	Woman Fairy: Medium Skin Tone
+🧚🏾‍♀️	Woman Fairy: Medium-Dark Skin Tone
+🧚🏿‍♀️	Woman Fairy: Dark Skin Tone
+🧛🏻	Vampire: Light Skin Tone
+🧛🏼	Vampire: Medium-Light Skin Tone
+🧛🏽	Vampire: Medium Skin Tone
+🧛🏾	Vampire: Medium-Dark Skin Tone
+🧛🏿	Vampire: Dark Skin Tone
+🧛‍♂️	Man Vampire
+🧛🏻‍♂️	Man Vampire: Light Skin Tone
+🧛🏼‍♂️	Man Vampire: Medium-Light Skin Tone
+🧛🏽‍♂️	Man Vampire: Medium Skin Tone
+🧛🏾‍♂️	Man Vampire: Medium-Dark Skin Tone
+🧛🏿‍♂️	Man Vampire: Dark Skin Tone
+🧛‍♀️	Woman Vampire
+🧛🏻‍♀️	Woman Vampire: Light Skin Tone
+🧛🏼‍♀️	Woman Vampire: Medium-Light Skin Tone
+🧛🏽‍♀️	Woman Vampire: Medium Skin Tone
+🧛🏾‍♀️	Woman Vampire: Medium-Dark Skin Tone
+🧛🏿‍♀️	Woman Vampire: Dark Skin Tone
+🧜🏻	Merperson: Light Skin Tone
+🧜🏼	Merperson: Medium-Light Skin Tone
+🧜🏽	Merperson: Medium Skin Tone
+🧜🏾	Merperson: Medium-Dark Skin Tone
+🧜🏿	Merperson: Dark Skin Tone
+🧜‍♂️	Merman
+🧜🏻‍♂️	Merman: Light Skin Tone
+🧜🏼‍♂️	Merman: Medium-Light Skin Tone
+🧜🏽‍♂️	Merman: Medium Skin Tone
+🧜🏾‍♂️	Merman: Medium-Dark Skin Tone
+🧜🏿‍♂️	Merman: Dark Skin Tone
+🧜‍♀️	Mermaid
+🧜🏻‍♀️	Mermaid: Light Skin Tone
+🧜🏼‍♀️	Mermaid: Medium-Light Skin Tone
+🧜🏽‍♀️	Mermaid: Medium Skin Tone
+🧜🏾‍♀️	Mermaid: Medium-Dark Skin Tone
+🧜🏿‍♀️	Mermaid: Dark Skin Tone
+🧝🏻	Elf: Light Skin Tone
+🧝🏼	Elf: Medium-Light Skin Tone
+🧝🏽	Elf: Medium Skin Tone
+🧝🏾	Elf: Medium-Dark Skin Tone
+🧝🏿	Elf: Dark Skin Tone
+🧝‍♂️	Man Elf
+🧝🏻‍♂️	Man Elf: Light Skin Tone
+🧝🏼‍♂️	Man Elf: Medium-Light Skin Tone
+🧝🏽‍♂️	Man Elf: Medium Skin Tone
+🧝🏾‍♂️	Man Elf: Medium-Dark Skin Tone
+🧝🏿‍♂️	Man Elf: Dark Skin Tone
+🧝‍♀️	Woman Elf
+🧝🏻‍♀️	Woman Elf: Light Skin Tone
+🧝🏼‍♀️	Woman Elf: Medium-Light Skin Tone
+🧝🏽‍♀️	Woman Elf: Medium Skin Tone
+🧝🏾‍♀️	Woman Elf: Medium-Dark Skin Tone
+🧝🏿‍♀️	Woman Elf: Dark Skin Tone
+🧞‍♂️	Man Genie
+🧞‍♀️	Woman Genie
+🧟‍♂️	Man Zombie
+🧟‍♀️	Woman Zombie
+🧖🏻	Person in Steamy Room: Light Skin Tone
+🧖🏼	Person in Steamy Room: Medium-Light Skin Tone
+🧖🏽	Person in Steamy Room: Medium Skin Tone
+🧖🏾	Person in Steamy Room: Medium-Dark Skin Tone
+🧖🏿	Person in Steamy Room: Dark Skin Tone
+🧖‍♂️	Man in Steamy Room
+🧖🏻‍♂️	Man in Steamy Room: Light Skin Tone
+🧖🏼‍♂️	Man in Steamy Room: Medium-Light Skin Tone
+🧖🏽‍♂️	Man in Steamy Room: Medium Skin Tone
+🧖🏾‍♂️	Man in Steamy Room: Medium-Dark Skin Tone
+🧖🏿‍♂️	Man in Steamy Room: Dark Skin Tone
+🧖‍♀️	Woman in Steamy Room
+🧖🏻‍♀️	Woman in Steamy Room: Light Skin Tone
+🧖🏼‍♀️	Woman in Steamy Room: Medium-Light Skin Tone
+🧖🏽‍♀️	Woman in Steamy Room: Medium Skin Tone
+🧖🏾‍♀️	Woman in Steamy Room: Medium-Dark Skin Tone
+🧖🏿‍♀️	Woman in Steamy Room: Dark Skin Tone
+🧗🏻	Person Climbing: Light Skin Tone
+🧗🏼	Person Climbing: Medium-Light Skin Tone
+🧗🏽	Person Climbing: Medium Skin Tone
+🧗🏾	Person Climbing: Medium-Dark Skin Tone
+🧗🏿	Person Climbing: Dark Skin Tone
+🧗‍♂️	Man Climbing
+🧗🏻‍♂️	Man Climbing: Light Skin Tone
+🧗🏼‍♂️	Man Climbing: Medium-Light Skin Tone
+🧗🏽‍♂️	Man Climbing: Medium Skin Tone
+🧗🏾‍♂️	Man Climbing: Medium-Dark Skin Tone
+🧗🏿‍♂️	Man Climbing: Dark Skin Tone
+🧗‍♀️	Woman Climbing
+🧗🏻‍♀️	Woman Climbing: Light Skin Tone
+🧗🏼‍♀️	Woman Climbing: Medium-Light Skin Tone
+🧗🏽‍♀️	Woman Climbing: Medium Skin Tone
+🧗🏾‍♀️	Woman Climbing: Medium-Dark Skin Tone
+🧗🏿‍♀️	Woman Climbing: Dark Skin Tone
+🧘🏻	Person in Lotus Position: Light Skin Tone
+🧘🏼	Person in Lotus Position: Medium-Light Skin Tone
+🧘🏽	Person in Lotus Position: Medium Skin Tone
+🧘🏾	Person in Lotus Position: Medium-Dark Skin Tone
+🧘🏿	Person in Lotus Position: Dark Skin Tone
+🧘‍♂️	Man in Lotus Position
+🧘🏻‍♂️	Man in Lotus Position: Light Skin Tone
+🧘🏼‍♂️	Man in Lotus Position: Medium-Light Skin Tone
+🧘🏽‍♂️	Man in Lotus Position: Medium Skin Tone
+🧘🏾‍♂️	Man in Lotus Position: Medium-Dark Skin Tone
+🧘🏿‍♂️	Man in Lotus Position: Dark Skin Tone
+🧘‍♀️	Woman in Lotus Position
+🧘🏻‍♀️	Woman in Lotus Position: Light Skin Tone
+🧘🏼‍♀️	Woman in Lotus Position: Medium-Light Skin Tone
+🧘🏽‍♀️	Woman in Lotus Position: Medium Skin Tone
+🧘🏾‍♀️	Woman in Lotus Position: Medium-Dark Skin Tone
+🧘🏿‍♀️	Woman in Lotus Position: Dark Skin Tone
+🏴󠁧󠁢󠁥󠁮󠁧󠁿	Flag: England
+🏴󠁧󠁢󠁳󠁣󠁴󠁿	Flag: Scotland
+🏴󠁧󠁢󠁷󠁬󠁳󠁿	Flag: Wales
+🔣	Emoji Data 4.0 Source File
+🔣	Emoji Data 3.0 Source File
+🔣	Emoji Data 2.0 Source File
+🔣	Emoji Data 1.0 Source File

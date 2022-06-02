@@ -2,6 +2,8 @@ import pandas as pd
 import requests
 from bs4 import BeautifulSoup
 
+import shutil
+import os
 import re
 import time
 from datetime import datetime
@@ -10,7 +12,6 @@ def destination():
     """
     destination function scrapes information on the routes icelandair travels through and saves it the flight-city.txt file
 
-    : param: None
     : return: None
     """
 
@@ -70,9 +71,89 @@ def destination():
 
     f.close()
 
-def emoji():
-    URL = "https://emojipedia.org/"
+def emoji_update():
+    """
+    emoji_update function scrapes and appends new emojis to end of file if there is a new version
+ 
+    : return: None
+    """
 
-    print("emoji scraping")
+    # open emoji file and get the last updated version
+    emoji_file = "./lexicons/emoji.txt"
+    f = open(emoji_file, "r", encoding="utf-8")
+    emoji_file_version = f.readline().rstrip()
 
-emoji()
+    # download content
+    URL = "https://emojipedia.org"
+    data = requests.get(URL)
+
+    # create soup object
+    soup = BeautifulSoup(data.text, 'lxml')
+    emoji_versions = soup.find('footer', class_='page-footer').find('div', class_='unicode-version').find_all('ul')[0]
+    current_version = emoji_versions.find_all('li')[1]
+
+    # grab the most recent url_extension and version_name from the footer
+    url_extension = current_version.find('a').get("href")
+    version_name = current_version.text
+    
+    if emoji_file_version == version_name:
+        f.close()
+        exit()
+    else: 
+        f_temp = open("temp.txt", "w", encoding="utf-8")
+        
+        f_temp.write(version_name + "\n")
+        shutil.copyfileobj(f, f_temp)
+        f.close()
+        
+        URL = URL + url_extension
+        data = requests.get(URL)
+
+        soup = BeautifulSoup(data.text, 'lxml')
+        finding = soup.find('div', class_='content').find_all('ul')[0]
+        for new_emoji in finding.find_all('li'):
+            line = new_emoji.find('a').text.split(" ", 1)
+            icon = line[0]
+            description = line[1]
+            f_temp.write(icon + "\t" + description + "\n")
+        f_temp.close()
+
+        shutil.move("temp.txt", emoji_file)
+
+def emoji_all():
+    """
+    emoji_all function scrapes every emoji available on emojipedia
+
+    : return: None
+    """
+    # open emoji file and get the last updated version
+    emoji_file = "./lexicons/emoji.txt"
+    f = open(emoji_file, "w", encoding="utf-8")
+    
+    # download content
+    URL = "https://emojipedia.org"
+    data = requests.get(URL)
+
+    # create soup object
+    soup = BeautifulSoup(data.text, 'lxml')
+    emoji_versions = soup.find('footer', class_='page-footer').find('div', class_='unicode-version').find_all('ul')[0]
+
+    f.write(emoji_versions.find_all('li')[1].text + "\n")
+
+    for i in emoji_versions.find_all('li')[1:]:
+        url_extension = i.find('a').get("href")
+
+        new_URL = URL + url_extension
+        data = requests.get(new_URL)
+
+        soup = BeautifulSoup(data.text, 'lxml')
+        finding = soup.find('div', class_='content').find_all('ul')[0]
+        for new_emoji in finding.find_all('li'):
+            line = new_emoji.find('a').text.split(" ", 1)
+            icon = line[0]
+            description = line[1]
+            f.write(icon + "\t" + description + "\n")
+
+    f.close()
+
+emoji_all()
