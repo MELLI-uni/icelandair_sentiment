@@ -34,4 +34,4 @@ df.drop(df.columns.difference(['Emoticon', 'Meaning']), axis=1, inplace=True)
 # Explode the "Emoticon" column
 df = df.explode('Emoticon')
 
-df.to_csv('.\emoticon-lexicon.txt', header=None, index=None, sep='\t', mode='w')
+df.to_csv('./lexicons/emoticon-lexicon.txt', header=None, index=None, sep='\t', mode='w')
