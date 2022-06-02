@@ -1,5 +1,0 @@
-1	dummy1	positive
-2	dummy2	positive
-3	dummy3	positive
-4	dummy4	positive
-5	dummy5	positive
