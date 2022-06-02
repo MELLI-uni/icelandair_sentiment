@@ -14,7 +14,9 @@ STOPWORDS = STOPWORDS.union(set(['icelandair']))
 
 import spacy
 
-# Dataframe Initialization
+# regex pattern for flight names
+regex_plane = r'(A3\d{2}(-\d{3})?)|(7\d7(-\d{3})?)'
+
 def init(file_name, sheet_name):
     """
     init function launches a password-protected excel file for the user to open and changes it into a datafram
@@ -31,7 +33,6 @@ def init(file_name, sheet_name):
     df = sheet.options(pd.DataFrame, index=False, header=True).value
     return(df)
 
-# Data Cleaning
 def clean(df):
     """
     clean function eliminates columns that are not needed, rows with no freetext or sentiment, lowercase and strips
@@ -69,8 +70,6 @@ def clean(df):
 
     return df
 
-# TASK1-placeholder
-# TODO: TASK1-B3-extend
 def clean_multi(df, lang):
     """
     clean function eliminates columns that are not needed, rows with no freetext or sentiment, lowercase and strips
