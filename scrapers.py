@@ -6,8 +6,6 @@ import re
 import time
 from datetime import datetime
 
-# TASK2-C: Create a destination scraper
-# Scraping from: https://www.icelandair.com/support/airports/
 def destination():
     """
     destination function scrapes information on the routes icelandair travels through and saves it the flight-city.txt file
@@ -72,11 +70,9 @@ def destination():
 
     f.close()
 
-# TASK2-B1: Create an emoji-scraper
-# Scraping from: https://emojipedia.org/
 def emoji():
     URL = "https://emojipedia.org/"
 
     print("emoji scraping")
 
-destination()
+emoji()
