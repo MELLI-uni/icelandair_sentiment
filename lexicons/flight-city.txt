@@ -1,0 +1,201 @@
+Last Updated: 2022-06-02 14:29:54.031143AEY
+ALC
+AMS
+ANC
+BWI
+BGO
+BER
+BLL
+BOS
+BRU
+ORD
+CPH
+DEN
+DUB
+EGS
+FRA
+GVA
+GLA
+HAM
+HEL
+JAV
+KUS
+LGW
+LHR
+MAD
+MAN
+MXP
+MSP
+YUL
+MUC
+UAK
+JFK
+EWR
+NCE
+GOH
+MCO
+OSL
+CDG
+PDX
+RDU
+KEF
+RKV
+FCO
+SZG
+SEA
+ARN
+TFS
+YYZ
+YVR
+VEY
+IAD
+ZRH
+IFJ
+Akureyri International Airport
+Akureyri International
+Akureyri
+Alicante Airport
+Alicante
+Amsterdam Airport Schiphol
+Amsterdam
+Ted Stevens Anchorage International Airport
+Ted Stevens Anchorage International
+Ted Stevens Anchorage
+Anchorage
+Baltimore BWI Marshall Airport
+Baltimore BWI Marshall
+Baltimore
+Bergen Airport, Flesland
+Bergen
+Berlin Brandenburg Airport
+Berlin Brandenburg
+Berlin
+Billund Airport
+Billund
+Logan International Airport
+Logan International
+Logan
+Boston
+Brussels Airport
+Brussels
+Chicago O'Hare International Airport
+Chicago O'Hare International
+Chicago O'Hare
+Chicago
+Copenhagen Airport, Kastrup
+Copenhagen
+Denver International Airport
+Denver International
+Denver
+Dublin Airport
+Dublin
+Egilsstaðir Airport
+Egilsstaðir
+Frankfurt Airport
+Frankfurt
+Geneva International Airport
+Geneva International
+Geneva
+Glasgow Airport
+Glasgow
+Hamburg Airport
+Hamburg
+Helsinki Airport
+Helsinki
+Ilulissat Airport
+Ilulissat
+Kulusuk Airport
+Kulusuk
+Gatwick Airport
+Gatwick
+London
+London Heathrow Airport
+London Heathrow
+London
+Adolfo Suárez Madrid–Barajas Airport
+Adolfo Suárez Madrid–Barajas
+Madrid
+Manchester Airport
+Manchester
+Milano Malpensa Airport
+Milano Malpensa
+Milan
+Minneapolis–Saint Paul International Airport
+Minneapolis–Saint Paul International
+Minneapolis–Saint Paul
+Minneapolis
+Montreal International Airport
+Montreal International
+Montreal
+Munich Airport
+Munich
+Narsarsuaq Airport
+Narsarsuaq
+John F. Kennedy International Airport
+John F. Kennedy International
+John F. Kennedy
+New York
+Newark Liberty International Airport
+Newark Liberty International
+Newark Liberty
+New York
+Nice Côte d'Azur Airport
+Nice Côte d'Azur
+Nice
+Nuuk Airport
+Nuuk
+Orlando International Airport
+Orlando International
+Orlando
+Oslo Airport, Gardermoen
+Oslo
+Paris Charles de Gaulle Airport
+Paris Charles de Gaulle
+Paris
+Portland International Airport
+Portland International
+Portland
+Raleigh-Durham International Airport
+Raleigh-Durham International
+Raleigh-Durham
+Keflavik International Airport
+Keflavik International
+Keflavik
+Reykjavík
+Reykjavik International Airport
+Reykjavik International
+Reykjavik
+Reykjavík
+Rome Fiumicino Airport
+Rome Fiumicino
+Rome
+Salzburg Airport
+Salzburg
+Seattle-Tacoma International Airport
+Seattle-Tacoma International
+Seattle-Tacoma
+Seattle
+Stockholm Arlanda Airport
+Stockholm Arlanda
+Stockholm
+Tenerife Sur Airport
+Tenerife Sur
+Tenerife
+Toronto Pearson International Airport
+Toronto Pearson International
+Toronto Pearson
+Toronto
+Vancouver International Airport
+Vancouver International
+Vancouver
+Vestmannaeyjar Airport
+Vestmannaeyjar
+Washington Dulles International Airport
+Washington Dulles International
+Washington Dulles
+Washington D.C.
+Zürich Airport
+Zürich
+Zurich
+Ísafjörður Airport
+Ísafjörður
