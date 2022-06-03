@@ -96,12 +96,16 @@ def emoji_update():
     url_extension = current_version.find('a').get("href")
     version_name = current_version.text
     
+    # End the program if the emoji version listed on the emoji lexicon is the same as the most recent emoji version on emojipedia
     if emoji_file_version == version_name:
         f.close()
+        print("No Updates Required")
+
         exit()
     else: 
         f_temp = open("temp.txt", "w", encoding="utf-8")
         
+        # copy all the emojis in the previous file to a new file
         f_temp.write(version_name + "\n")
         shutil.copyfileobj(f, f_temp)
         f.close()
@@ -111,6 +115,8 @@ def emoji_update():
 
         soup = BeautifulSoup(data.text, 'lxml')
         finding = soup.find('div', class_='content').find_all('ul')[0]
+
+        # append all new emojis available in the new version
         for new_emoji in finding.find_all('li'):
             line = new_emoji.find('a').text.split(" ", 1)
             icon = line[0]
@@ -118,6 +124,7 @@ def emoji_update():
             f_temp.write(icon + "\t" + description + "\n")
         f_temp.close()
 
+        # replace the original file
         shutil.move("temp.txt", emoji_file)
 
 def emoji_all():
@@ -138,8 +145,10 @@ def emoji_all():
     soup = BeautifulSoup(data.text, 'lxml')
     emoji_versions = soup.find('footer', class_='page-footer').find('div', class_='unicode-version').find_all('ul')[0]
 
+    # write the most recent emoji version available on emojipedia
     f.write(emoji_versions.find_all('li')[1].text + "\n")
 
+    # scrape all the emojis in the format of <emoji>\t<description>
     for i in emoji_versions.find_all('li')[1:]:
         url_extension = i.find('a').get("href")
 
@@ -147,7 +156,7 @@ def emoji_all():
         data = requests.get(new_URL)
 
         soup = BeautifulSoup(data.text, 'lxml')
-        finding = soup.find('div', class_='content').find_all('ul')[0]
+        finding = soup.find('div', class_='content').find('h2').findNext('ul')
         for new_emoji in finding.find_all('li'):
             line = new_emoji.find('a').text.split(" ", 1)
             icon = line[0]
@@ -155,5 +164,3 @@ def emoji_all():
             f.write(icon + "\t" + description + "\n")
 
     f.close()
-
-emoji_all()
