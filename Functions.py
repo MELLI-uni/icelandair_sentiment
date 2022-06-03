@@ -17,7 +17,9 @@ isk_pattern = r'\s[Ee][n]\.*,*\s|\s[Þþ]ó\.*,*\s|\s[Nn]ema\.*,*\s|\s[Hh]ins ve
 
 import spacy
 
-# Dataframe Initialization
+# regex pattern for flight names
+regex_plane = r'(A3\d{2}(-\d{3})?)|(7\d7(-\d{3})?)'
+
 def init(file_name, sheet_name):
     """
     init function launches a password-protected excel file for the user to open and changes it into a datafram
