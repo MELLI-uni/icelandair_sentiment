@@ -44,10 +44,15 @@ def eng_update(df):
 def isk_update():
     print("Icelandic update")
 
-sample_location = './Tester_Files/sample-processed.xlsx'
-sample_df = pd.read_excel(sample_location, header=0)
-del sample_df['Unnamed: 0']
-del sample_df['id']
-#print(sample_df)
+def eng_dict():
+    eng_lexicon = "./lexicons/eng_lexicon.txt"
 
-eng_update(sample_df)
+    eng_dict = {}
+
+    f = open(eng_lexicon, 'r', encoding='utf-8')
+
+    for lines in f:
+        [key, mean, skip] = lines.split('\t')
+        eng_dict[key] = float(mean)
+
+    return eng_dict
