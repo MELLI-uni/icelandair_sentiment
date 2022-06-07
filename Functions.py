@@ -18,7 +18,7 @@ isk_pattern = r'\s[Ee][n]\.*,*\s|\s[Þþ]ó\.*,*\s|\s[Nn]ema\.*,*\s|\s[Hh]ins ve
 import spacy
 
 # regex pattern for flight names
-regex_plane = r'(A3\d{2}(-\d{3})?)|(7\d7(-\d{3})?)'
+regex_plane = r'(A3\d{2}(-\d{3})?)|(7\d7(-\d{3})?)|FI\d+'
 
 def init(file_name, sheet_name):
     """
@@ -70,6 +70,7 @@ def clean_multi(df, lang):
     # Find all rows with multiple sentiments and store it to separate dataframe
     df_temp = df.loc[(df['Sentiment']).str.len() > 1]
     df.drop(df_temp.index, inplace=True)
+    df = df.explode(['Sentiment'])
 
     #df_temp.to_excel("multi.xlsx")      # LINE TO DELETE
 
@@ -118,7 +119,7 @@ def clean_multi(df, lang):
     df_temp.loc[(df_count['Type'] == 'Period'), 'answer_freetext_value'] = df_count['Period'][df_count['Type'] == 'Period']
     df_temp.loc[(df_count['Type'] == 'Punct'), 'answer_freetext_value'] = df_count['Punct'][df_count['Type'] == 'Punct']
     df_temp['Type'] = df_count['Type']
-    #df_temp.to_excel("multi_det.xlsx")      # LINE TO DELETE
+    df_temp.to_excel("multi_det.xlsx")      # LINE TO DELETE
 
     df_temp.dropna(subset = ['Type'], inplace=True)
     del df_temp['Type']
@@ -129,16 +130,26 @@ def clean_multi(df, lang):
     df = pd.concat([df, df_temp], ignore_index=True, sort=False)
 
     # Create new column of Positive, Negative, Neutral Boolean
-    pos = df['Sentiment'].str.contains('positive', regex=False).astype(int)
-    neg = df['Sentiment'].str.contains('negative', regex=False).astype(int)
-    neu = df['Sentiment'].str.contains('neutral', regex=False).astype(int)
-    df['Positive'], df['Negative'], df['Neutral'] = [pos, neg, neu]
-    del df['Sentiment']
+    # pos = df['Sentiment'].str.contains('positive', regex=False).astype(int)
+    # neg = df['Sentiment'].str.contains('negative', regex=False).astype(int)
+    # neu = df['Sentiment'].str.contains('neutral', regex=False).astype(int)
+    # df['Positive'], df['Negative'], df['Neutral'] = [pos, neg, neu]
+
+    df.loc[df['Sentiment'] == 'positive', 'Sentiment'] = 1
+    df.loc[df['Sentiment'] == 'negative', 'Sentiment'] = -1
+    df.loc[df['Sentiment'] == 'neutral', 'Sentiment'] = 0
+    #del df['Sentiment']
 
     return df
 
+def load_lexicon():
+    flights = open("./lexicons/flight-city.txt", 'r', encoding='utf-8').read()
+    flight_lexicon = flights.split()
+
+    return flight_lexicon
+
 # Text preprocessing
-def process(df, lang):
+def process(df, lang, FLIGHTS):
     """
     process Function eliminates stopwords and Named Entities, tokenizes and lemmatizes the given sentence
 
@@ -154,11 +165,123 @@ def process(df, lang):
     # else:
     #     named_ent = eng_NE
 
-    df['Change'] = df['answer_freetext_value'].apply(lambda x: [str(ent.lemma_) for ent in eng_NE(x) if 
+    df['Change'] = df['answer_freetext_value'].apply(lambda x: [str(ent.lemma_).lower() for ent in eng_NE(x) if 
                                                                 (not ent.ent_type_ 
-                                                                and not re.findall("\s", str(ent.text)) 
-                                                                and str(ent.text).lower() not in STOPWORDS)
+                                                                and not re.findall(r'\W|\d', str(ent.text))
+                                                                and not re.findall(r'no|nei|n/a|N/A', str(ent.text).lower())
+                                                                and not re.findall(regex_plane, str(ent.text).lower())
+                                                                and str(ent.text).lower() not in STOPWORDS
+                                                                and str(ent.text) not in FLIGHTS)
                                                                 ])
+
+    df = df.explode(['Change'], ignore_index=True)
+    df.dropna(subset = ['Change'], inplace=True)
+
+    idx_not = df.index[df['Change'].str.contains('not', regex=True)].tolist()
+    idx_follow = [i+1 for i in idx_not]
+    #print(idx_follow)
+    df.loc[idx_follow, 'Sentiment'] = -df['Sentiment']
+
+    df = df.drop(idx_not)
+
+    # df['Change'] = df['answer_freetext_value'].apply(lambda x: [str(ent.lemma_) for ent in eng_NE(x) if 
+    #                                                             (not ent.ent_type_ 
+    #                                                             and not re.findall(r'\W', str(ent.text)))
+    #                                                             ])
+
+    # lower case everything left
+    # delete blank text rows, nei, n/a
+    # eliminate those with single letter and all numbers
+    # eliminate words from flight-city
+    # eliminate all seat combination
+    # eliminate flight related
+    # icelandair plane names FI[]
+
     del df['answer_freetext_value']
+
+    df.to_excel("check.xlsx")
     
     return df
+
+def process_sentence(sentence, lang, FLIGHTS):
+    """
+    process Function eliminates stopwords and Named Entities, tokenizes and lemmatizes the given sentence
+
+    : param df: dataframe where text processing is needed
+
+    : return: Pandas dataframe with processed free-text
+    """
+
+    eng_NE = spacy.load('en_core_web_sm')
+
+    cleaning = [str(ent.lemma_).lower() for ent in eng_NE(sentence) if
+                (not ent.ent_type_
+                and (ent.pos_ == "ADJ")
+                and not re.findall(r'\W|\d', str(ent.text))
+                and not re.findall(r'no|nei|n/a|N/A', str(ent.text).lower())
+                and not re.findall(regex_plane, str(ent.text).lower())
+                and str(ent.text).lower() not in STOPWORDS
+                and str(ent.text) not in FLIGHTS)
+                ]
+
+    # cleaning = [str(ent.lemma_).lower() for ent in eng_NE(sentence) if
+    #             (not ent.ent_type_
+    #             and str(ent.lemma_).lower() != "flight"
+    #             and not re.findall(r'\W|\d', str(ent.text))
+    #             and not re.findall(r'no|nei|n/a|N/A', str(ent.text).lower())
+    #             and not re.findall(regex_plane, str(ent.text).lower())
+    #             and str(ent.text).lower() not in STOPWORDS
+    #             and str(ent.text) not in FLIGHTS)
+    #             ]
+
+
+    # cleaning = []
+    # negate = ""
+    # mult = ""
+    # for ent in eng_NE(sentence):
+    #     token = ""
+    #     if (str(ent) == "not"):
+    #         negate = "-"
+    #         continue
+    #     if ((ent.pos_ == 'ADJ') | (ent.pos_ == 'ADV')):
+    #         mult = "10"
+    #     if (not ent.ent_type_
+    #         and not re.findall(r'\W|\d', str(ent.text))
+    #         and not re.findall(r'no|nei|n/a|N/A', str(ent.text).lower())
+    #         and not re.findall(regex_plane, str(ent.text).lower())
+    #         and str(ent.text).lower() not in STOPWORDS
+    #         and str(ent.text) not in FLIGHTS):
+    #         token = negate + mult + str(ent.lemma_).lower()
+    #         negate = ""
+    #         mult = ""
+
+    #     cleaning.append(token)
+    
+    return cleaning
+
+# Intensify adjectives and adverbs when calculating scores
+
+# Deal with not
+# Filter out not from the lexicon list (when developing lexicon list)
+# If not is placed in front of an adjective then change the storing sentiment when developing lexicon list
+# When calculating score, if not is in front of an adjective then multiply the score of the adjective by -1
+
+def calculate(tokens, lang, dict):
+    total = 0
+    token_count = len(tokens)
+    
+    for i in tokens:
+        # mult = 1
+        # if re.match('^-|^\d', i):
+        #     mult = int("".join(re.findall('[^a-z]', i)))
+        #     i = i.lstrip(str(mult))
+        if i in dict:
+            total += dict[i]
+            print(i + ":" + str(dict[i]))
+
+    if token_count == 0:
+        score = 0
+    else:
+        score = total / token_count
+
+    return score
