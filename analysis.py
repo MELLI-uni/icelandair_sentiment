@@ -1,5 +1,9 @@
+from itertools import islice
+
 A_INC = 2       # TEMP VALUES
 A_DEC = -2      # TEMP VALUES
+
+C_INC = 2
 
 # list of degree adverbs
 # http://en.wiktionary.org/wiki/Category:English_degree_adverbs
@@ -36,7 +40,7 @@ ISK_ADV = {'að hluta':A_DEC, 'af skornum skammti':A_DEC, 'bara nóg':A_DEC, 'fu
             }
 
 # list of negating words
-
+# https://www.wordsense.eu/not/#Icelandic
 ENG_NEG = ["aint", "ain't", "arent", "aren't", "cannot", "cant", "can't", "darent", "daren't", "didnt", "didn't", "doesnt", "doesn't", "don't", "dont", "hadnt", "hadn't", "hasnt", 
             "hasn't", "have-not", "havent", "haven't", "isnt", "isn't", "mightnt", "mightn't", "neednt", "needn't", "neither", "never", "none", "nope", "nor", "not", "nothing", 
             "nowhere", "shant", "shan't", "shouldnt", "shouldn't", "wasnt", "wasn't", "wont", "won't", "wouldnt", "wouldn't", 
@@ -44,3 +48,114 @@ ENG_NEG = ["aint", "ain't", "arent", "aren't", "cannot", "cant", "can't", "daren
 
 ISK_NEG = ["aldrei", "ekkert", "ekki", "enginn", "hvergi", "hvorki", "ne", "neibb", "neitt"
             ]
+
+def negated(input, lang):
+    """
+    check if there is any negating words in the sentence
+    """
+    neg_words = []
+    if lang == "EN":
+        neg_words = ENG_NEG
+    elif lang == "IS":
+        neg_words = ISK_NEG
+
+    words = [w.lower() for w in input]
+    for word in words:
+        if word in neg_words:
+            return True
+
+    return False
+
+def allcaps(input, score):
+    """
+    check if there is any allcaps word in the sentence
+    """
+    for w in input:
+        if len(w) > 1 and w.isupper():
+            score *= C_INC
+
+    return score
+
+def degreed(word, score, lang):
+    """
+    check if there is a degree adverb in the sentence
+    """
+    degree_adv = {}
+    if lang == "EN":
+        degree_adv = ENG_ADV
+    elif lang == "IS":
+        degree_adv = ISK_ADV
+    
+    degree = 0
+    
+    lower_word = word.tolower()
+    if lower_word in degree_adv:
+        degree = degree_adv[lower_word]
+
+        if score < 0:
+            degree *= -1
+        
+        degree = allcaps(word, degree)
+
+    return degree
+
+class SentimentAnalyzer():
+    def __init__(self, eng_lexicon="eng_lexicon.txt", isk_lexicon="isk_lexion.txt", emoji_lexicon="emoji_lexicon.txt", emoticon_lexicon="emoticon_lexicon.txt"):
+        self.path = "./lexicons/"
+
+        self.eng = self.make_dict(eng_lexicon)
+        self.isk = self.make_dict(isk_lexicon)
+        self.emo = self.make_emoji_dict(emoji_lexicon, emoticon_lexicon)
+
+    def make_dict(self, lexicon):
+        lex_dict = {}
+
+        loc = self.path + lexicon
+
+        with open(loc) as f:
+            for line in f:
+                [key, value, skip] = line.split("\t")
+                lex_dict[key] = float(value)
+
+        return lex_dict
+
+    def make_emoji_dict(self, emoji, emoticon):
+        emoji_dict = {}
+
+        emoji_loc = self.path + emoji
+        emoticon_loc = self.path + emoticon
+
+        with open(emoji_loc) as f:
+            for line in islice(f, 1, None):
+                [key, value] = line.split("\t")
+                emoji_dict[key] = value
+
+        with open(emoticon_loc) as f:
+            for line in f:
+                [key, value] = line.split("\t")
+                emoji_dict[key] = value
+
+        return emoji_dict
+
+    def sentiments_list(self, input):
+        print("sentiments_list")
+
+    @staticmethod
+    def exclamation_point(input):
+        print("count exclamation point")
+
+    @staticmethod
+    def question_mark(input):
+        print("question mark")
+
+    @staticmethod
+    def count_each(sentiments):
+        print("count each")
+
+    def calculate_total(self, sentiments):
+        if sentiments:
+            print("exist")
+        else:
+            total_score = 0
+        
+        return total_score
