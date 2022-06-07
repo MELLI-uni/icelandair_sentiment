@@ -5,6 +5,7 @@ from nltk.util import ngrams
 from nltk.metrics.distance import jaccard_distance
 from nltk.corpus import wordnet as wn
 from reynir import Greynir
+from reynir_correct import check_single
 from textblob import TextBlob
 
 import Functions
@@ -51,21 +52,21 @@ ISK_VOCAB = []
 
 # check if the word is an actual word
 # https://www.geeksforgeeks.org/correcting-words-using-nltk-in-python/
-def spell_check(word, lang):
-    correct_vocab = []
-
-    if lang == "EN":
-        correct_vocab = ENG_VOCAB
-    elif lang == "IS":
-        correct_vocab = ISK_VOCAB
-
+def ENG_spell_check(word):
     if wn.synsets(word):
         word = word
     else:
         temp = [(jaccard_distance(set(ngrams(word,2)),
                                     set(ngrams(w, 2))), w)
-                for w in correct_vocab if w[0] == word[0]]
+                for w in ENG_VOCAB if w[0] == word[0]]
         word = sorted(temp, key=lambda val:val[0])[0][1]
+    
+    return word
+
+# https://github.com/mideind/GreynirCorrect
+def ISK_spell_check(word):
+    word = check_single(word)
+    word = word.tidy_text
     
     return word
 

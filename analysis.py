@@ -9,7 +9,7 @@ from nltk.stem import WordNetLemmatizer
 A_INC = 2       # TEMP VALUES
 A_DEC = -2      # TEMP VALUES
 
-C_INC = 2
+C_INC = 2       # TEMP VALUES
 
 # list of degree adverbs
 # http://en.wiktionary.org/wiki/Category:English_degree_adverbs
@@ -72,13 +72,12 @@ def negated(input, lang):
 
     return False
 
-def allcaps(input, score):
+def allcaps(word, score):
     """
     check if there is any allcaps word in the sentence
     """
-    for w in input:
-        if len(w) > 1 and w.isupper():
-            score *= C_INC
+    if len(word) > 1 and word.isupper():
+        score *= C_INC
 
     return score
 
