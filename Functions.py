@@ -119,7 +119,7 @@ def clean_multi(df, lang):
     df_temp.loc[(df_count['Type'] == 'Period'), 'answer_freetext_value'] = df_count['Period'][df_count['Type'] == 'Period']
     df_temp.loc[(df_count['Type'] == 'Punct'), 'answer_freetext_value'] = df_count['Punct'][df_count['Type'] == 'Punct']
     df_temp['Type'] = df_count['Type']
-    #df_temp.to_excel("multi_det.xlsx")      # LINE TO DELETE
+    df_temp.to_excel("multi_det.xlsx")      # LINE TO DELETE
 
     df_temp.dropna(subset = ['Type'], inplace=True)
     del df_temp['Type']

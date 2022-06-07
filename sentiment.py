@@ -23,10 +23,13 @@ isk_sheet_name = 'Icelandic'
 
 flight_lexicon = Functions.load_lexicon()
 
-df = Functions.init(eng_file_name, eng_sheet_name)
+df = Functions.init(isk_file_name, isk_sheet_name)
 df = Functions.clean_multi(df, "EN")
-df = Functions.process(df, "EN", flight_lexicon)
-Update.eng_update(df)
+
+# df = Functions.init(eng_file_name, eng_sheet_name)
+# df = Functions.clean_multi(df, "EN")
+# df = Functions.process(df, "EN", flight_lexicon)
+# Update.eng_update(df)
 
 # sample_sentence = "Every was wonderful.  My husband said he'll only go places that Iceland Air flies."
 # dictionary = Update.eng_dict()
