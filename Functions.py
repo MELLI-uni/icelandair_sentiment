@@ -36,7 +36,7 @@ def init(file_name, sheet_name):
     df = sheet.options(pd.DataFrame, index=False, header=True).value
     return(df)
 
-def clean_multi(df, lang):
+def clean(df, lang):
     """
     clean function eliminates columns that are not needed, rows with no freetext or sentiment, lowercase and strips
     trailing blank spaces in the sentiment column, and separates the sentiment into three boolean columns (pos, neg, neu)
@@ -143,7 +143,7 @@ def clean_multi(df, lang):
     return df
 
 def load_lexicon():
-    flights = open("./lexicons/flight-city.txt", 'r', encoding='utf-8').read()
+    flights = open("./lexicons/destination.txt", 'r', encoding='utf-8').read()
     flight_lexicon = flights.split()
 
     return flight_lexicon
@@ -159,11 +159,6 @@ def process(df, lang, FLIGHTS):
     """
 
     eng_NE = spacy.load('en_core_web_sm')
-    #isk_NE = 
-    # if lang == "IS":
-    #     named_ent = isk_NE
-    # else:
-    #     named_ent = eng_NE
 
     df['Change'] = df['answer_freetext_value'].apply(lambda x: [str(ent.lemma_).lower() for ent in eng_NE(x) if 
                                                                 (not ent.ent_type_ 
@@ -183,19 +178,6 @@ def process(df, lang, FLIGHTS):
     df.loc[idx_follow, 'Sentiment'] = -df['Sentiment']
 
     df = df.drop(idx_not)
-
-    # df['Change'] = df['answer_freetext_value'].apply(lambda x: [str(ent.lemma_) for ent in eng_NE(x) if 
-    #                                                             (not ent.ent_type_ 
-    #                                                             and not re.findall(r'\W', str(ent.text)))
-    #                                                             ])
-
-    # lower case everything left
-    # delete blank text rows, nei, n/a
-    # eliminate those with single letter and all numbers
-    # eliminate words from flight-city
-    # eliminate all seat combination
-    # eliminate flight related
-    # icelandair plane names FI[]
 
     del df['answer_freetext_value']
 

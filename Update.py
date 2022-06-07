@@ -1,7 +1,6 @@
 import nltk
 from nltk import word_tokenize
 from nltk.stem import WordNetLemmatizer
-from itertools import chain
 
 import re
 import numpy as np
@@ -11,6 +10,13 @@ import Functions
 
 from gensim.parsing.preprocessing import STOPWORDS
 STOPWORDS = STOPWORDS.union(set(['icelandair']))
+
+from textblob import TextBlob
+# use format
+# b = TextBlob("bonjour")
+#b.detect_language()
+# english code = "en"
+# islandic code = "is"
 
 # TASK2-D: Create an update-lexicon py file that will create eng-lexicons based on the leftover words
 def eng_update(df):
@@ -40,19 +46,6 @@ def eng_update(df):
 
     f.close()
 
-# TASK2-E: Create an update-lexicon py file that will create eng-lexicons based on the leftover words
+# TASK2-E: Create an update-lexicon py file that will create isk-lexicons based on the leftover words
 def isk_update():
     print("Icelandic update")
-
-def eng_dict():
-    eng_lexicon = "./lexicons/eng_lexicon.txt"
-
-    eng_dict = {}
-
-    f = open(eng_lexicon, 'r', encoding='utf-8')
-
-    for lines in f:
-        [key, mean, skip] = lines.split('\t')
-        eng_dict[key] = float(mean)
-
-    return eng_dict

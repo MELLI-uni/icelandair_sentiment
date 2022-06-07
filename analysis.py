@@ -1,5 +1,11 @@
 from itertools import islice
 
+import nltk
+from nltk.metrics.distance import jaccard_distance
+from nltk.util import ngrams
+from nltk.corpus import wordnet as wn
+from nltk.stem import WordNetLemmatizer
+
 A_INC = 2       # TEMP VALUES
 A_DEC = -2      # TEMP VALUES
 
@@ -7,9 +13,9 @@ C_INC = 2
 
 # list of degree adverbs
 # http://en.wiktionary.org/wiki/Category:English_degree_adverbs
-ENG_ADV = {'a bit':A_DEC, 'adequately':A_DEC, 'almost':A_DEC, 'barely':A_DEC, 'barely':A_DEC, 'fairly':A_DEC, 'hardly':A_DEC, 'just enough':A_DEC, 'kind of':A_DEC, 
-            'kinda':A_DEC, 'kindof':A_DEC, 'kind-of':A_DEC, 'less':A_DEC, 'little':A_DEC, 'marginal':A_DEC, 'marginally':A_DEC, 'moderately':A_DEC, 'modest':A_DEC, 
-            'nearly':A_DEC, 'occasional':A_DEC, 'occasionally':A_DEC, 'partly':A_DEC, 'scarce':A_DEC, 'scarcely':A_DEC, 'seldom':A_DEC, 'slight':A_DEC, 'slightly':A_DEC, 
+ENG_ADV = {'a bit':A_DEC, 'adequately':A_DEC, 'almost':A_DEC, 'barely':A_DEC, 'fairly':A_DEC, 'hardly':A_DEC, 'just enough':A_DEC, 'kind of':A_DEC, 'kinda':A_DEC, 
+            'kindof':A_DEC, 'kind-of':A_DEC, 'less':A_DEC, 'little':A_DEC, 'marginal':A_DEC, 'marginally':A_DEC, 'moderately':A_DEC, 'modest':A_DEC, 'nearly':A_DEC, 
+            'occasional':A_DEC, 'occasionally':A_DEC, 'partly':A_DEC, 'scarce':A_DEC, 'scarcely':A_DEC, 'seldom':A_DEC, 'slight':A_DEC, 'slightly':A_DEC, 
             'somewhat':A_DEC, 'sort of':A_DEC, 'sorta':A_DEC, 'sortof':A_DEC, 'sort-of':A_DEC, 'sufficiently':A_DEC, 
 
             '100 percent':A_INC, '100-percent':A_INC, '100%':A_INC, 'a lot':A_INC, 'alot':A_INC, 'absolutely':A_INC, 'amazingly':A_INC, 'awfully':A_INC, 'clearly':A_INC,
@@ -99,7 +105,7 @@ def degreed(word, score, lang):
 
     return degree
 
-class SentimentAnalyzer():
+class SentimentAnalyzer(object):
     def __init__(self, eng_lexicon="eng_lexicon.txt", isk_lexicon="isk_lexion.txt", emoji_lexicon="emoji_lexicon.txt", emoticon_lexicon="emoticon_lexicon.txt"):
         self.path = "./lexicons/"
 
@@ -137,8 +143,10 @@ class SentimentAnalyzer():
 
         return emoji_dict
 
-    def sentiments_list(self, input):
-        print("sentiments_list")
+    def convert_to_score(self, input):
+        if input:
+            print("there is")
+        return 0
 
     @staticmethod
     def exclamation_point(input):
@@ -152,7 +160,7 @@ class SentimentAnalyzer():
     def count_each(sentiments):
         print("count each")
 
-    def calculate_total(self, sentiments):
+    def calc_total_score(self, sentiments):
         if sentiments:
             print("exist")
         else:
