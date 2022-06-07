@@ -1,7 +1,9 @@
 A_INC = 2       # TEMP VALUES
 A_DEC = -2      # TEMP VALUES
 
-ENG_adv = {'a bit':A_DEC, 'adequately':A_DEC, 'almost':A_DEC, 'barely':A_DEC, 'barely':A_DEC, 'fairly':A_DEC, 'hardly':A_DEC, 'just enough':A_DEC, 'kind of':A_DEC, 
+# list of degree adverbs
+# http://en.wiktionary.org/wiki/Category:English_degree_adverbs
+ENG_ADV = {'a bit':A_DEC, 'adequately':A_DEC, 'almost':A_DEC, 'barely':A_DEC, 'barely':A_DEC, 'fairly':A_DEC, 'hardly':A_DEC, 'just enough':A_DEC, 'kind of':A_DEC, 
             'kinda':A_DEC, 'kindof':A_DEC, 'kind-of':A_DEC, 'less':A_DEC, 'little':A_DEC, 'marginal':A_DEC, 'marginally':A_DEC, 'moderately':A_DEC, 'modest':A_DEC, 
             'nearly':A_DEC, 'occasional':A_DEC, 'occasionally':A_DEC, 'partly':A_DEC, 'scarce':A_DEC, 'scarcely':A_DEC, 'seldom':A_DEC, 'slight':A_DEC, 'slightly':A_DEC, 
             'somewhat':A_DEC, 'sort of':A_DEC, 'sorta':A_DEC, 'sortof':A_DEC, 'sort-of':A_DEC, 'sufficiently':A_DEC, 
@@ -17,7 +19,8 @@ ENG_adv = {'a bit':A_DEC, 'adequately':A_DEC, 'almost':A_DEC, 'barely':A_DEC, 'b
             'utterly':A_INC, 'very':A_INC, 'well':A_INC
             }
 
-ISK_adv = {'að hluta':A_DEC, 'af skornum skammti':A_DEC, 'bara nóg':A_DEC, 'fullnægjandi':A_DEC, 'hóflega':A_DEC, 'hóflegur':A_DEC, 'hófsamur':A_DEC, 
+# http://mylanguages.org/icelandic_adverbs.php
+ISK_ADV = {'að hluta':A_DEC, 'af skornum skammti':A_DEC, 'bara nóg':A_DEC, 'fullnægjandi':A_DEC, 'hóflega':A_DEC, 'hóflegur':A_DEC, 'hófsamur':A_DEC, 
             'jaðar':A_DEC, 'lítillega':A_DEC, 'lítilsháttar':A_DEC, 'litla':A_DEC, 'minna':A_DEC, 'nægilega':A_DEC, 'næstum':A_DEC, 'næstum því':A_DEC, 
             'nokkuð':A_DEC, 'örlítið':A_DEC, 'sjaldan':A_DEC, 'stöku sinnum':A_DEC, 'stundum':A_DEC, 'svoleiðis':A_DEC, 'svolítið':A_DEC, 'svona':A_DEC, 
             'varla':A_DEC,
@@ -31,3 +34,13 @@ ISK_adv = {'að hluta':A_DEC, 'af skornum skammti':A_DEC, 'bara nóg':A_DEC, 'fu
             'sérstaklega':A_INC, 'sláandi':A_INC, 'stórkostlega':A_INC, 'stórkostlegt':A_INC, 'svo':A_INC, 'talsverður':A_INC, 'talsvert':A_INC, 
             'undantekningarlaust':A_INC, 'vel':A_INC, 'venjulega':A_INC, 'verulega':A_INC, 'virkilega':A_INC
             }
+
+# list of negating words
+
+ENG_NEG = ["aint", "ain't", "arent", "aren't", "cannot", "cant", "can't", "darent", "daren't", "didnt", "didn't", "doesnt", "doesn't", "don't", "dont", "hadnt", "hadn't", "hasnt", 
+            "hasn't", "have-not", "havent", "haven't", "isnt", "isn't", "mightnt", "mightn't", "neednt", "needn't", "neither", "never", "none", "nope", "nor", "not", "nothing", 
+            "nowhere", "shant", "shan't", "shouldnt", "shouldn't", "wasnt", "wasn't", "wont", "won't", "wouldnt", "wouldn't", 
+            ]
+
+ISK_NEG = ["aldrei", "ekkert", "ekki", "enginn", "hvergi", "hvorki", "ne", "neibb", "neitt"
+            ]
