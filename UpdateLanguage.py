@@ -72,21 +72,21 @@ def ISK_spell_check(word):
 
 def update_lexicons(df):
     eng_lexicon = "./lexicons/eng_lexicon.txt"
-    isk_lexicon = "./lexicons/isk_lexicon.txt"
+    #isk_lexicon = "./lexicons/isk_lexicon.txt"
 
     eng_dict = {}
-    isk_dict = {}
+    #isk_dict = {}
 
     f = open(eng_lexicon, 'r+', encoding='utf-8')
 
     for lines in f:
         [key, skip, scores] = lines.split('\t')
-        eng_dict[key] = [int(x) for x in scores.strip('\n[]').split(', ')]
+        eng_dict[key] = [float(x) for x in scores.strip('\n[]').split(', ')]
 
     f.seek(0)
 
     for row in df.itertuples(index=False):
-        new_word = row.Change
+        new_word = row.answer_freetext_value
         new_score = row.Sentiment
 
         if new_word in eng_dict:
@@ -98,11 +98,6 @@ def update_lexicons(df):
         f.write(key + "\t" + str(sum(value) / len(value)) + "\t" + str(value) + "\n")
 
     f.close()
-
-def update(excel_file, excel_sheet):
-    df = Functions.init(excel_file, excel_sheet)
-    df = Functions.clean(df, "EN")
-    df = Functions.process(df, "EN")
 
 # how to use greynir
 # text

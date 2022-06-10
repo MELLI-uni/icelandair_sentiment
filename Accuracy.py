@@ -28,6 +28,14 @@ def accuracy(actual_file, test_file):
     df_predict = pd.read_excel(test_file)
     senti_predict = df_predict['Sentiment'].tolist()
 
+    ##### TO BE DELETED
+    df = df_truth.copy()
+    df['Guess'] = df_predict['Sentiment']
+
+    df['Inc'] = np.where(df['Sentiment'] != df['Guess'], 'INCORRECT', '')
+    df.to_excel("Checking.xlsx")
+    #####
+
     # Generate confusion matrix
     cf_matrix = confusion_matrix(senti_truth, senti_predict, labels=labels)
     df_matrix = pd.DataFrame(cf_matrix, index=labels, columns=labels)

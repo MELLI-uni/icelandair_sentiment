@@ -6,10 +6,11 @@ from nltk.util import ngrams
 from nltk.corpus import wordnet as wn
 from nltk.stem import WordNetLemmatizer
 
-A_INC = 2       # TEMP VALUES
-A_DEC = -2      # TEMP VALUES
+ADV_VAL = 0.25
+A_INC = ADV_VAL       # TEMP VALUES
+A_DEC = -ADV_VAL      # TEMP VALUES
 
-C_INC = 2       # TEMP VALUES
+C_INC = 0.1       # TEMP VALUES
 
 # list of degree adverbs
 # http://en.wiktionary.org/wiki/Category:English_degree_adverbs
