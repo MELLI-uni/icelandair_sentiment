@@ -8,8 +8,6 @@ from reynir import Greynir
 from reynir_correct import check_single
 from textblob import TextBlob
 
-import Functions
-
 # list of degree adverbs
 # http://en.wiktionary.org/wiki/Category:English_degree_adverbs
 ENG_ADV = ['a bit', 'adequately', 'almost', 'barely', 'fairly', 'hardly', 'just enough', 'kind of', 'kinda', 'kindof', 'kind-of', 'less', 'little', 'marginal', 
@@ -98,13 +96,3 @@ def update_lexicons(df):
         f.write(key + "\t" + str(sum(value) / len(value)) + "\t" + str(value) + "\n")
 
     f.close()
-
-# how to use greynir
-# text
-# g = Greynir()
-# job = g.submit(text)
-
-# iterate through sentences and parse each one
-# for sent in job:
-#   sent.parse()
-#   #sent.lemmas
