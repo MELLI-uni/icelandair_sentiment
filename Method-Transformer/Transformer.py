@@ -1,3 +1,6 @@
+# Reference: https://huggingface.co/blog/sentiment-analysis-python
+# Reference: https://huggingface.co/docs/transformers/model_doc/roberta
+
 import xlwings as xws
 import string
 
