@@ -37,6 +37,7 @@ from reynir_correct import check_single
 eng_spacy = spacy.load('en_core_web_sm')
 isk_greynir = Greynir()
 
+# Stopwords from: https://github.com/atlijas/icelandic-stop-words/blob/master/all_stop_words.txt
 isk_stop = []       # List of Icelandic Stopwords
 with open('../lexicons/isk_stop.txt', encoding='utf-8') as f:
     for line in f:
