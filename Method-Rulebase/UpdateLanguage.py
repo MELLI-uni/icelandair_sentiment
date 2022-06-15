@@ -69,7 +69,7 @@ def ISK_spell_check(word):
     return word
 
 def update_lexicons(df):
-    eng_lexicon = "./lexicons/eng_lexicon.txt"
+    eng_lexicon = "./eng_lexicon.txt"
     #isk_lexicon = "./lexicons/isk_lexicon.txt"
 
     eng_dict = {}

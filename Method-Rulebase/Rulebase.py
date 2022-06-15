@@ -1,36 +1,69 @@
-from tokenize import String
+import regex as re
+import xlwings as xws
+import string
+import emoji
+
 from itertools import groupby
 from itertools import islice
+from collections import Counter
+
 import numpy as np
 import pandas as pd
 pd.set_option('mode.chained_assignment', None)
 
-import regex as re
-import xlwings as xws
+import matplotlib
+import matplotlib.pyplot as plt
+from sklearn.model_selection import train_test_split
 
-import gensim
-from gensim.parsing.preprocessing import remove_stopwords
-from gensim.parsing.preprocessing import STOPWORDS
-
-from tabulate import tabulate
-
+import seaborn as sns
 from sklearn.metrics import confusion_matrix
 from sklearn.metrics import f1_score
 from sklearn.metrics import precision_score
 from sklearn.metrics import recall_score
-from sklearn.metrics import accuracy_score
+from tabulate import tabulate
 
-import seaborn as sns
-import matplotlib.pyplot as plt
-
-eng_pattern = r'\s[Bb]ut\.*,*\s|\s[Hh]owever\.*,*\s|\s[Ee]xcept\.*,*\s'
-isk_pattern = r'\s[Ee][n]\.*,*\s|\s[Þþ]ó\.*,*\s|\s[Nn]ema\.*,*\s|\s[Hh]ins vegar\.*,*\s|\sfyrir utan\.*,*\s'
+import gensim
+from gensim.parsing.preprocessing import STOPWORDS      # List of English Stopwords
 
 import spacy
+from nltk.corpus import words
+from nltk.corpus import wordnet as wn
+from nltk.util import ngrams
+from nltk.metrics.distance import jaccard_distance
+from nltk.metrics.distance import edit_distance
+
 from reynir import Greynir
 from reynir_correct import check_single
 
-ADV_VAL = 0.5
+eng_spacy = spacy.load('en_core_web_sm')
+isk_greynir = Greynir()
+
+emoji_dict = {}
+with open('../lexicons/emoji.txt', encoding='utf-8') as f:
+    for line in islice(f, 1, None):
+        [key, value] = line.split("\t")
+        emoji_dict[key] = value.strip()
+with open('../lexicons/emoticon.txt', encoding='utf-8') as f:
+    for line in f:
+        [key, value] = line.split("\t")
+        emoji_dict[key] = value.strip()
+
+flight_list = []
+with open('../lexicons/destination.txt', encoding='utf-8') as f:
+    for line in f:
+        flight_list.append(line.strip())
+
+isk_stop = []
+with open('../lexicons/isk_stop.txt', encoding='utf-8') as f:
+    for line in f:
+        isk_stop.append(line.strip())
+
+english_words = list(wn.words()) + words.words()
+
+eng_negating = r'\s[Bb]ut\.*,*\s|\s[Hh]owever\.*,*\s'
+isk_negating = r'\s[Ee]n\.*,*\s|\s[Nn]ema\.*,*\s'
+
+ADV_VAL = 1
 A_INC = ADV_VAL
 A_DEC = -ADV_VAL
 
@@ -65,41 +98,17 @@ ISK_ADV = {'að hluta':A_DEC, 'af skornum skammti':A_DEC, 'bara nóg':A_DEC, 'fu
             'undantekningarlaust':A_INC, 'vel':A_INC, 'venjulega':A_INC, 'verulega':A_INC, 'virkilega':A_INC
             }
 
-# ENG_NEG = ["never", "not"]
 ISK_NEG = ["ekki"]
 #ISK_NEG = ["aldrei", "ekkert", "ekki", "enginn", "hvergi", "hvorki", "ne", "neibb", "neitt"]
 ENG_NEG = ["neither", "never", "none", "nope", "nor", "not", "nothing", "nowhere"]
 NEUTRAL_SKIP = ["N/A", "n/a", "na", "N/a", "n/A", "NA"]
 
-# regex pattern for flight names
-regex_plane = r'(A3\d{2}(-\d{3})?)|(7\d7(-\d{3})?)|FI\d+'
-
-emoji_dict = {}
-with open('../lexicons/emoji.txt', encoding='utf-8') as f:
-    for line in islice(f, 1, None):
-        [key, value] = line.split("\t")
-        emoji_dict[key] = value
-with open('../lexicons/emoticon.txt', encoding='utf-8') as f:
-    for line in f:
-        [key, value] = line.split("\t")
-        emoji_dict[key] = value
-
-isk_stop = []
-with open('../lexicons/isk_stop.txt', encoding='utf-8') as f:
-    for line in f:
-        isk_stop.append(line.strip())
-
-FLIGHT = []
-with open('../lexicons/destination.txt', encoding='utf-8') as f:
-    for line in f:
-        FLIGHT.append(line)
-
-nlp = spacy.load("en_core_web_sm")
-g = Greynir()
-
 def init(file_name, sheet_name):
     """
-    init function launches a password-protected excel file for the user to open and changes it into a datafram
+    init function launches a password-protected excel file for the user to open and changes it into a dataframe
+    all other columns exclusing 'id', 'answer_freetext_value', 'sentiment' is eliminated from the dataframe
+    responses in 'answer_freetext_value' is lemmatized
+    'sentiment' column is separated into three boolean columns: 'Positive', 'Negative', 'Neutral'
 
     : param file_name: location/name of the excel file to open
     : param sheet_name: name of the sheet to open
@@ -111,20 +120,6 @@ def init(file_name, sheet_name):
     sheet = wb.sheets[sheet_name].used_range
 
     df = sheet.options(pd.DataFrame, index=False, header=True).value
-    return(df)
-
-def clean(df, lang):
-    """
-    clean function eliminates columns that are not needed, rows with no freetext or sentiment, lowercase and strips
-    trailing blank spaces in the sentiment column, and separates the sentiment into three boolean columns (pos, neg, neu)
-
-    : param df: panda dataframe
-
-    : return: panda dataframe with [id(int), freetext(String), Positive(bool), Negative(bool), Neutral(bool)]
-
-    input: panda_df
-    output: cleaned panda_df with (id, freetext, Sentiment)
-    """
 
     header = list(df.columns)
 
@@ -136,283 +131,364 @@ def clean(df, lang):
             del df[h]
 
     # Lowercase & Strip trailing blanks for sentiment
-    # Change sentiment column into list by spliting at non-word component
     df['Sentiment'] = df['Sentiment'].str.lower().str.strip()
+
+    # Drop all rows with either empty freetext or empty sentiment
+    df.dropna(subset = ['answer_freetext_value'], inplace=True)
+    df.dropna(subset = ['Sentiment'], inplace=True)
+
+    return df
+
+def combine_df(df1, df2):
+    """
+    combine_df function concatenates two dataframe into one larger dataframe
+
+    : param df1, df2: dataframes to be concatenated
+
+    : return: concatenated dataframe
+    """
+    df = pd.concat([df1, df2], ignore_index=True)
+
+    return df
+
+def separate_multi(df, lang):
+    """
+    separate_multi function separates rows of dataframe with multiple sentiments
+    Separation Rule:
+        1. if there is a new line, separate at new line
+        2. if there is a negating conjugation, separate at negating conjugation
+        3. if there is a period, separate at period
+        4. if there is a comma, separate at comma
+        else. delete row from dataframe
+    """
+
     df['Sentiment'] = list(df['Sentiment'].str.split(r'\W+'))
 
-    # Drop all rows with either empty freetext or emtpy sentiment
-    df.dropna(subset = ['answer_freetext_value'], inplace=True)
-    df.dropna(subset = ['Sentiment'], inplace=True)
-
-    # Find all rows with multiple sentiments and store it to separate dataframe
-    df_temp = df.loc[(df['Sentiment']).str.len() > 1]
-    df.drop(df_temp.index, inplace=True)
+    df_multi = df.loc[(df['Sentiment']).str.len() > 1]
+    df.drop(df_multi.index, inplace=True)
     df = df.explode(['Sentiment'])
 
-    #df_temp.to_excel("multi.xlsx")      # LINE TO DELETE
+    df_multi['ct_senti'] = (df_multi['Sentiment']).str.len()
 
-    df_count = df_temp[['Sentiment', 'answer_freetext_value']].copy()   # Create a copy of the dataframe with multiple sentiments
-    df_count['answer_freetext_value'] = df_count['answer_freetext_value'].str.replace(r'\s*([Tt]hank [Yy]ou)\.*\s*','', regex=True)  # Replace all 'Thank you.' to blank space
-    df_count['answer_freetext_value'] = df_count['answer_freetext_value'].str.replace(r'\s*[Yy]es\.*\,*\s*','', regex=True)  # Replace all 'Yes.' to blank space
+    df_multi['ct_sep'] = (df_multi['answer_freetext_value']).str.split(r'\n+').str.len()
+    df_multi.loc[(df_multi['ct_senti'] == df_multi['ct_sep']), 'answer_freetext_value'] = (df_multi['answer_freetext_value']).str.split(r'\n+')
+    df_sep = df_multi.loc[(df_multi['ct_senti'] == df_multi['ct_sep'])]
+    df_multi.drop(df_sep.index, inplace=True)
+    del df_multi['ct_sep']
 
-    df_count['answer_freetext_value'] = df_count['answer_freetext_value'].str.replace(r'\s*[Tt]akk\.\s*','', regex=True)
-    df_count['answer_freetext_value'] = df_count['answer_freetext_value'].str.replace(r'\s*[Jj]á\.*\,*\s*','', regex=True)
+    if lang == 'EN':
+        negating_pattern = eng_negating
+    elif lang == 'IS':
+        negating_pattern = isk_negating
     
-    df_count['Sentiment'] = df_count['Sentiment'] # Count number of sentiments
-    df_count['New Line'] = df_count['answer_freetext_value'].str.split(r'\n+')    # Count number of sentences separated by new line
+    df_multi['ct_sep'] = (df_multi['answer_freetext_value']).str.split(negating_pattern).str.len()
+    df_multi.loc[(df_multi['ct_senti'] == df_multi['ct_sep']), 'answer_freetext_value'] = (df_multi['answer_freetext_value']).str.split(negating_pattern)
+    df_temp = df_multi.loc[(df_multi['ct_senti'] == df_multi['ct_sep'])]
+    df_sep = pd.concat([df_sep, df_temp], sort=False)
+    df_multi.drop(df_temp.index, inplace=True)
+    del df_multi['ct_sep']
 
-    if lang == "IS":
-        negating_conjugation = isk_pattern
-    else:
-        negating_conjugation = eng_pattern
+    df_multi['ct_sep'] = (df_multi['answer_freetext_value']).str.strip(r'[.!?]').str.split(r'[.!?]').str.len()
+    df_multi.loc[(df_multi['ct_senti'] == df_multi['ct_sep']), 'answer_freetext_value'] = (df_multi['answer_freetext_value']).str.strip(r'[.!?]').str.split(r'[.!?]')
+    df_temp = df_multi.loc[(df_multi['ct_senti'] == df_multi['ct_sep'])]
+    df_sep = pd.concat([df_sep, df_temp], sort=False)
+    df_multi.drop(df_temp.index, inplace=True)
+    del df_multi['ct_sep']
+
+    df_multi['ct_sep'] = (df_multi['answer_freetext_value']).str.split(r'[,;]').str.len()
+    df_multi.loc[(df_multi['ct_senti'] == df_multi['ct_sep']), 'answer_freetext_value'] = (df_multi['answer_freetext_value']).str.split(r'[,;]')
+    df_temp = df_multi.loc[(df_multi['ct_senti'] == df_multi['ct_sep'])]
+    df_sep = pd.concat([df_sep, df_temp], sort=False)
+    df_multi.drop(df_temp.index, inplace=True)
+    del df_multi['ct_sep']
     
-    df_count['Negating'] = df_count['answer_freetext_value'].str.split(negating_conjugation)    # Count number of sentences separated by negating conjugations
-    # TODO: Investigate with \p{L} -> why is it not workiiinnnggggggg
-    df_count['Period'] = df_count['answer_freetext_value'].str.strip(r'\W+').str.split(r'(?<=[a-zA-ZÁáÐðÉéÍíÓóÚúÝýÞþÆæÖö])\.(?=\s*[a-zA-ZÁáÐðÉéÍíÓóÚúÝýÞþÆæÖö])') # Count number of sentences separated by period
-    #df_count['Word'] = df_count['answer_freetext_value'].str.split()  # Count number of words in the sentence
-    #df_count['Word'] = df_count['Word'].apply(lambda x: [' '.join(i.tolist()) for i in (np.array_split(np.array(x), 2))])
-    #df_count['Wordc'] = df_count.apply(lambda x: np.array(x['Word']))
+    del df_sep['ct_senti']
+    del df_sep['ct_sep']
+    df_sep = df_sep.explode(['Sentiment', 'answer_freetext_value'])
 
-    df_count['Punct'] = df_count['answer_freetext_value'].str.split(r',|;') # Count number of sentences separated by comma or semicolon
-    df_count['Elim'] = df_temp['Sentiment'].apply(lambda x: [i[0] for i in groupby(x)])   # Remove consecutive duplicates in sentiment list
-
-    #TODO: Determine priority or if accuracy of program is high enough, train this portion with transformer?!?!
-    df_count.loc[(df_count['Sentiment'].str.len() == df_count['New Line'].str.len()), 'Type'] = 'New Line'
-    df_count.loc[(df_count['Sentiment'].str.len() == df_count['Negating'].str.len()) & (df_count['Type'].isnull()), 'Type'] = 'Negating'
-    df_count.loc[(df_count['Sentiment'].str.len() == df_count['Period'].str.len()) & (df_count['Type'].isnull()), 'Type'] = 'Period'
-
-    df_count.loc[(df_count['Elim'].str.len() == df_count['New Line'].str.len()), 'Type'] = 'New Line'
-    df_count.loc[(df_count['Elim'].str.len() == df_count['New Line'].str.len()), 'Sentiment'] = df_count['Elim']    # Replace sentiment label with duplicate removed list
-
-    df_count.loc[(df_count['Elim'].str.len() == df_count['Negating'].str.len()) & (df_count['Type'].isnull()), 'Sentiment'] = df_count['Elim']    # Replace sentiment label with duplicate removed list
-    df_count.loc[(df_count['Elim'].str.len() == df_count['Negating'].str.len()) & (df_count['Type'].isnull()), 'Type'] = 'Negating'
-    del df_count['Elim']
-
-    df_count.loc[(df_count['Period'].str.len() == 1) & (df_count['Sentiment'].str.len() == df_count['Punct'].str.len()) & (df_count['Type'].isnull()), 'Type'] = 'Punct'
-
-    df_temp['Sentiment'] = df_count['Sentiment']
-    df_temp.loc[(df_count['Type'] == 'New Line'), 'answer_freetext_value'] = df_count['New Line'][df_count['Type'] == 'New Line']
-    df_temp.loc[(df_count['Type'] == 'Negating'), 'answer_freetext_value'] = df_count['Negating'][df_count['Type'] == 'Negating']
-    df_temp.loc[(df_count['Type'] == 'Period'), 'answer_freetext_value'] = df_count['Period'][df_count['Type'] == 'Period']
-    df_temp.loc[(df_count['Type'] == 'Punct'), 'answer_freetext_value'] = df_count['Punct'][df_count['Type'] == 'Punct']
-    df_temp['Type'] = df_count['Type']
-    #df_temp.to_excel("multi_det.xlsx")      # LINE TO DELETE
-
-    df_temp.dropna(subset = ['Type'], inplace=True)
-    del df_temp['Type']
-
-    df_temp = df_temp.explode(['Sentiment', 'answer_freetext_value'])
-    #df_temp.to_excel("multi_explode.xlsx")       # LINE TO DELETE
-
-    df = pd.concat([df, df_temp], ignore_index=True, sort=False)
-
-    df.loc[df['Sentiment'] == 'positive', 'Sentiment'] = 0.25
-    df.loc[df['Sentiment'] == 'negative', 'Sentiment'] = -0.25
-    df.loc[df['Sentiment'] == 'neutral', 'Sentiment'] = 0
-    #del df['Sentiment']
+    df = pd.concat([df, df_sep], ignore_index=True, sort=False)
 
     return df
 
-def eng_process(input, sentiment):
+def train_dev_test_split(df):
+    """
+    train_dev_test_split function divides the dataframe into training set, development set, and testing set
+    composition ratio: 70% training, 20% dev, 10% testing
+
+    : param df: pandas dataframe that would be separated into three sets
+
+    : return: pandas dataframe divided into training, dev, and testing
+    """
+
+    df_train, df_others = train_test_split(df, test_size=0.3, shuffle=True)
+    df_dev, df_test = train_test_split(df_others, test_size=0.33, shuffle=True)
+
+    return df_train, df_dev, df_test
+
+def stem_prefix(word, prefixes, roots):
+    original_word = word
+
+    for prefix in sorted(prefixes, key=len, reverse=True):
+        word, nsub = re.subn(prefix, "", word)
+        if nsub > 0 and word in roots:
+            return prefixes[prefix] + word
+    
+    return original_word
+
+def stem_suffix(word, suffixes, roots):
+    original_word = word
+
+    for suffix in sorted(suffixes, key=len, reverse=True):
+        word, nsub = re.subn(suffix, "", word)
+        if nsub > 0 and word in roots:
+            return word
+    
+    return original_word
+
+def spell_correct_eng(word):
+    """
+    Reference: https://socialnetwork.readthedocs.io/en/latest/spell-check.html
+    """
+    temp = [(jaccard_distance(
+            set(ngrams(word, 2)),
+            set(ngrams(w, 2))), w)
+            for w in english_words if w[0]==word[0]]
+    
+    return sorted(temp, key = lambda val: val[0])[0][1]
+
+def lemmatize_eng(input):
+    return " ".join([token.lemma_ for token in eng_spacy(input) if token.text not in string.punctuation])
+
+def lemmatize_isk(input):
+    token_list = []
+    job = isk_greynir.submit(input)
+
+    for sent in job:
+        sent.parse()
+        if sent.tree is None:
+            for t in sent.tokens:
+                token_list.append(t.txt)
+        else:
+            token_list.extend(sent.lemmas)
+
+    return " ".join([token for token in token_list if token not in string.punctuation])
+
+def total_weight(num_levels, num_degree):
+    sum = (num_levels * (num_levels + 1)) / 2
+    sum += num_degree
+
+    return sum
+
+def weight_tokens():
+    return
+
+def process_eng(input, sentiment):
+    doc = eng_spacy(input)
+
     text = []
     tag = []
-    score = []
-    
-    token_score = sentiment
+    polarity = []
 
-    doc = nlp(input)
-    
+    token_score = sentiment
+    auxiliary = []
+    negate = False
+    comp_neg = False
+
+    score_deg = 0
+    flag_deg = False
+
     for token in doc:
-        if (
-            (token.lemma_ in ENG_ADV and token.tag_ == 'RB')
-            or token.text in FLIGHT
-            or token.text in NEUTRAL_SKIP
-            or token.lemma_ == 'be'
-            or re.findall(r'\,|NNP|NNPS|RP|SYM|TO|UH|WDT|WP|WP$|WRB|LS|IN|FW|EX|DT|CC|CD|MD', token.tag_)   # test with NN and NNS & test with MD
-        ):
+        # if token.text not in english_words:
+        #     continue
+
+        if token.pos_ == 'AUX':
+            auxiliary.append(True)
             continue
-        
-        if re.findall(r'\.', token.tag_):
+
+        if len(auxiliary) == 1:
+            auxiliary = []
+
+        if len(auxiliary) >= 2:
+            if(token.pos_ == 'ADJ'):
+                auxiliary = []
+                text.append(token.lemma_)
+                polarity.append(-token_score)
+                tag.append(token.pos_)
+                comp_neg = True
+            continue
+
+        if token.dep_ == 'cc':
+            comp_neg = False
+            continue
+
+        if token.dep_ == 'prep':
+            continue
+
+        if token.dep_ == 'neg':
+            negate = True
+            continue
+
+        if negate == True:
+            text.append(token.lemma_)
+            polarity.append(-token_score)
+            tag.append(token.pos_)
+            negate = False
+            continue
+
+        if token.dep_ == 'mark':
+            if comp_neg == True:
+                token_score = -token_score
+            continue
+
+        # TODO: Find a way to indicate that this is for the following adj
+        if token.lemma_ in ENG_ADV and token.pos_ == 'ADV':
+            score_deg += ENG_ADV[token.lemma_]
+            flag_deg = True
+            continue
+
+        if token.pos_ == r'[\.\?!]':
             token_score = sentiment
             continue
 
-        if re.findall(r'\W', token.text):
+        if token.pos_ == 'NOUN' and token.lemma_ in text:
             continue
 
-        if token.lemma_ in ENG_NEG:
-            if tag and (tag[-1] == 'MD' or text[-1] == 'do' or text[-1] == 'have'):
-                del text[-1]
-                del tag[-1]
-                del score[-1]
-            token_score = -token_score
+        if re.findall(r'ADP|CONJ|CCONJ|DET|INTJ|NUM|PART|PRON|PROPN|PUNCT|SCONJ|SYM|X|SPACE', token.pos_):
             continue
 
-        text.append(token.lemma_)
-        tag.append(token.tag_)
-
-        if token.tag_ == 'JJ':
-            score.append(token_score * 4)
-        else:
-            score.append(token_score)
-
-    return [text, score]
-
-def eng_process2(input, sentiment):
-    text = []
-    tag = []
-    score = []
-    
-    token_score = sentiment
-    amplify = 0
-
-    doc = nlp(input)
-    
-    for token in doc:
-        if (
-            token.text in FLIGHT
-            or token.text in NEUTRAL_SKIP
-            or token.lemma_ == 'be'
-            or re.findall(r'\,|NNP|NNPS|RP|SYM|TO|UH|WDT|WP|WP$|WRB|LS|IN|FW|EX|DT|CC|CD|MD', token.tag_)   # test with NN and NNS & test with MD
-        ):
-            continue
-        
-        if re.findall(r'\.', token.tag_):
-            token_score = sentiment
-            continue
-
-        if re.findall(r'\W', token.text):
-            continue
-
-        if token.lemma_ in ENG_ADV:
-            amplify = ENG_ADV[token.lemma_]
-            continue
-
-        if token.lemma_ in ENG_NEG:
-            if tag and (tag[-1] == 'MD' or text[-1] == 'do' or text[-1] == 'have'):
-                del text[-1]
-                del tag[-1]
-                del score[-1]
-            token_score = -token_score
+        if token.lemma_ in STOPWORDS:
             continue
 
         text.append(token.lemma_)
-        tag.append(token.tag_)
+        polarity.append(token_score)
+        tag.append(token.pos_)
+        #print(token.text, token.lemma_, token.tag_, token.pos_, token.dep_, token_score)
 
-        if token_score != sentiment:
-            amplify = -amplify
+    list_tag = Counter(tag).keys()
+    weights = (np.abs(sentiment) * len(text)) / total_weight(len(list_tag), score_deg)
 
-        if token.tag_ == 'JJ':
-            score.append(amplify + token_score * 4)
-        else:
-            score.append(amplify + token_score)
-        amplify = 0
+    print(text)
+    print(polarity)
+    print(tag)
+    print(weights)
 
-    return [text, score]
+    return input
 
-def isk_process(input, sentiment):
-    text = []
-    score = []
+def sample_isk():
+    my_text = "Ég hataði flugið vegna þess að flugvélin var svo heit"
 
-    lines = input.strip(".!?").split(".")
+    job = isk_greynir.submit(my_text)
 
-    for sentence in lines:
-        sent = check_single(sentence)
-        if sent is None:
+    tree_temp = []
+    tree = []
+    lemmas = []
+
+    # Iterate through sentences and parse each one
+    for sent in job:
+        sent.parse()
+
+        if sent.tree is None:
+            print(False)
             continue
+            # for t in sent.tokens:
+            #     token_list.append(t.txt)
 
-        sent = sent.tidy_text
-        doc = g.parse_single(sent)
+        print(sent.tree.view)
+        tree_temp = sent.tree.view.split("\n")
 
-        token_count = 0
-        token_score = sentiment
-        token_lemmas = doc.lemmas
-        token_tags = doc.categories
+    for levels in tree_temp[2:]:
+        elim_indic = re.sub('+-', '', levels)
+        tree.append(re.subn('  ', '', elim_indic))
 
-        if token_lemmas:
-            for token in token_lemmas:
-                if (
-                    token in ISK_ADV
-                    or token in isk_stop
-                    or token == 'vera'
-                    or token in FLIGHT
-                    or re.findall(r'\p{S}|\p{Ps}|\p{Pe}|\p{Pi}|\p{Pf}|\p{Pc}|\p{Po}', token)
-                    or re.findall(r'.*fn|person|entity|gata|to|töl|st.*|uh|nhm|gr|fs|fyrirtæki', token_tags[token_count])
-                ):
-                    token_count += 1
-                    continue
+    print(tree)
 
-                if text and token in ISK_NEG:
-                    if (token_count != len(token_tags)) and (token_tags[token_count + 1] == 'so' or token_tags[token_count + 1] == 'lo'):
-                        del text[-1]
-                        del score[-1]
+def convert_emoji_emoti(input):
+    """
+    convert_emoji_emoti function replaces all emojis and emoticons in the input with corresponding text descriptions.
+    Emoji descriptions are obtained from: https://emojipedia.org
+    Emoticon descriptions are obtained from: https://en.wikipedia.org/wiki/List_of_emoticons
 
-                    else:
-                        score[-1] = -score[-1]
+    The lexicon for emoji and emoticon are located under '../lexicons/' folder under the name emoji.txt and emoticon.txt correspondingly
+    The emoji and emoticon lexicon can be updated by calling the 'update_emoji' or 'update_emoticon' function in the rulebase_test.py file
 
-                    token_score = -token_score
-                    token_count += 1
-                    continue
+    : param input: input sentence that will have the emoji converted
 
-                if token_tags[token_count] == 'lo':
-                    score.append(token_score * 2)
-                else:
-                    score.append(token_score)
-                token_count += 1
+    : return: sentence with emoji and emoticons converted into text
+    """
 
-                text.append(token)
+    converted_input = input
 
-    return [text, score]
+    tokens = converted_input.split(" ")
+    for token in tokens:
+        if len(token) > 4 or len(token) == 1:
+            continue
+        elif token.lower() in STOPWORDS:
+            continue
+        elif token in emoji_dict:
+            converted_input = converted_input.replace(token, (" " + emoji_dict[token] + " "))
 
-def process(df, lang):
-    if lang == "EN":
-        df = df.apply(lambda x: eng_process(x['answer_freetext_value'], x['Sentiment']), axis=1, result_type='expand')
-    elif lang == "IS":
-        df = df.apply(lambda x: isk_process(x['answer_freetext_value'], x['Sentiment']), axis=1, result_type='expand')
+    converted_input = converted_input.replace("  ", " ")
 
-    df.columns = ['answer_freetext_value', 'Sentiment']
-    df = df.explode(['answer_freetext_value', 'Sentiment'], ignore_index=True)
+    for item in (re.findall(r'[^\w\s]', input)):
+        if item in emoji_dict:
+            converted_input = converted_input.replace(item, (" " + emoji_dict[item] + " "))
+            continue
+        converted_input = converted_input.replace(item, "")
 
-    df.dropna(subset = ['answer_freetext_value'], inplace=True)
-    df.dropna(subset = ['Sentiment'], inplace=True)
+    converted_input = converted_input.replace("  ", " ")
 
-    return df
+    return converted_input
 
-# Intensify adjectives and adverbs when calculating scores
+def filter_words(tokens, lang):
+    """
+    filter_words function replaces all airport related information from the given list of tokens
+    It also replaces all information that seems like plane names or reference numbers
+    Then the function calls the processing function based on the language, which would provide additional cleaning onto the tokens
+    
+    : param tokens: list of tokens that requires filtering or certain words
+    : param lang: language of the given list of tokens
 
-# If not is placed in front of an adjective then change the storing sentiment when developing lexicon list
+    : return: cleaned up token
+    """
+    
+    return tokens
 
-def make_dict(lexicon):
-    lex_dict = {}
+def open_lexicon(file_name):
+    lexicon = {}
+    path = '../lexicons/'
 
-    loc = './lexicons/' + lexicon
-
-    with open(loc, encoding='utf-8') as f:
+    with open((path+file_name), encoding='utf-8') as f:
         for line in f:
-            [key, value, skip] = line.split("\t")
-            lex_dict[key] = float(value)
+            word, score = line.split("\t")
+            lexicon[word] = float(score.strip())
 
-    return lex_dict
+    # format word score pos neg neu
 
-def find_in_dict(tokens, dict):
+    return lexicon
+
+def update_lexicon(df):
+    return
+
+def find_in_lexicon(tokens, lexicon):
     score = []
 
     for i in tokens:
-        if i in dict:
-            score.append(dict[i])
-        else:
-            score.append(0)
+        if i in lexicon:
+            score.append(lexicon[i])
+            continue
+        score.append(0)
 
     return score
 
-def calculate(text, lang, lexi_dict):
+def calculate(input, lang, lexicon):
     if lang == "EN":
-        [text, multiplier] = eng_process(text, 1)
+        tokens = []
     elif lang == "IS":
-        [text, multiplier] = isk_process(text, 1)
-    
-    indiv_scores = find_in_dict(text, lexi_dict)
-    product = np.multiply(multiplier, indiv_scores)
-    score = sum(product)
+        tokens = []
+
+    indiv_score = find_in_lexicon(tokens, lexicon)
+
+    score = 0
 
     if score > 0:
         return 'positive'
@@ -421,118 +497,22 @@ def calculate(text, lang, lexi_dict):
     else:
         return 'neutral'
 
-def label(df):
-    lexi_dict = make_dict('eng_lexicon.txt')
-    df_senti = df.apply(lambda x: calculate(x['answer_freetext_value'], "EN", lexi_dict), axis=1)
-    df['Sentiment'] = df_senti
+def label(df, lang):
+    if lang == "EN":
+        file_name = 'eng_lexicon.txt'
+    elif lang == "IS":
+        file_name = 'isk_lexicon.txt'
 
-    df.to_excel("guess.xlsx")
+    lexicon = open_lexicon(file_name)
+    df_sentiment = df.apply(lambda x: calculate(x['answer_freetext_value'], lang, lexicon), axis=1)
 
+    df['Sentiment'] = df_sentiment
 
-################################################################
-
-#TODO: MAKE IT SO THAT IT ONLY DIVIDES AT NEW LINE, BY EVERY PERIOD, AND AT NEGATING CONJUGATIONS
-def leave_text(df, lang):
-    """
-    clean function eliminates columns that are not needed, rows with no freetext or sentiment, lowercase and strips
-    trailing blank spaces in the sentiment column, and separates the sentiment into three boolean columns (pos, neg, neu)
-
-    : param df: panda dataframe
-
-    : return: panda dataframe with [id(int), freetext(String), Positive(bool), Negative(bool), Neutral(bool)]
-
-    input: panda_df
-    output: cleaned panda_df with (id, freetext, Sentiment)
-    """
-
-    header = list(df.columns)
-
-    # Leave only id, freetext, Sentiment column
-    to_leave = ['id', 'answer_freetext_value', 'Sentiment']
-
-    for h in header:
-        if h not in to_leave:
-            del df[h]
-
-    # Lowercase & Strip trailing blanks for sentiment
-    # Change sentiment column into list by spliting at non-word component
-    df['Sentiment'] = df['Sentiment'].str.lower().str.strip()
-    df['Sentiment'] = list(df['Sentiment'].str.split(r'\W+'))
-
-    # Drop all rows with either empty freetext or emtpy sentiment
-    df.dropna(subset = ['answer_freetext_value'], inplace=True)
-    df.dropna(subset = ['Sentiment'], inplace=True)
-
-    # Find all rows with multiple sentiments and store it to separate dataframe
-    df_temp = df.loc[(df['Sentiment']).str.len() > 1]
-    df.drop(df_temp.index, inplace=True)
-    df = df.explode(['Sentiment'])
-
-    #df_temp.to_excel("multi.xlsx")      # LINE TO DELETE
-
-    df_count = df_temp[['Sentiment', 'answer_freetext_value']].copy()   # Create a copy of the dataframe with multiple sentiments
-    df_count['answer_freetext_value'] = df_count['answer_freetext_value'].str.replace(r'\s*([Tt]hank [Yy]ou)\.*\s*','', regex=True)  # Replace all 'Thank you.' to blank space
-    df_count['answer_freetext_value'] = df_count['answer_freetext_value'].str.replace(r'\s*[Yy]es\.*\,*\s*','', regex=True)  # Replace all 'Yes.' to blank space
-
-    df_count['answer_freetext_value'] = df_count['answer_freetext_value'].str.replace(r'\s*[Tt]akk\.\s*','', regex=True)
-    df_count['answer_freetext_value'] = df_count['answer_freetext_value'].str.replace(r'\s*[Jj]á\.*\,*\s*','', regex=True)
-    
-    df_count['Sentiment'] = df_count['Sentiment'] # Count number of sentiments
-    df_count['New Line'] = df_count['answer_freetext_value'].str.split(r'\n+')    # Count number of sentences separated by new line
-
-    if lang == "IS":
-        negating_conjugation = isk_pattern
-    elif lang == "EN":
-        negating_conjugation = eng_pattern
-    
-    df_count['Negating'] = df_count['answer_freetext_value'].str.split(negating_conjugation)    # Count number of sentences separated by negating conjugations
-    # TODO: Investigate with \p{L} -> why is it not workiiinnnggggggg
-    df_count['Period'] = df_count['answer_freetext_value'].str.strip(r'\W+').str.split(r'(?<=[a-zA-ZÁáÐðÉéÍíÓóÚúÝýÞþÆæÖö])\.(?=\s*[a-zA-ZÁáÐðÉéÍíÓóÚúÝýÞþÆæÖö])') # Count number of sentences separated by period
-    #df_count['Word'] = df_count['answer_freetext_value'].str.split()  # Count number of words in the sentence
-    #df_count['Word'] = df_count['Word'].apply(lambda x: [' '.join(i.tolist()) for i in (np.array_split(np.array(x), 2))])
-    #df_count['Wordc'] = df_count.apply(lambda x: np.array(x['Word']))
-
-    df_count['Punct'] = df_count['answer_freetext_value'].str.split(r',|;') # Count number of sentences separated by comma or semicolon
-    df_count['Elim'] = df_temp['Sentiment'].apply(lambda x: [i[0] for i in groupby(x)])   # Remove consecutive duplicates in sentiment list
-
-    #TODO: Determine priority or if accuracy of program is high enough, train this portion with transformer?!?!
-    df_count.loc[(df_count['Sentiment'].str.len() == df_count['New Line'].str.len()), 'Type'] = 'New Line'
-    df_count.loc[(df_count['Sentiment'].str.len() == df_count['Negating'].str.len()) & (df_count['Type'].isnull()), 'Type'] = 'Negating'
-    df_count.loc[(df_count['Sentiment'].str.len() == df_count['Period'].str.len()) & (df_count['Type'].isnull()), 'Type'] = 'Period'
-
-    df_count.loc[(df_count['Elim'].str.len() == df_count['New Line'].str.len()), 'Type'] = 'New Line'
-    df_count.loc[(df_count['Elim'].str.len() == df_count['New Line'].str.len()), 'Sentiment'] = df_count['Elim']    # Replace sentiment label with duplicate removed list
-
-    df_count.loc[(df_count['Elim'].str.len() == df_count['Negating'].str.len()) & (df_count['Type'].isnull()), 'Sentiment'] = df_count['Elim']    # Replace sentiment label with duplicate removed list
-    df_count.loc[(df_count['Elim'].str.len() == df_count['Negating'].str.len()) & (df_count['Type'].isnull()), 'Type'] = 'Negating'
-    del df_count['Elim']
-
-    df_count.loc[(df_count['Period'].str.len() == 1) & (df_count['Sentiment'].str.len() == df_count['Punct'].str.len()) & (df_count['Type'].isnull()), 'Type'] = 'Punct'
-
-    df_temp['Sentiment'] = df_count['Sentiment']
-    df_temp.loc[(df_count['Type'] == 'New Line'), 'answer_freetext_value'] = df_count['New Line'][df_count['Type'] == 'New Line']
-    df_temp.loc[(df_count['Type'] == 'Negating'), 'answer_freetext_value'] = df_count['Negating'][df_count['Type'] == 'Negating']
-    df_temp.loc[(df_count['Type'] == 'Period'), 'answer_freetext_value'] = df_count['Period'][df_count['Type'] == 'Period']
-    df_temp.loc[(df_count['Type'] == 'Punct'), 'answer_freetext_value'] = df_count['Punct'][df_count['Type'] == 'Punct']
-    df_temp['Type'] = df_count['Type']
-    #df_temp.to_excel("multi_det.xlsx")      # LINE TO DELETE
-
-    df_temp.dropna(subset = ['Type'], inplace=True)
-    del df_temp['Type']
-
-    df_temp = df_temp.explode(['Sentiment', 'answer_freetext_value'])
-    #df_temp.to_excel("multi_explode.xlsx")       # LINE TO DELETE
-
-    df = pd.concat([df, df_temp], ignore_index=True, sort=False)
-
-    df.to_excel("truth.xlsx")
-
-    del df['Sentiment']
-    df.to_excel("test.xlsx")
+    df.to_excel("sentiment_labeled.txt")
 
     return df
 
-def accuracy(actual_file, test_file):
+def accuracy(df_truth, df_predict):
     """
     accuracy function displays the confusion matrix and calculates precision, recall, f1, f1 micro-average, f1 macro-average scores, and prints it in a tabular format
 
@@ -542,11 +522,9 @@ def accuracy(actual_file, test_file):
     : return: N/A
     """
     # Open the two files and convert Sentiment column to list
-    df_truth = pd.read_excel(actual_file)
     senti_truth = df_truth['Sentiment'].tolist()
     labels = np.unique(senti_truth)
 
-    df_predict = pd.read_excel(test_file)
     senti_predict = df_predict['Sentiment'].tolist()
 
     ##### TO BE DELETED
@@ -590,3 +568,28 @@ def accuracy(actual_file, test_file):
     # Print dataframe in tabular format
     print(tabulate(df_score, headers='keys', tablefmt='pretty'))
     print(tabulate(df_average, headers='keys', tablefmt='pretty'))
+
+def test_lexicon(df, lang):
+    df_truth = df.copy()
+    df_predict = df.copy()
+    del df_predict['Sentiment']
+
+    df_predict = label(df_predict, lang)
+    accuracy(df_truth, df_predict)
+
+def tuning(df_truth, lang):
+    if lang == "EN":
+        file_name = 'eng_lexicon.txt'
+    elif lang == "IS":
+        file_name = 'isk_lexicon.txt'
+
+    lexicon = open_lexicon(file_name)
+    
+
+
+    return 
+
+def tune_lexicon(df, lang):
+    df_truth = df.copy()
+
+    tuning(df_truth, lang)
