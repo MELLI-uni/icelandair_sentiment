@@ -38,10 +38,10 @@ import Rulebase
 
 ### GENERAL TESTING ###
 #text = "It would be better if your baggage allowance was clear on the ticket rather than having to go back in to check on the web via the ticket type."
-#text = "Very uncomfortable seats. Horrible experience"
+#text = "Horrible experience because of uncomfortable seats"
 #text = "I did not like the flight because the seats were uncomfortable"
-#text = "This was one of the nicest, efficient, and pleasant flight crew we ever have experienced."
+text = "This was one of the nicest, efficient, and pleasant flight crew we ever have experienced. Flight from KEF to JFK was smooth :)"
 #text = "very quiet flight attendants letting passengers relax"
-text = "intertainment"
-Rulebase.process_eng(text, 1)
+# text = "intertainment"
+Rulebase.filter_words(text, 1, "EN")
 #Rulebase.sample_isk()

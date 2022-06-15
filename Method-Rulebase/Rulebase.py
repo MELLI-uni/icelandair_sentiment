@@ -63,9 +63,8 @@ english_words = list(wn.words()) + words.words()
 eng_negating = r'\s[Bb]ut\.*,*\s|\s[Hh]owever\.*,*\s'
 isk_negating = r'\s[Ee]n\.*,*\s|\s[Nn]ema\.*,*\s'
 
-ADV_VAL = 1
-A_INC = ADV_VAL
-A_DEC = -ADV_VAL
+A_INC = 1
+A_DEC = -0.5
 
 ENG_ADV = {'a bit':A_DEC, 'adequately':A_DEC, 'almost':A_DEC, 'barely':A_DEC, 'fairly':A_DEC, 'hardly':A_DEC, 'just enough':A_DEC, 'kind of':A_DEC, 'kinda':A_DEC, 
             'kindof':A_DEC, 'kind-of':A_DEC, 'less':A_DEC, 'little':A_DEC, 'marginal':A_DEC, 'marginally':A_DEC, 'moderately':A_DEC, 'modest':A_DEC, 'nearly':A_DEC, 
@@ -210,6 +209,13 @@ def separate_multi(df, lang):
 
     return df
 
+def sentiment_to_val(df):
+    df.loc[df['Sentiment'] == 'positive', 'Sentiment'] = 1
+    df.loc[df['Sentiment'] == 'negative', 'Sentiment'] = -1
+    df.loc[df['Sentiment'] == 'neutral', 'Sentiment'] = 0
+
+    return df
+
 def train_dev_test_split(df):
     """
     train_dev_test_split function divides the dataframe into training set, development set, and testing set
@@ -279,8 +285,30 @@ def total_weight(num_levels, num_degree):
 
     return sum
 
-def weight_tokens():
-    return
+def weight_tokens(unique_tag_list, tag_list, mark_list):
+    tag_dict = {}
+
+    weight = 1
+    if "NOUN" in unique_tag_list:
+        tag_dict["NOUN"] = 0.5
+
+    if "VERB" in unique_tag_list:
+        tag_dict["VERB"] = weight
+        weight += 1
+
+    if "ADV" in unique_tag_list:
+        tag_dict["ADV"] = weight
+        weight += 1
+
+    if "ADJ" in unique_tag_list:
+        tag_dict["ADJ"] = weight
+        weight += 1
+
+    apply_weight = map(lambda tag: tag_dict[tag], tag_list)
+    weight_list = list(apply_weight)
+    weight_list = np.add(weight_list, mark_list)
+
+    return weight_list
 
 def process_eng(input, sentiment):
     doc = eng_spacy(input)
@@ -291,6 +319,8 @@ def process_eng(input, sentiment):
 
     token_score = sentiment
     auxiliary = []
+    mark_down = 0
+    mark_list = []
     negate = False
     comp_neg = False
 
@@ -301,6 +331,9 @@ def process_eng(input, sentiment):
         # if token.text not in english_words:
         #     continue
 
+        if token.text in flight_list:
+            continue
+
         if token.pos_ == 'AUX':
             auxiliary.append(True)
             continue
@@ -308,15 +341,27 @@ def process_eng(input, sentiment):
         if len(auxiliary) == 1:
             auxiliary = []
 
+        # TODO: Find a way to indicate that this is for the following adj
+        if token.lemma_ in ENG_ADV and token.pos_ == 'ADV':
+            score_deg += ENG_ADV[token.lemma_]
+            flag_deg = True
+            continue
+
         if len(auxiliary) >= 2:
             if(token.pos_ == 'ADJ'):
                 auxiliary = []
                 text.append(token.lemma_)
-                polarity.append(-token_score)
                 tag.append(token.pos_)
+                mark_list.append(mark_down)
+                if flag_deg == True:
+                    polarity.append(-token_score + score_deg)
+                    flag_deg = False
+                else:
+                    polarity.append(-token_score)
                 comp_neg = True
             continue
 
+        # TODO: double check this portion
         if token.dep_ == 'cc':
             comp_neg = False
             continue
@@ -330,20 +375,20 @@ def process_eng(input, sentiment):
 
         if negate == True:
             text.append(token.lemma_)
-            polarity.append(-token_score)
             tag.append(token.pos_)
+            mark_list.append(mark_down)
+            if flag_deg == True:
+                polarity.append(-token_score + score_deg)
+                flag_deg = False
+            else:
+                polarity.append(-token_score)
             negate = False
             continue
 
         if token.dep_ == 'mark':
+            mark_down -= 0.25
             if comp_neg == True:
                 token_score = -token_score
-            continue
-
-        # TODO: Find a way to indicate that this is for the following adj
-        if token.lemma_ in ENG_ADV and token.pos_ == 'ADV':
-            score_deg += ENG_ADV[token.lemma_]
-            flag_deg = True
             continue
 
         if token.pos_ == r'[\.\?!]':
@@ -360,19 +405,23 @@ def process_eng(input, sentiment):
             continue
 
         text.append(token.lemma_)
-        polarity.append(token_score)
+        mark_list.append(mark_down)
+        if flag_deg == True:
+            polarity.append(token_score + score_deg)
+            flag_deg = False
+        else:
+            polarity.append(token_score)
         tag.append(token.pos_)
-        #print(token.text, token.lemma_, token.tag_, token.pos_, token.dep_, token_score)
 
     list_tag = Counter(tag).keys()
-    weights = (np.abs(sentiment) * len(text)) / total_weight(len(list_tag), score_deg)
+
+    weight = weight_tokens(list_tag, tag, mark_list)
 
     print(text)
     print(polarity)
-    print(tag)
-    print(weights)
+    print(weight)
 
-    return input
+    return [text, polarity, weight]
 
 def sample_isk():
     my_text = "Ég hataði flugið vegna þess að flugvélin var svo heit"
@@ -439,35 +488,80 @@ def convert_emoji_emoti(input):
 
     return converted_input
 
-def filter_words(tokens, lang):
+def filter_words(input, sentiment, lang):
     """
-    filter_words function replaces all airport related information from the given list of tokens
-    It also replaces all information that seems like plane names or reference numbers
-    Then the function calls the processing function based on the language, which would provide additional cleaning onto the tokens
+    filter_words function calls all other functions relative to processing the input text
     
     : param tokens: list of tokens that requires filtering or certain words
     : param lang: language of the given list of tokens
 
-    : return: cleaned up token
+    : return: cleaned up token, polarity, weight lists
     """
-    
-    return tokens
+
+    input = convert_emoji_emoti(input)
+
+    if lang == "EN":
+        text, polarity, weight = process_eng(input, sentiment)
+    elif lang == "IS":
+        print("Icelandic")
+        # text, polarity, weight = process_isk(input, sentiment)
+
+    return text, polarity, weight
 
 def open_lexicon(file_name):
     lexicon = {}
+    tuning = {}
     path = '../lexicons/'
 
     with open((path+file_name), encoding='utf-8') as f:
         for line in f:
-            word, score = line.split("\t")
-            lexicon[word] = float(score.strip())
+            word, mean, scores = line.split("\t")
+            lexicon[word] = float(mean.strip())
+            tuning[word] = [int(x) for x in scores.strip('\n[]').split(', ')]
 
-    # format word score pos neg neu
+    f.close()
 
-    return lexicon
+    return lexicon, tuning
 
-def update_lexicon(df):
-    return
+def update_lexicon(df, lang):
+    path = '../lexicons/'
+
+    if lang == "EN":
+        file_name = 'eng_lexicon.txt'
+    elif lang == 'IS':
+        file_name = 'isk_lexicon.txt'
+
+    lexicon, tuning = open_lexicon(file_name)
+
+    f = open(path+file_name, 'w', encoding='utf-8')
+
+    for row in df.itertuples(index=False):
+        new_word = row.answer_freetext_value
+        new_score = row.Sentiment
+
+        if new_word in tuning:
+            tuning[new_word].append(new_score)
+        else:
+            tuning[new_word] = [new_score]
+
+    for key, value in tuning.items():
+        f.write(key + "\t" + str(sum(value) / len(value)) + "\t" + str(value) + "\n")
+
+    f.close()
+
+def train(df, lang):
+    df = sentiment_to_val(df)
+    df = df.apply(lambda x: filter_words(x['answer_freetext_value'], x['Sentiment']), axis=1, result_type='expand')
+
+    df.columns = ['answer_freetext_value', 'Sentiment', 'Weight']
+    del df['Weight']
+
+    df = df.explode(['answer_freetext_value', 'Sentiment'], ignore_index=True)
+
+    df.dropna(subset = ['answer_freetext_value'], inplace=True)
+    df.dropna(subset = ['Sentiment'], inplace=True)
+
+    update_lexicon(df, lang)
 
 def find_in_lexicon(tokens, lexicon):
     score = []
@@ -503,7 +597,7 @@ def label(df, lang):
     elif lang == "IS":
         file_name = 'isk_lexicon.txt'
 
-    lexicon = open_lexicon(file_name)
+    lexicon, skip = open_lexicon(file_name)
     df_sentiment = df.apply(lambda x: calculate(x['answer_freetext_value'], lang, lexicon), axis=1)
 
     df['Sentiment'] = df_sentiment
@@ -583,9 +677,11 @@ def tuning(df_truth, lang):
     elif lang == "IS":
         file_name = 'isk_lexicon.txt'
 
-    lexicon = open_lexicon(file_name)
-    
+    lexicon, tuning = open_lexicon(file_name)
 
+    tokens = []
+
+    indiv_score = find_in_lexicon(tokens, lexicon)
 
     return 
 
