@@ -1,14 +1,37 @@
 # Reference: https://huggingface.co/blog/sentiment-analysis-python
 # Reference: https://huggingface.co/docs/transformers/model_doc/roberta
+# Reference: https://huggingface.co/siebert/sentiment-roberta-large-english
+# Reference: https://colab.research.google.com/github/DhavalTaunk08/NLP_scripts/blob/master/sentiment_analysis_using_roberta.ipynb
 
 import xlwings as xws
 import string
+import numpy as np
+import pandas as pd
 
+from sklearn.model_selection import train_test_split
 from sklearn.metrics import f1_score
 from sklearn.metrics import precision_score
 from sklearn.metrics import recall_score
 from sklearn.metrics import roc_auc_score
+import seaborn as sns
 from tabulate import tabulate
+
+import torch
+from torch.utils.data import Dataset, DataLoader
+import transformers
+from transformers import RobertaModel, RobertaTokenizer
+
+from torch import cuda
+device = 'cuda' if cuda.is_available() else 'cpu'
+
+MAX_LEN = 256
+TRAIN_BATCH_SIZE = 8
+VALID_BATCH_SIZE = 4
+EPOCHS = 1
+LEARNING_RATE = 1e-05
+CATEGORIES = ['Positive', 'Negative', 'Neutral']
+
+tokenizer = RobertaTokenizer.from_pretrained('roberta-base', truncation=True, do_lower_case=True)
 
 def init(file_name, sheet_name, lang):
     """
@@ -96,3 +119,37 @@ def display(scores, f1s):
     # Print dataframe in tabular format
     print(tabulate(df_score, headers='keys', tablefmt='pretty'))
     print(tabulate(df_average, headers='keys', tablefmt='pretty'))
+
+class SentimentData(Dataset):
+    def __init__(self, dataframe, tokenizer, max_len):
+        self.tokenizer = tokenizer
+        self.data = dataframe
+        self.text = dataframe.Phrase
+        self.targets = self.data.Sentiment
+        self.max_len = max_len
+
+    def __len__(self):
+        return len(self.text)
+
+    def __getitem__(self, index):
+        text = str(self.text[index])
+        text = " ".join(text.split())
+
+        inputs = self.tokenizer.encode_plus(
+            text,
+            None,
+            add_special_tokens=True,
+            max_length=self.max_len,
+            pad_to_max_length=True,
+            return_token_type_ids=True
+        )
+        ids = inputs['input_ids']
+        mask = inputs['attention_mask']
+        token_type_ids = inputs['token_type_ids']
+
+        return {
+            'ids': torch.tensor(ids, dtype=torch.long),
+            'mask': torch.tensor(mask, dtype=torch.long),
+            'token_type_ids': torch.tensor(token_type_ids, dtype=torch.long),
+            'targets': torch.tensor(self.targets[index], dtype=torch.float)
+        }
