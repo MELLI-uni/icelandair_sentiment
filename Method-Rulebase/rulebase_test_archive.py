@@ -105,7 +105,7 @@ df.to_excel("temp.xlsx")
 #text = "I hated the flight because the plane was so hot"
 #text = "I would love to fly with you again"
 #text = "training is needed for the staff"
-#text = "This was one of the nicest efficient and pleasant flight crew we ever have experienced."
+#text = "This was one of the nicest, efficient, and pleasant flight crew we ever have experienced."
 
 # [tokens, score] = clean(text, -1)
 # print(degree_adv)

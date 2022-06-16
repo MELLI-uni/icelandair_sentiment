@@ -327,29 +327,6 @@ def cleaning(input, senti):
         elif token.dep_ == 'cc':
             comp_neg = False
 
-        elif token.dep_ == 'mark' and comp_neg == True:
-            label = -label
-
-        elif token.pos_ == 'AUX':
-            auxiliary.append(True)
-            continue
-
-        elif len(auxiliary) >= 2:
-            if(token.pos_ == 'ADJ'):
-                auxiliary = []
-                tokens.append(token.lemma_)
-                score.append(-label)
-                comp_neg = True
-                continue
-
-        elif token.dep_ == 'neg':
-            negate = True
-            continue
-
-        elif token.pos_ == 'ADV' and token.dep_ == 'advmod':
-            degree = token.lemma_
-            continue
-
         elif token.pos_ == 'ADJ':
             tokens.append(token.lemma_)
             if negate == True:

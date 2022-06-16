@@ -84,20 +84,12 @@ doc = nlp(term)
 for token in doc:
     print(token.lemma_)
 
-def lemmatize_isk(input):
-    token_list = []
-    job = isk_greynir.submit(input)
+from spellchecker import SpellChecker
 
-    for sent in job:
-        sent.parse()
-        if sent.tree is None:
-            for t in sent.tokens:
-                token_list.append(t.txt)
-        else:
-            token_list.extend(sent.lemmas)
+spell = SpellChecker()
 
-    return " ".join([token for token in token_list if token not in string.punctuation])
-
-word = "óþægilegt"
-
-print(lemmatize_isk(word))
+word = 'intertainment'
+if word not in whitelist:
+    print(spell.correction(word))
+else:
+    print(word)

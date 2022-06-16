@@ -1,4 +1,5 @@
 import Rulebase
+import pandas as pd
 
 ###ENGLISH###
 # eng_data1 = '../Data/NLP_English_JAN2022_OPEN.xlsx'
@@ -12,6 +13,27 @@ import Rulebase
 # df_eng = Rulebase.separate_multi(df_eng, "EN")
 
 # df_eng_train, df_eng_dev, df_eng_test = Rulebase.train_dev_test_split(df_eng)
+# df_eng_train, df_eng_test = Rulebase.train_n_test_split(df_eng)
+# df_eng_train.to_pickle('./train8.pkl')
+# df_eng_test.to_pickle('./test2.pkl')
+
+# Save for testing purpose
+# df_eng_train.to_pickle('./train.pkl')
+# df_eng_dev.to_pickle('./dev.pkl')
+# df_eng_test.to_pickle('./test.pkl')
+
+# df_eng_train = pd.read_pickle('./train.pkl')
+# df_eng_dev = pd.read_pickle('./dev.pkl')
+# df_eng_test = pd.read_pickle('./test.pkl')
+
+df_eng_train = pd.read_pickle('./train8.pkl')
+df_eng_test = pd.read_pickle('./test2.pkl')
+
+# Rulebase.train(df_eng_train, "EN")
+# Rulebase.train(df_eng_dev, "EN")
+# Rulebase.train(df_eng_test, "EN")
+Rulebase.tune_lexicon(df_eng_test, "EN")
+#Rulebase.test_lexicon(df_eng_test, "EN")
 
 # Rulebase.update_lexicon(df_eng_train)
 # Rulebase.tune_lexicon(df_eng_dev)
@@ -40,8 +62,8 @@ import Rulebase
 #text = "It would be better if your baggage allowance was clear on the ticket rather than having to go back in to check on the web via the ticket type."
 #text = "Horrible experience because of uncomfortable seats"
 #text = "I did not like the flight because the seats were uncomfortable"
-text = "This was one of the nicest, efficient, and pleasant flight crew we ever have experienced. Flight from KEF to JFK was smooth :)"
+#text = "This was one of the nicest, efficient, and pleasant flight crew we ever have experienced. Flight from KEF to JFK was smooth :)"
 #text = "very quiet flight attendants letting passengers relax"
 # text = "intertainment"
-Rulebase.filter_words(text, 1, "EN")
+# Rulebase.filter_words(text, 1, "EN")
 #Rulebase.sample_isk()
