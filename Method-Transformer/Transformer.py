@@ -5,10 +5,15 @@
 
 import xlwings as xws
 import string
+
 import numpy as np
 import pandas as pd
+pd.set_option('mode.chained_assignment', None)
 
+import matplotlib
+import matplotlib.pyplot as plt
 from sklearn.model_selection import train_test_split
+
 from sklearn.metrics import f1_score
 from sklearn.metrics import precision_score
 from sklearn.metrics import recall_score
@@ -67,12 +72,23 @@ def init(file_name, sheet_name, lang):
     df.dropna(subset = ['answer_freetext_value'], inplace=True)
     df.dropna(subset = ['Sentiment'], inplace=True)
 
+    # Change it to be -1, 0, 1
     pos = df['Sentiment'].str.contains('positive', regex=False).astype(int)
     neg = df['Sentiment'].str.contains('negative', regex=False).astype(int)
     neu = df['Sentiment'].str.contains('neutral', regex=False).astype(int)
 
     df['Positive'], df['Negative'], df['Neutral'] = [pos, neg, neu]
     del df['Sentiment']
+
+    return df
+
+def combine_df(df1, df2):
+    """
+    combine_df function concatenates two dataframe into one larger dataframe
+    : param df1, df2: dataframes to be concatenated
+    : return: concatenated dataframe
+    """
+    df = pd.concat([df1, df2], ignore_index=True)
 
     return df
 
