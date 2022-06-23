@@ -107,16 +107,14 @@ def update_destination():
     soup = BeautifulSoup(data.text, 'lxml')
     table = soup.find('table', class_='airports_table__2dArS')
 
-    # collecting data
     for row in table.tbody.find_all('tr'):
         for airport_column in row.find_all('td', attrs={'data-label': 'Flugvöllur:'}):
             temp = "temp"
 
-            # find the name of airport and append variants of airport name to airport list
             name_column = airport_column.find_all('a')
             for i in name_column:
-                if str(i.text) not in airport:
-                    airport.append(str(i.text))
+                if re.sub(r" upplýsingar", "", i.text) not in airport:
+                    airport.append(re.sub(r" upplýsingar", "", str(i.text)))
                     if "Airport" in i.text:
                         temp = re.split("Airport", i.text)[0].strip()
                         airport.append(temp)
@@ -130,8 +128,9 @@ def update_destination():
                 if(str(i.text) != temp) and (str(i.text) not in airport):
                     airport.append(str(i.text))
 
-    flight_city_file = "./lexicons/destination.txt"
-    with open(flight_city_file, 'w', encoding='utf-8') as f:
+    path = "../lexicons/"
+    flight_city_file = "destination.txt"
+    with open(path+flight_city_file, 'w', encoding='utf-8') as f:
         # Write the last updated date/time in datetime format
         timestamp = time.time()
         dt = datetime.fromtimestamp(timestamp)

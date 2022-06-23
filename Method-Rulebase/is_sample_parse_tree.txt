@@ -1,0 +1,256 @@
+    
+
+S0: Að ALLT starfsfólk á Keflavíkurflugvelli kunni eitthvað í íslensku!
++-S-PREFIX
+  +-C
+    +-st: 'Að'
++-S-MAIN
+  +-IP
+    +-NP-SUBJ
+      +-fn_et_nf_hk: 'ALLT'
+      +-no_et_nf_hk: 'starfsfólk'
+      +-PP
+        +-P
+          +-fs_þgf: 'á'
+        +-NP
+          +-no_et_þgf_kk: 'Keflavíkurflugvelli'
+    +-VP
+      +-VP
+        +-so_1_þf_et_p3: 'kunni'
+      +-NP-OBJ
+        +-fn_et_þf_hk: 'eitthvað'
+        +-PP
+          +-P
+            +-fs_þf: 'í'
+          +-NP
+            +-no_et_þf_kvk: 'íslensku'
++-'!'
+
+S0: Það eru ekki allir enskumælandi sem eru að ferðast!
++-S-MAIN
+  +-IP
+    +-NP-SUBJ
+      +-fn_nf_et_hk: 'Það'
+    +-VP
+      +-VP
+        +-so_1_nf_ft_p3: 'eru'
+      +-NP-PRD
+        +-eo: 'ekki'
+        +-fn_ft_nf_kk: 'allir'
+        +-lo_nf_ft_kk: 'enskumælandi'
+        +-CP-REL
+          +-C
+            +-stt: 'sem'
+          +-IP
+            +-VP
+              +-VP
+                +-so_0_ft_p3: 'eru'
+              +-IP-INF
+                +-TO
+                  +-nhm: 'að'
+                +-VP
+                  +-so_0_nh: 'ferðast'
++-'!'
+
+S0: Eða að t.d. innritunarborð séu merkt að framan þar sem eru eingöngu töluð enska.
++-S-PREFIX
+  +-C
+    +-st: 'Eða'
++-S-MAIN
+  +-IP
+    +-ADVP
+      +-ao: 'að' (STOPWORD)
+    +-ADVP
+      +-eo: 't.d.' (def: e.g.)
+      +-no_et_þf_hk: 'innritunarborð' (def: check in table, noun, singular, accusative?)
+    +-VP
+      +-VP
+        +-so_0_ft_p3: 'séu' (def: be, verb)
+      +-NP-SUBJ
+        +-lo_sb_ft_nf_hk: 'merkt' (def: marked, adjective)
+      +-ADVP
+        +-ao: 'að framan' (def: in front, adverb)
+      +-ADVP
+        +-ao: 'þar' (def: there, adverb)
+        +-CP-REL
+          +-C
+            +-stt: 'sem' (def: which, preposition)
+          +-IP
+            +-VP
+              +-VP
+                +-so_1_nf_ft_p3: 'eru' (def: are, verb, nominative)
+              +-NP-PRD
+                +-eo: 'eingöngu' (def: only, adverb)
+                +-lo_nf_et_kvk: 'töluð' (def: speaking, adjective, nominative)
+                +-no_et_nf_kvk: 'enska' (def: english, noun, nominative)
++-'.'
+
+S0: Verður að vera íslensku mælandi lika! 
++-S-MAIN
+  +-IP
+    +-VP
+      +-VP
+        +-so_1_þgf_subj_op_þgf: 'Verður'
+      +-IP-INF-SUBJ
+        +-TO
+          +-nhm: 'að'
+        +-VP
+          +-so_0_nh: 'vera'
+      +-NP-OBJ
+        +-no_et_þgf_kvk: 'íslensku'
+      +-VP
+        +-so_0_lh_nt: 'mælandi'
+      +-ADVP
+        +-ao: 'líka'
++-'!'
+
+S0: Það er reyndar verra með eingöngu enskumælandi starfsfólk við komu til Kef.
++-S-MAIN
+  +-IP
+    +-NP-SUBJ
+      +-pfn_hk_et_nf: 'Það'
+    +-VP
+      +-VP-AUX
+        +-so_et_p3: 'er'
+      +-NP-PRD
+        +-eo: 'reyndar'
+        +-lo_mst_nf_et_hk: 'verra'
+      +-PP
+        +-P
+          +-fs_þf: 'með'
+        +-NP
+          +-eo: 'eingöngu'
+          +-lo_þf_et_hk: 'enskumælandi'
+          +-no_et_þf_hk: 'starfsfólk'
+          +-PP
+            +-P
+              +-fs_þf: 'við'
+            +-NP
+              +-no_et_þf_kvk: 'komu'
+      +-PP
+        +-P
+          +-fs_ef: 'til'
+        +-NP
+          +-no_et_ef_kvk: 'Kef.'
+
+S0
++-S-MAIN
+  +-IP
+    +-VP
+      +-VP
+        +-so_1_þgf_subj_op_þgf: 'Verður'
+      +-IP-INF-SUBJ
+        +-TO
+          +-nhm: 'að'
+        +-VP
+          +-so_0_nh: 'vera'
+      +-NP-OBJ
+        +-no_et_þgf_kvk: 'íslensku'
+      +-VP
+        +-so_0_lh_nt: 'mælandi'
+      +-ADVP
+        +-ao: 'líka'
++-'!'
+
+S0: Ábending.
++-S-HEADING
+  +-NP
+    +-no_et_nf_kvk: 'Ábending'
+  +-'.'
+
+S0: Annars allt gott!
++-S-HEADING
+  +-NP
+    +-NP-POSS
+      +-fn_et_ef_hk: 'Annars'
+    +-fn_et_nf_hk: 'allt'
+    +-no_et_nf_hk: 'gott'
+  +-'!'
+
+
+
+
+------------------------------------------
+
+Mikið væri gott að fá betra kaffi espresso! er það alls ekki hægt?
+
+
+No Parse Available: Mikið væri gott að fá betra kaffi (espresso!)
+
+S0: er það alls ekki hægt?
++-S-QUE
+  +-IP
+    +-VP
+      +-VP
+        +-so_et_p3: 'Er'
+      +-NP-SUBJ
+        +-pfn_hk_et_nf: 'það'
+      +-NP-PRD
+        +-eo: 'alls ekki'
+        +-lo_sb_nf_et_hk: 'hægt'
+  +-'?'
+
+S0: Mikið væri gott að fá betra kaffi
++-S-MAIN
+  +-IP
+    +-NP-SUBJ
+      +-lo_sb_et_hk_nf: 'Mikið'
+    +-VP
+      +-VP-AUX
+        +-so_et_p3: 'væri'
+      +-NP-PRD
+        +-lo_sb_nf_et_hk: 'gott'
+      +-IP-INF
+        +-TO
+          +-nhm: 'að'
+        +-VP
+          +-VP
+            +-so_1_þf_nh: 'fá'
+          +-NP-OBJ
+            +-lo_þf_et_hk: 'betra'
+            +-no_et_þf_hk: 'kaffi'
+
+S0: Mikið væri gott að fá betra kaffi espresso!
++-S-MAIN
+  +-IP
+    +-NP-SUBJ
+      +-lo_sb_et_hk_nf: 'Mikið'
+    +-VP
+      +-VP-AUX
+        +-so_et_p3: 'væri'
+      +-NP-PRD
+        +-lo_sb_nf_et_hk: 'gott'
+      +-IP-INF
+        +-TO
+          +-nhm: 'að'
+        +-VP
+          +-VP
+            +-so_1_þf_nh: 'fá'
+          +-NP-OBJ
+            +-lo_þf_et_hk: 'betra'
+            +-no_et_þf_hk: 'kaffi'
+            +-NP-POSS
+              +-no_et_ef_hk: 'espresso'
++-'!'
+
+
+
+------------------------------------
+S0
++-S-MAIN
+  +-IP
+    +-NP-SUBJ
+      +-pfn_et_þgf: 'Mér'
+    +-VP-AUX
+      +-so_gm_vh_p3_et: 'þætti'
+    +-NP-PRD
+      +-lo_sb_nf_et_hk: 'gott'
+    +-IP-INF
+      +-TO
+        +-nhm: 'að'
+      +-VP
+        +-VP
+          +-so_1_þf_nh: 'hafa'
+        +-NP-OBJ
+          +-lo_þf_et_hk: 'meira'
+          +-no_et_þf_hk: 'pláss'
