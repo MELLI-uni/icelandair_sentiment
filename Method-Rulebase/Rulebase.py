@@ -588,6 +588,8 @@ def temp(input, sentiment):
 
         print(level, " ", line)
     
+    # commit
+
     print(text)
         # line, num = re.subn(r'\+-', "", branch)
         # result, level = re.subn(r'\s\s', "", line)
