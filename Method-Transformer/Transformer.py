@@ -1,5 +1,6 @@
 import xlwings as xws
 import string
+import pandas as pd
 
 from sklearn.metrics import f1_score
 from sklearn.metrics import precision_score
@@ -49,6 +50,32 @@ def init(file_name, sheet_name, lang):
     del df['Sentiment']
 
     return df
+
+def init_tuning(file_name, sheet_name):
+    wb = xws.Book(file_name)
+    sheet = wb.sheets[sheet_name].used_range
+
+    df = sheet.options(pd.DataFrame, index=False, header=True).value
+
+    header = list(df.columns)
+
+    # Leave only id, freetext, Sentiment column
+    to_leave = ['id', 'answer_freetext_value']
+
+    for h in header:
+        if h not in to_leave:
+            del df[h]
+
+    # Drop all rows with either empty freetext or empty sentiment
+    df.dropna(subset = ['answer_freetext_value'], inplace=True)
+
+    return df
+    
+def combine_df (df1, df2):
+    df = pd.concat([df1, df2], ignore_index=True)
+
+    return df
+
 
 def accuracy(df_actual, df_prediction):
     """
