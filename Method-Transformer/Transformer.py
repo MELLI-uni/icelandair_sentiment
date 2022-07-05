@@ -253,6 +253,39 @@ class RobertaClass(torch.nn.Module):
 
         return output
 
+def tuning(tokenizer, model, tune_file, save_path):
+    dataset = LineByLineTextDataset(
+        tokenizer=tokenizer,
+        file_path=tune_file,
+        block_size=512,
+    )
+
+    data_collator = DataCollatorForLanguageModeling(
+        tokenizer=tokenizer,
+        mlm=True,
+        mlm_probability=0.15,
+    )
+
+    training_args = TrainingArguments(
+        output_dir=save_path,
+        overwrite_output_dir=True,
+        num_train_epochs=25,
+        per_device_train_batch_size=48,
+        save_steps=500,
+        save_total_limits=2,
+        seed=1,
+    )
+
+    trainer = Trainer(
+        model=model,
+        args=training_args,
+        data_collator=data_collator,
+        train_dataset=dataset
+    )
+
+    trainer.train()
+    trainer.save_model(save_path)
+
 def train(model, training_loader, epoch, loss_function, optimizer):
     tr_loss = 0
     n_correct = 0
@@ -344,39 +377,6 @@ def valid(model, testing_loader, loss_function):
     
     return scores, f1s
 
-def tuning(tokenizer, model, tune_file, save_path):
-    dataset = LineByLineTextDataset(
-        tokenizer=tokenizer,
-        file_path=tune_file,
-        block_size=512,
-    )
-
-    data_collator = DataCollatorForLanguageModeling(
-        tokenizer=tokenizer,
-        mlm=True,
-        mlm_probability=0.15,
-    )
-
-    training_args = TrainingArguments(
-        output_dir=save_path,
-        overwrite_output_dir=True,
-        num_train_epochs=25,
-        per_device_train_batch_size=48,
-        save_steps=500,
-        save_total_limits=2,
-        seed=1,
-    )
-
-    trainer = Trainer(
-        model=model,
-        args=training_args,
-        data_collator=data_collator,
-        train_dataset=dataset
-    )
-
-    trainer.train()
-    trainer.save_model(save_path)
-
 def test_vanilla_basic(df, lang):
     df_train, df_test = train_test_split(df, test_size=0.2, shuffle=True)
 
@@ -445,15 +445,18 @@ def test_vanilla_5fold(df, lang):
     print("VANILLA MODEL for", lang.upper())
     display(scores_total/num_split, f1s_total/num_split)
 
-def test_tuned_basic(df, df_tuning, lang):
+def test_tuned_basic(df, tuning_file, lang):
     df_train, df_test = train_test_split(df, test_size=0.2, shuffle=True)
 
     if lang == "EN":
-        tuned_model = RobertaClass('roberta-base')
+        model = RobertaModel.from_pretrained('roberta-base')
         tokenizer = RobertaTokenizer.from_pretrained('roberta-base', truncation=True, do_lower_case=True, max_length = MAX_LEN)
+        tuning(tokenizer, model, tuning_file, './roberta-base-retrained')
+        tuned_model = RobertaClass('./roberta-base-retrained')
+
     elif lang == "IS":
-        tuned_model = RobertaClass('mideind/IceBERT')
         tokenizer = RobertaTokenizer.from_pretrained('mideind/IceBERT', truncation=True, do_lower_case=True, max_length = MAX_LEN)
+        tuned_model = RobertaClass('./IceBert-retrained')
     tuned_model.to(device)
 
     loss_function = torch.nn.CrossEntropyLoss()
