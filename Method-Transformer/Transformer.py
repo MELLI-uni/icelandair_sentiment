@@ -55,6 +55,8 @@ encoding_dict = {
 
 eng_tokenizer = RobertaTokenizer.from_pretrained('roberta-base', truncation=True, do_lower_case=True, max_length = MAX_LEN)
 isk_tokenizer = AutoTokenizer.from_pretrained('mideind/IceBERT', truncation=True, do_lower_case=True, max_length = MAX_LEN)
+tokenizer = AutoTokenizer.from_pretrained('xlm-roberta-base', truncation=True, do_lower_case=True, max_length = MAX_LEN)
+model = AutoModelForMaskedLM.from_pretrained('xlm-roberta-base')
 
 eng_stop = set(stopwords.words('english'))
 eng_spacy = spacy.load('en_core_web_sm')
@@ -85,24 +87,6 @@ def init(file_name, sheet_name, lang):
 
     return df
 
-def init_tuning(file_name, sheet_name):
-    wb = xws.Book(file_name)
-    sheet = wb.sheets[sheet_name].used_range
-
-    df = sheet.options(pd.DataFrame, index=False, headers=True).value
-
-    header = list(df.columns)
-
-    to_leave = ['answer_freetext_value']
-
-    for h in header:
-        if h not in to_leave:
-            del df[h]
-
-    df.dropna(subset = ['answer_freetext_value'], inplace=True)
-
-    return df
-
 def combine_df(df1, df2):
     df = pd.concat([df1, df2], ignore_index=True)
 
@@ -127,24 +111,6 @@ def separate_multi(df, lang):
     if lang == 'EN':
         negating_pattern = eng_negating
     elif lang == 'IS':
-        negating_pattern = isk_neagting
-
-    df_multi['ct_sep'] = (df_multi['answer_freetext_value']).str.split(negating_pattern).str.len()
-    df_multi.loc[(df_multi['ct_senti'] == df_multi['ct_sep']), 'answer_freetext_value'] = (df_multi['answer_freetext_value']).str.split(negating_pattern)
-    df_temp = df_multi.loc[(df_multi['ct_senti'] == df_multi['ct_sep'])]
-    df_sep = pd.concat([df_sep, df_temp], sort=False)
-    df_multi.drop(df_temp.index, inplace=True)
-    del df_multi['ct_sep']
-
-    df_multi['ct_sep'] = (df_multi['answer_freetext_value']).str.strip(r'[.!?]').str.split(r'[.!?]').str.len()
-    df_multi.loc[(df_multi['ct_senti'] == df_multi['ct_sep']), 'answer_freetext_value'] = (df_multi['answer_freetext_value']).str.strip(r'[.!?]').str.split(r'[.!?]')
-    df_temp = df_multi.loc[(df_multi['ct_senti'] == df_multi['ct_sep'])]
-    df_sep = pd.concat([df_sep, df_temp], sort=False)
-    df_multi.drop(df_temp.index, inplace=True)
-    del df_multi['ct_sep']
-
-    df_multi['ct_sep'] = (df_multi['answer_freetext_value']).str.split(r'[,;]').str.len()
-    df_multi.loc[(df_multi['ct_senti'] == df_multi['ct_sep']), 'answer_freetext_value'] = (df_multi['answer_freetext_value']).str.split(r'[.;]')
     df_temp = df_multi.loc[(df_multi['ct_senti'] == df_multi['ct_sep'])]
     df_sep = pd.concat([df_sep, df_temp], sort=False)
     df_multi.drop(df_temp.index, inplace=True)
@@ -158,45 +124,11 @@ def separate_multi(df, lang):
 
     return df
 
-def remove_stopword(data, stopwords):
-    filtered_words = []
-    doc = eng_spacy(data)
-    #words = word_tokenize(data)
-
-    # Only stopword version
-    #for w in words:
-    #    if w not in stopwords:
-    #        filtered_words.append(w)
-
-    # Lemmatizing version
-    for token in doc:
-        if token.lemma_ not in stopwords:
-            filtered_words.append(token.text)
-
-    return " ".join([words for words in filtered_words])
-
-def data_processing(df, lang):
-    if lang == "EN":
-        stopwords = eng_stop
-    elif lang == "IS":
-        stopwords = isk_stop
-
-    df['answer_freetext_value'] = df['answer_freetext_value'].apply(lambda x: remove_stopword(x, stopwords))
-
-    return df
-
 def sentiment_mapping(df):
     df['Sentiment'] = df.Sentiment.map(encoding_dict)
 
     # Line will be deleted later
     del df['id']
-
-    return df
-
-def identify_lang(df):
-    df_lang = df['answer_freetext_value'].apply(lambda x: (cld3.get_language(x)).language)
-   
-    df['Lang'] = df_lang
 
     return df
 
@@ -642,3 +574,48 @@ def test_tuned(df, lang):
     #model_to_save = tuned_model
     #torch.save(model_to_save, output_model_file)
     #tokenizer.save_vocabulary(output_vocab_file)
+import xlwings as xws
+import regex as re
+import string
+
+import numpy as np
+import pandas as pd
+import seaborn as sns
+
+import matplotlib
+import matplotlib.pyplot as plt
+
+from sklearn.model_selection import train_test_split
+from sklearn.model_selection import KFold
+from sklearn.metrics import f1_score
+from sklearn.metrics import precision_score
+from sklearn.metrics import recall_score
+from tabulate import tabulate
+from tqdm import tqdm
+
+import torch
+from torch import cuda
+from torch.utils.data import Dataset, DataLoader
+
+import transformers
+from transformers import RobertaModel, RobertaTokenizer, RobertaForSequenceClassification
+from transformers import AutoTokenizer, AutoModelForMaskedLM
+from transformers import logging
+
+import nltk
+from nltk.tokenize import word_tokenize
+from nltk.corpus import stopwords
+
+import spacy
+
+import cld3
+
+device = 'cuda' if cuda.is_available() else 'cpu'
+
+logging.set_verbosity_warning()
+logging.set_verbosity_error()
+
+MAX_LEN = 512
+TRAIN_BATCH_SIZE = 8
+TEST_BATCH_SIZE = 4
+
