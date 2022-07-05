@@ -12,13 +12,15 @@ import pandas as pd
 
 df_eng = pd.read_pickle('../Data/eng_total.pkl')
 tuning_eng = pd.read_pickle('../Data/Tuning/tuning_eng.pkl')
+tuning_file = '../Data/Tuning/tuning_eng.txt'
+tuning_eng.to_csv(tuning_file, header=None, index=None, sep=' ', mode='w')
 
 df_eng = Transformer.separate_multi(df_eng, "EN")
 df_eng = Transformer.sentiment_mapping(df_eng)
 
 #Transformer.test_vanilla_basic(df_eng, "EN")
 #Transformer.test_vanilla_5fold(df_eng, "EN")
-Transformer.test_tuned_basic(df_eng, "EN")
+Transformer.test_tuned_basic(df_eng, tuning_file, "EN")
 #Transformer.test_tuned_5fold(df_eng, "EN")
 
 df_isk = pd.read_pickle('../Data/isk_total.pkl')

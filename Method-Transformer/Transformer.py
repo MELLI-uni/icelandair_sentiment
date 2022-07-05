@@ -272,7 +272,7 @@ def tuning(tokenizer, model, tune_file, save_path):
         num_train_epochs=25,
         per_device_train_batch_size=48,
         save_steps=500,
-        save_total_limits=2,
+        save_total_limit=2,
         seed=1,
     )
 
@@ -444,6 +444,11 @@ def test_vanilla_5fold(df, lang):
 
     print("VANILLA MODEL for", lang.upper())
     display(scores_total/num_split, f1s_total/num_split)
+
+def tune_model(tuning_file, lang):
+    if lang == "EN":
+        model = RobertaModel.from_pretrained('roberta-base')
+        tokenizer = RobertaTokenizer.from_pretrained('')
 
 def test_tuned_basic(df, tuning_file, lang):
     df_train, df_test = train_test_split(df, test_size=0.2, shuffle=True)
