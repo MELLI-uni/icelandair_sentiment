@@ -1,4 +1,3 @@
-from wsgiref.simple_server import WSGIRequestHandler
 import Transformer
 import Roberta
 import pandas as pd
@@ -18,8 +17,12 @@ df_eng = pd.read_pickle('../Data/eng_total.pkl')
 tuning_eng = pd.read_pickle('../Data/Tuning/tuning_eng.pkl')
 
 df_eng = Transformer.sentiment_mapping(df_eng) 
+
+print("Before: ", df_eng.shape)
+df_eng = Transformer.separate_multi(df_eng)
+print("After: ", df_eng.shape)
 #df_eng = Transformer.data_processing(df_eng, "EN")
-print(df_eng)
+#print(df_eng)
 
 df_isk = pd.read_pickle('../Data/isk_total.pkl')
 tuning_isk = pd.read_pickle('../Data/Tuning/tuning_isk.pkl')

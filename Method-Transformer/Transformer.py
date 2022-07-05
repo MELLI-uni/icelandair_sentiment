@@ -22,9 +22,12 @@ from torch import cuda
 from torch.utils.data import Dataset, DataLoader
 
 import transformers
-from transformers import RobertaModel, RobertaTokenizer, RobertaForSequenceClassification
+from transformers import RobertaModel, RobertaTokenizer, RobertaForMaskedLM, RobertaForSequenceClassification
 from transformers import AutoTokenizer, AutoModelForMaskedLM
 from transformers import logging
+from transformers import DataCollatorForLanguageModeling
+from transformers import LineByLineTextDataset
+from transformers import Trainer, TrainingArguments
 
 import nltk
 from nltk.tokenize import word_tokenize
@@ -601,48 +604,11 @@ def test_tuned(df, lang):
     #model_to_save = tuned_model
     #torch.save(model_to_save, output_model_file)
     #tokenizer.save_vocabulary(output_vocab_file)
-import xlwings as xws
-import regex as re
-import string
 
-import numpy as np
-import pandas as pd
-import seaborn as sns
+def retrain():
+    tokenizer = eng_tokenizer
+    model = RobertaforMaskedLM.from_pretrained('roberta-base')
 
-import matplotlib
-import matplotlib.pyplot as plt
-
-from sklearn.model_selection import train_test_split
-from sklearn.model_selection import KFold
-from sklearn.metrics import f1_score
-from sklearn.metrics import precision_score
-from sklearn.metrics import recall_score
-from tabulate import tabulate
-from tqdm import tqdm
-
-import torch
-from torch import cuda
-from torch.utils.data import Dataset, DataLoader
-
-import transformers
-from transformers import RobertaModel, RobertaTokenizer, RobertaForSequenceClassification
-from transformers import AutoTokenizer, AutoModelForMaskedLM
-from transformers import logging
-
-import nltk
-from nltk.tokenize import word_tokenize
-from nltk.corpus import stopwords
-
-import spacy
-
-import cld3
-
-device = 'cuda' if cuda.is_available() else 'cpu'
-
-logging.set_verbosity_warning()
-logging.set_verbosity_error()
-
-MAX_LEN = 512
-TRAIN_BATCH_SIZE = 8
-TEST_BATCH_SIZE = 4
-
+    dataset = LineByLineTextDataset(
+            tokenizer=tokenizer,
+            file_path='tmp/tweeteval/datasets/hate/train_text.')
