@@ -18,7 +18,7 @@ df_eng = Transformer.sentiment_mapping(df_eng)
 
 #Transformer.test_vanilla_basic(df_eng, "EN")
 #Transformer.test_vanilla_5fold(df_eng, "EN")
-#Transformer.test_tuned_basic(df_eng, "EN")
+Transformer.test_tuned_basic(df_eng, "EN")
 #Transformer.test_tuned_5fold(df_eng, "EN")
 
 df_isk = pd.read_pickle('../Data/isk_total.pkl')
@@ -27,4 +27,5 @@ tuning_isk = pd.read_pickle('../Data/Tuning/tuning_isk.pkl')
 #df_isk = Transformer.separate_multi(df_isk, "IS")
 df_isk = Transformer.sentiment_mapping(df_isk)
 
-Transformer.test_vanilla_basic(df_isk, "IS")
+#Transformer.test_vanilla_basic(df_isk, "IS")
+#Transformer.test_vanilla_5fold(df_isk, "IS")
