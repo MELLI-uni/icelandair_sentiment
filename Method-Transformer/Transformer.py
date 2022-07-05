@@ -4,8 +4,9 @@ import string
 
 import numpy as np
 import pandas as pd
-import seaborn as sns
+pd.set_option('mode.chained_assignment', None)
 
+import seaborn as sns
 import matplotlib
 import matplotlib.pyplot as plt
 
@@ -26,8 +27,6 @@ from transformers import RobertaTokenizer, RobertaModel
 from transformers import LineByLineTextDataset
 from transformers import DataCollatorForLanguageModeling
 from transformers import Trainer, TrainingArguments
-from transformers import RobertaForSequenceClassification
-from transformers import AutoTokenizer, AutoModelForMaskedLM
 from transformers import logging
 
 device = 'cuda' if cuda.is_available() else 'cpu'
@@ -398,7 +397,7 @@ def tuning(tokenizer, model, tune_file, save_path):
     trainer.train()
     trainer.save_model(save_path)
 
-def test_tuned_basic(df, lang):
+def test_vanilla_basic(df, lang):
     df_train, df_test = train_test_split(df, test_size=0.2, shuffle=True)
 
     if lang == "EN":
@@ -407,7 +406,6 @@ def test_tuned_basic(df, lang):
     elif lang == "IS":
         tuned_model = IceBertClass()
         tokenizer = RobertaTokenizer.from_pretrained('mideind/IceBERT', truncation=True, do_lower_case=True, max_length = MAX_LEN)
-        print(lang)
     tuned_model.to(device)
 
     loss_function = torch.nn.CrossEntropyLoss()

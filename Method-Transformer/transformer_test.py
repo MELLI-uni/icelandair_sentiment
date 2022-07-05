@@ -1,5 +1,4 @@
 import Transformer
-import Roberta
 import pandas as pd
 
 #eng_data1 = './Data/NLP_English_JAN2022_OPEN.xlsx'
@@ -11,29 +10,21 @@ import pandas as pd
 #df_eng2 = Transformer.init(eng_data2, eng_sheet2, "EN")
 #df_eng = Transformer.combine_df(df_eng1, df_eng2)
 
-#Transformer.test_vanilla(df_eng)
-
 df_eng = pd.read_pickle('../Data/eng_total.pkl')
 tuning_eng = pd.read_pickle('../Data/Tuning/tuning_eng.pkl')
 
-print("Before: ", df_eng.shape)
 df_eng = Transformer.separate_multi(df_eng, "EN")
-print("After: ", df_eng.shape)
-
 df_eng = Transformer.sentiment_mapping(df_eng)
-#df_eng = Transformer.data_processing(df_eng, "EN")
-#print(df_eng)
+
+#Transformer.test_vanilla_basic(df_eng, "EN")
+#Transformer.test_vanilla_5fold(df_eng, "EN")
+#Transformer.test_tuned_basic(df_eng, "EN")
+#Transformer.test_tuned_5fold(df_eng, "EN")
 
 df_isk = pd.read_pickle('../Data/isk_total.pkl')
 tuning_isk = pd.read_pickle('../Data/Tuning/tuning_isk.pkl')
 
+#df_isk = Transformer.separate_multi(df_isk, "IS")
 df_isk = Transformer.sentiment_mapping(df_isk)
-#df_isk = Transformer.data_processing(df_isk, "IS")
 
-#Transformer.test_vanilla(df_eng, "EN")
-Transformer.test_tuned_basic(df_eng, "EN")
-#Transformer.dev_lex(df_eng)
-#Transformer.test_tuned(df_eng, "EN")
-#Transformer.test_vanilla(df_isk, "IS")
-#Transformer.test_tuned_basic(df_isk, "IS")
-#Transformer.test_tuned(df_isk, "IS")
+Transformer.test_vanilla_basic(df_isk, "IS")
