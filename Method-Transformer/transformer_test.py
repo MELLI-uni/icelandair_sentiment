@@ -20,6 +20,8 @@ df_eng = Transformer.sentiment_mapping(df_eng)
 
 #Transformer.test_vanilla_basic(df_eng, "EN")
 #Transformer.test_vanilla_5fold(df_eng, "EN")
+
+Transformer.tune_model(tuning_file, "EN")
 Transformer.test_tuned_basic(df_eng, tuning_file, "EN")
 #Transformer.test_tuned_5fold(df_eng, "EN")
 

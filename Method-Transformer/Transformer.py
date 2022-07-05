@@ -448,20 +448,23 @@ def test_vanilla_5fold(df, lang):
 def tune_model(tuning_file, lang):
     if lang == "EN":
         model = RobertaModel.from_pretrained('roberta-base')
-        tokenizer = RobertaTokenizer.from_pretrained('')
+        tokenizer = RobertaTokenizer.from_pretrained('roberta-base', truncation=True, do_lower_case=True, max_length = MAX_LEN)
+        tuning(tokenizer, model, tuning_file, './roberta-base-retrained')
+    elif lang == "IS":
+        model = RobertaModel.from_pretrained('mideind/IceBERT')
+        tokenizer = RobertaTokenizer.from_pretrained('mideind/IceBERT', truncation=True, do_lower_case=True, max_length = MAX_LEN)
+        tuning(tokenizer, model, tuning_file, './IceBert-retrained')
 
 def test_tuned_basic(df, tuning_file, lang):
     df_train, df_test = train_test_split(df, test_size=0.2, shuffle=True)
 
     if lang == "EN":
-        model = RobertaModel.from_pretrained('roberta-base')
-        tokenizer = RobertaTokenizer.from_pretrained('roberta-base', truncation=True, do_lower_case=True, max_length = MAX_LEN)
-        tuning(tokenizer, model, tuning_file, './roberta-base-retrained')
         tuned_model = RobertaClass('./roberta-base-retrained')
+        tokenizer = RobertaTokenizer.from_pretrained('roberta-base', truncation=True, do_lower_case=True, max_length = MAX_LEN)
 
     elif lang == "IS":
-        tokenizer = RobertaTokenizer.from_pretrained('mideind/IceBERT', truncation=True, do_lower_case=True, max_length = MAX_LEN)
         tuned_model = RobertaClass('./IceBert-retrained')
+        tokenizer = RobertaTokenizer.from_pretrained('mideind/IceBERT', truncation=True, do_lower_case=True, max_length = MAX_LEN)
     tuned_model.to(device)
 
     loss_function = torch.nn.CrossEntropyLoss()
