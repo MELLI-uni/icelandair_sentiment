@@ -258,30 +258,30 @@ def tuning(tokenizer, model, tune_file, save_path):
         tokenizer=tokenizer,
         file_path=tune_file,
         block_size=512,
-    )
+        )
 
     data_collator = DataCollatorForLanguageModeling(
-        tokenizer=tokenizer,
-        mlm=True,
-        mlm_probability=0.15,
-    )
+            tokenizer=tokenizer,
+            mlm=True,
+            mlm_probability=0.15,
+            )
 
     training_args = TrainingArguments(
-        output_dir=save_path,
-        overwrite_output_dir=True,
-        num_train_epochs=25,
-        per_device_train_batch_size=48,
-        save_steps=500,
-        save_total_limit=2,
-        seed=1,
-    )
+            output_dir=save_path,
+            overwrite_output_dir=True,
+            num_train_epochs=25,
+            per_device_train_batch_size=48,
+            save_steps=500,
+            save_total_limit=2,
+            seed=1,
+            )
 
     trainer = Trainer(
-        model=model,
-        args=training_args,
-        data_collator=data_collator,
-        train_dataset=dataset
-    )
+            model=model,
+            args=training_args,
+            data_collator=data_collator,
+            train_dataset=dataset
+            )
 
     trainer.train()
     trainer.save_model(save_path)
