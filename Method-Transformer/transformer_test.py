@@ -16,11 +16,11 @@ import pandas as pd
 df_eng = pd.read_pickle('../Data/eng_total.pkl')
 tuning_eng = pd.read_pickle('../Data/Tuning/tuning_eng.pkl')
 
-df_eng = Transformer.sentiment_mapping(df_eng) 
-
 print("Before: ", df_eng.shape)
-df_eng = Transformer.separate_multi(df_eng)
+df_eng = Transformer.separate_multi(df_eng, "EN")
 print("After: ", df_eng.shape)
+
+df_eng = Transformer.sentiment_mapping(df_eng)
 #df_eng = Transformer.data_processing(df_eng, "EN")
 #print(df_eng)
 
@@ -31,7 +31,7 @@ df_isk = Transformer.sentiment_mapping(df_isk)
 #df_isk = Transformer.data_processing(df_isk, "IS")
 
 #Transformer.test_vanilla(df_eng, "EN")
-#Transformer.test_tuned_basic(df_eng, "EN")
+Transformer.test_tuned_basic(df_eng, "EN")
 #Transformer.dev_lex(df_eng)
 #Transformer.test_tuned(df_eng, "EN")
 #Transformer.test_vanilla(df_isk, "IS")

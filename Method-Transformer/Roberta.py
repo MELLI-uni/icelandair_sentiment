@@ -1,27 +1,11 @@
-import pandas as pd
-
-import torch
-from torch import cuda
-from torch.utils.data import Dataset, DataLoader
-
-from transformers import RobertaTokenizer, RobertaModel
+from transformers import pipeline
+from transformers import RobertaTokenizer, RobertaForMaskedLM
 from transformers import LineByLineTextDataset
 from transformers import DataCollatorForLanguageModeling
 from transformers import Trainer, TrainingArguments
-from transformers import logging
 
-device = 'cuda' if cuda.is_available() else 'cpu'
-
-logging.set_verbosity_warning()
-logging.set_verbosity_error()
-
-# Load model and tokenizer
-model = RobertaModel.from_pretrained('roberta-base')
 tokenizer = RobertaTokenizer.from_pretrained('roberta-base')
-
-df = pd.read_pickle('../Data/Tuning/tuning_eng.pkl')
-df.to_csv('train_text.txt', header=None, index=None, sep=' ', mode='w')
-#print(df)
+model = RobertaForMaskedLM.from_pretrained('roberta-base')
 
 dataset = LineByLineTextDataset(
         tokenizer=tokenizer,
@@ -49,8 +33,16 @@ trainer = Trainer(
         model=model,
         args=training_args,
         data_collator=data_collator,
-        train_dataset=dataset,
+        train_dataset=dataset
         )
 
-trainer.train()
-trainer.save_model('./roberta-retrained')
+#trainer.train()
+#trainer.save_model("./roberta-retrained")
+
+fill_mask = pipeline(
+        "fill-mask",
+        model="./roberta-retrained",
+        tokenizer="roberta-base",
+        )
+
+print(fill_mask("Send these <mask> back!"))

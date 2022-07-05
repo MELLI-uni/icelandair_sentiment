@@ -343,7 +343,7 @@ def valid(model, testing_loader, loss_function):
 
     scores, f1s = accuracy(actual, predicted)
     
-    return scores, f1s, actual
+    return scores, f1s
 
 
 def tuning(tokenizer, model, tune_file, save_path):
