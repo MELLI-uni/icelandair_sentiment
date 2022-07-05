@@ -235,9 +235,9 @@ def calculate_accuracy(preds, targets):
     return n_correct
 
 class RobertaClass(torch.nn.Module):
-    def __init__(self):
+    def __init__(self, model_name):
         super(RobertaClass, self).__init__()
-        self.l1 = RobertaModel.from_pretrained('roberta-base')
+        self.l1 = RobertaModel.from_pretrained(model_name)
         self.pre_classifier = torch.nn.Linear(768, 768)
         self.dropout = torch.nn.Dropout(0.3)
         self.classifier = torch.nn.Linear(768, 3)
@@ -363,7 +363,6 @@ def valid(model, testing_loader, loss_function):
     
     return scores, f1s
 
-
 def tuning(tokenizer, model, tune_file, save_path):
     dataset = LineByLineTextDataset(
         tokenizer=tokenizer,
@@ -401,23 +400,23 @@ def test_vanilla_basic(df, lang):
     df_train, df_test = train_test_split(df, test_size=0.2, shuffle=True)
 
     if lang == "EN":
-        tuned_model = RobertaClass()
+        vanilla_model = RobertaClass('roberta-base')
         tokenizer = RobertaTokenizer.from_pretrained('roberta-base', truncation=True, do_lower_case=True, max_length = MAX_LEN)
     elif lang == "IS":
-        tuned_model = IceBertClass()
+        vanilla_model = IceBertClass()
         tokenizer = RobertaTokenizer.from_pretrained('mideind/IceBERT', truncation=True, do_lower_case=True, max_length = MAX_LEN)
-    tuned_model.to(device)
+    vanilla_model.to(device)
 
     loss_function = torch.nn.CrossEntropyLoss()
-    optimizer = torch.optim.Adam(params=tuned_model.parameters(), lr=LEARNING_RATE)
+    optimizer = torch.optim.Adam(params=vanilla_model.parameters(), lr=LEARNING_RATE)
 
     training_loader, testing_loader = data_loading(df_train, df_test, tokenizer)
 
     EPOCHS = 1
     for epoch in range(EPOCHS):
-        train(tuned_model, training_loader, epoch, loss_function, optimizer)
+        train(vanilla_model, training_loader, epoch, loss_function, optimizer)
 
-    scores, f1s = valid(tuned_model, testing_loader, loss_function)
+    scores, f1s = valid(vanilla_model, testing_loader, loss_function)
 
     display(scores, f1s)
 
@@ -437,16 +436,16 @@ def test_vanilla_5fold(df, lang):
 
         # Tuned roBERTa model initilization
         if lang == "EN":
-            tuned_model = RobertaClass()
+            vanilla_model = RobertaClass()
             tokenizer = RobertaTokenizer.from_pretrained('roberta-base', truncation=True, do_lower_case=True, max_length = MAX_LEN)
         elif lang == "IS":
-            tuned_model = IceBertClass()
+            vanilla_model = IceBertClass()
             tokenizer = RobertaTokenizer.from_pretrained('mideind/IceBERT', truncation=True, do_lower_case=True, max_length = MAX_LEN)
-        tuned_model.to(device)
+        vanilla_model.to(device)
 
         # Create optimizer
         loss_function = torch.nn.CrossEntropyLoss()
-        optimizer = torch.optim.Adam(params = tuned_model.parameters(), lr=LEARNING_RATE)
+        optimizer = torch.optim.Adam(params = vanilla_model.parameters(), lr=LEARNING_RATE)
 
         # Load data
         training_loader, testing_loader = data_loading(df_train, df_test, tokenizer)
@@ -454,13 +453,37 @@ def test_vanilla_5fold(df, lang):
         # Train model
         EPOCHS = 1
         for epoch in range(EPOCHS):
-            train(tuned_model, training_loader, epoch, loss_function, optimizer)
+            train(vanilla_model, training_loader, epoch, loss_function, optimizer)
 
         # Validate model
-        scores, f1s = valid(tuned_model, testing_loader, loss_function)
+        scores, f1s = valid(vanilla_model, testing_loader, loss_function)
 
         scores_total = np.add(scores_total, scores)
         f1s_total = np.add(f1s_total, f1s)
 
     print("VANILLA MODEL for", lang.upper())
     display(scores_total/num_split, f1s_total/num_split)
+
+def test_tuned_basic(df, df_tuning, lang):
+    df_train, df_test = train_test_split(df, test_size=0.2, shuffle=True)
+
+    if lang == "EN":
+        tuned_model = RobertaClass()
+        tokenizer = RobertaTokenizer.from_pretrained('roberta-base', truncation=True, do_lower_case=True, max_length = MAX_LEN)
+    elif lang == "IS":
+        tuned_model = IceBertClass()
+        tokenizer = RobertaTokenizer.from_pretrained('mideind/IceBERT', truncation=True, do_lower_case=True, max_length = MAX_LEN)
+    tuned_model.to(device)
+
+    loss_function = torch.nn.CrossEntropyLoss()
+    optimizer = torch.optim.Adam(params=tuned_model.parameters(), lr=LEARNING_RATE)
+
+    training_loader, testing_loader = data_loading(df_train, df_test, tokenizer)
+
+    EPOCHS = 1
+    for epoch in range(EPOCHS):
+        train(tuned_model, training_loader, epoch, loss_function, optimizer)
+
+    scores, f1s = valid(tuned_model, testing_loader, loss_function)
+
+    display(scores, f1s)
