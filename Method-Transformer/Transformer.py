@@ -420,3 +420,47 @@ def test_vanilla_basic(df, lang):
     scores, f1s = valid(tuned_model, testing_loader, loss_function)
 
     display(scores, f1s)
+
+def test_vanilla_5fold(df, lang):
+    kf = KFold(n_splits=5, random_state=99, shuffle=True)
+    num_split = kf.get_n_splits(df)
+
+    scores_total = np.array([0, 0, 0])
+    f1s_total = np.array([0, 0])
+
+    # Create loss function
+    loss_function = torch.nn.CrossEntropyLoss()
+
+    for train_index, test_index in kf.split(df):
+        df_train = df.iloc[train_index]
+        df_test = df.iloc[test_index]
+
+        # Tuned roBERTa model initilization
+        if lang == "EN":
+            tuned_model = RobertaClass()
+            tokenizer = RobertaTokenizer.from_pretrained('roberta-base', truncation=True, do_lower_case=True, max_length = MAX_LEN)
+        elif lang == "IS":
+            tuned_model = IceBertClass()
+            tokenizer = RobertaTokenizer.from_pretrained('mideind/IceBERT', truncation=True, do_lower_case=True, max_length = MAX_LEN)
+        tuned_model.to(device)
+
+        # Create optimizer
+        loss_function = torch.nn.CrossEntropyLoss()
+        optimizer = torch.optim.Adam(params = tuned_model.parameters(), lr=LEARNING_RATE)
+
+        # Load data
+        training_loader, testing_loader = data_loading(df_train, df_test, tokenizer)
+
+        # Train model
+        EPOCHS = 1
+        for epoch in range(EPOCHS):
+            train(tuned_model, training_loader, epoch, loss_function, optimizer)
+
+        # Validate model
+        scores, f1s = valid(tuned_model, testing_loader, loss_function)
+
+        scores_total = np.add(scores_total, scores)
+        f1s_total = np.add(f1s_total, f1s)
+
+    print("VANILLA MODEL for", lang.upper())
+    display(scores_total/num_split, f1s_total/num_split)
