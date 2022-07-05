@@ -253,25 +253,6 @@ class RobertaClass(torch.nn.Module):
 
         return output
 
-class IceBertClass(torch.nn.Module):
-    def __init__(self):
-        super(IceBertClass, self).__init__()
-        self.l1 = RobertaModel.from_pretrained('mideind/IceBERT')
-        self.pre_classifier = torch.nn.Linear(768, 768)
-        self.dropout = torch.nn.Dropout(0.3)
-        self.classifier = torch.nn.Linear(768, 3)
-
-    def forward(self, input_ids, attention_mask, token_type_ids):
-        output_1 = self.l1(input_ids=input_ids, attention_mask=attention_mask, token_type_ids=token_type_ids)
-        hidden_state = output_1[0]
-        pooler = hidden_state[:, 0]
-        pooler = self.pre_classifier(pooler)
-        pooler = torch.nn.ReLU()(pooler)
-        pooler = self.dropout(pooler)
-        output = self.classifier(pooler)
-
-        return output
-
 def train(model, training_loader, epoch, loss_function, optimizer):
     tr_loss = 0
     n_correct = 0
@@ -403,7 +384,7 @@ def test_vanilla_basic(df, lang):
         vanilla_model = RobertaClass('roberta-base')
         tokenizer = RobertaTokenizer.from_pretrained('roberta-base', truncation=True, do_lower_case=True, max_length = MAX_LEN)
     elif lang == "IS":
-        vanilla_model = IceBertClass()
+        vanilla_model = RobertaClass('mideind/IceBERT')
         tokenizer = RobertaTokenizer.from_pretrained('mideind/IceBERT', truncation=True, do_lower_case=True, max_length = MAX_LEN)
     vanilla_model.to(device)
 
@@ -436,10 +417,10 @@ def test_vanilla_5fold(df, lang):
 
         # Tuned roBERTa model initilization
         if lang == "EN":
-            vanilla_model = RobertaClass()
+            vanilla_model = RobertaClass('roberta-base')
             tokenizer = RobertaTokenizer.from_pretrained('roberta-base', truncation=True, do_lower_case=True, max_length = MAX_LEN)
         elif lang == "IS":
-            vanilla_model = IceBertClass()
+            vanilla_model = RobertaClass('mideind/IceBERT')
             tokenizer = RobertaTokenizer.from_pretrained('mideind/IceBERT', truncation=True, do_lower_case=True, max_length = MAX_LEN)
         vanilla_model.to(device)
 
@@ -468,10 +449,10 @@ def test_tuned_basic(df, df_tuning, lang):
     df_train, df_test = train_test_split(df, test_size=0.2, shuffle=True)
 
     if lang == "EN":
-        tuned_model = RobertaClass()
+        tuned_model = RobertaClass('roberta-base')
         tokenizer = RobertaTokenizer.from_pretrained('roberta-base', truncation=True, do_lower_case=True, max_length = MAX_LEN)
     elif lang == "IS":
-        tuned_model = IceBertClass()
+        tuned_model = RobertaClass('mideind/IceBERT')
         tokenizer = RobertaTokenizer.from_pretrained('mideind/IceBERT', truncation=True, do_lower_case=True, max_length = MAX_LEN)
     tuned_model.to(device)
 
