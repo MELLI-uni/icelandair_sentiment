@@ -36,13 +36,13 @@ trainer = Trainer(
         train_dataset=dataset
         )
 
-#trainer.train()
-#trainer.save_model("./roberta-retrained")
+trainer.train()
+trainer.save_model("./roberta-retrained")
 
-fill_mask = pipeline(
-        "fill-mask",
-        model="./roberta-retrained",
-        tokenizer="roberta-base",
-        )
+#fill_mask = pipeline(
+#        "fill-mask",
+#        model="./roberta-retrained",
+#        tokenizer="roberta-base",
+#        )
 
-print(fill_mask("Send these <mask> back!"))
+#print(fill_mask("Send these <mask> back!"))

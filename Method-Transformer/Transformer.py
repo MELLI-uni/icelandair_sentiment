@@ -23,7 +23,7 @@ from torch import cuda
 from torch.utils.data import Dataset, DataLoader
 
 import transformers
-from transformers import RobertaTokenizer, RobertaModel
+from transformers import RobertaTokenizer, RobertaModel, RobertaForMaskedLM
 from transformers import LineByLineTextDataset
 from transformers import DataCollatorForLanguageModeling
 from transformers import Trainer, TrainingArguments
@@ -447,11 +447,11 @@ def test_vanilla_5fold(df, lang):
 
 def tune_model(tuning_file, lang):
     if lang == "EN":
-        model = RobertaModel.from_pretrained('roberta-base')
+        model = RobertaForMaskedLM.from_pretrained('roberta-base')
         tokenizer = RobertaTokenizer.from_pretrained('roberta-base', truncation=True, do_lower_case=True, max_length = MAX_LEN)
         tuning(tokenizer, model, tuning_file, './roberta-base-retrained')
     elif lang == "IS":
-        model = RobertaModel.from_pretrained('mideind/IceBERT')
+        model = RobertaForMaskedLM.from_pretrained('mideind/IceBERT')
         tokenizer = RobertaTokenizer.from_pretrained('mideind/IceBERT', truncation=True, do_lower_case=True, max_length = MAX_LEN)
         tuning(tokenizer, model, tuning_file, './IceBert-retrained')
 
