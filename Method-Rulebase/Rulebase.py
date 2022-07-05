@@ -861,16 +861,16 @@ def accuracy(df_truth, df_predict):
     senti_predict = df_predict['Sentiment'].tolist()
 
     # Generate confusion matrix
-    cf_matrix = confusion_matrix(senti_truth, senti_predict, labels=labels)
-    df_matrix = pd.DataFrame(cf_matrix, index=labels, columns=labels)
+    #cf_matrix = confusion_matrix(senti_truth, senti_predict, labels=labels)
+    #df_matrix = pd.DataFrame(cf_matrix, index=labels, columns=labels)
 
-    ax = sns.heatmap(df_matrix, annot=True, cmap='Blues', linecolor='white', cbar='True', xticklabels='auto', yticklabels='auto')
-    ax.set(title = "Confusion Matrix",
-            xlabel = "Predicted Sentiments",
-            ylabel = "Actual Sentiments")
-    sns.set(font_scale=0.7)
+    #ax = sns.heatmap(df_matrix, annot=True, cmap='Blues', linecolor='white', cbar='True', xticklabels='auto', yticklabels='auto')
+    #ax.set(title = "Confusion Matrix",
+    #        xlabel = "Predicted Sentiments",
+    #        ylabel = "Actual Sentiments")
+    #sns.set(font_scale=0.7)
 
-    plt.show()
+    #plt.show()
 
     # Calculate precision, recall, accuracy
     precision = precision_score(senti_truth, senti_predict, labels = labels, average = None)

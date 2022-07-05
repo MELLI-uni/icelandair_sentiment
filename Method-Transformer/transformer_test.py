@@ -14,21 +14,16 @@ import pandas as pd
 
 df_eng = pd.read_pickle('./Data/eng_total.pkl')
 df_eng = Transformer.sentiment_mapping(df_eng) 
+#df_eng = Transformer.data_processing(df_eng, "EN")
+
 df_isk = pd.read_pickle('./Data/isk_total.pkl')
 df_isk = Transformer.sentiment_mapping(df_isk)
-#print(df_isk.Sentiment.unique())
+#df_isk = Transformer.data_processing(df_isk, "IS")
 
-#print(df_isk)
-
-#print(df_eng.describe())
 #Transformer.test_vanilla(df_eng, "EN")
 #Transformer.test_tuned_basic(df_eng, "EN")
+#Transformer.dev_lex(df_eng)
 #Transformer.test_tuned(df_eng, "EN")
 #Transformer.test_vanilla(df_isk, "IS")
-Transformer.test_tuned(df_isk, "IS")
-
-#df_tuning = pd.read_pickle('./Data/tuning_total.pkl')
-
-#df_lang = Transformer.identify_lang(df_tuning)
-
-#print(df_lang)
+Transformer.test_tuned_basic(df_isk, "IS")
+#Transformer.test_tuned(df_isk, "IS")
