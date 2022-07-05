@@ -92,8 +92,17 @@ def combine_df(df1, df2):
 
     return df
 
-# Copy and paste from Rulebase later
 def separate_multi(df, lang):
+    """
+    separate_multi function separates rows of dataframe with multiple sentiments
+    Separation Rule:
+        1. if there is a new line, separate at new line
+        2. if there is a negating conjugation, separate at negating conjugation
+        3. if there is a period, separate at period
+        4. if there is a comma, separate at comma
+        else. delete row from dataframe
+    """
+
     df['Sentiment'] = list(df['Sentiment'].str.split(r'\W+'))
 
     df_multi = df.loc[(df['Sentiment']).str.len() > 1]
@@ -111,11 +120,29 @@ def separate_multi(df, lang):
     if lang == 'EN':
         negating_pattern = eng_negating
     elif lang == 'IS':
+        negating_pattern = isk_negating
+    
+    df_multi['ct_sep'] = (df_multi['answer_freetext_value']).str.split(negating_pattern).str.len()
+    df_multi.loc[(df_multi['ct_senti'] == df_multi['ct_sep']), 'answer_freetext_value'] = (df_multi['answer_freetext_value']).str.split(negating_pattern)
     df_temp = df_multi.loc[(df_multi['ct_senti'] == df_multi['ct_sep'])]
     df_sep = pd.concat([df_sep, df_temp], sort=False)
     df_multi.drop(df_temp.index, inplace=True)
     del df_multi['ct_sep']
 
+    df_multi['ct_sep'] = (df_multi['answer_freetext_value']).str.strip(r'[.!?]').str.split(r'[.!?]').str.len()
+    df_multi.loc[(df_multi['ct_senti'] == df_multi['ct_sep']), 'answer_freetext_value'] = (df_multi['answer_freetext_value']).str.strip(r'[.!?]').str.split(r'[.!?]')
+    df_temp = df_multi.loc[(df_multi['ct_senti'] == df_multi['ct_sep'])]
+    df_sep = pd.concat([df_sep, df_temp], sort=False)
+    df_multi.drop(df_temp.index, inplace=True)
+    del df_multi['ct_sep']
+
+    df_multi['ct_sep'] = (df_multi['answer_freetext_value']).str.split(r'[,;]').str.len()
+    df_multi.loc[(df_multi['ct_senti'] == df_multi['ct_sep']), 'answer_freetext_value'] = (df_multi['answer_freetext_value']).str.split(r'[,;]')
+    df_temp = df_multi.loc[(df_multi['ct_senti'] == df_multi['ct_sep'])]
+    df_sep = pd.concat([df_sep, df_temp], sort=False)
+    df_multi.drop(df_temp.index, inplace=True)
+    del df_multi['ct_sep']
+    
     del df_sep['ct_senti']
     del df_sep['ct_sep']
     df_sep = df_sep.explode(['Sentiment', 'answer_freetext_value'])
