@@ -22,15 +22,19 @@ from torch import cuda
 from torch.utils.data import Dataset, DataLoader
 
 import transformers
-from transformers import RobertaTokenizer, RobertaModel
-from transformers import LineByLineTextDataset
-from transformers import DataCollatorForLanguageModeling
-from transformers import Trainer, TrainingArguments
-from transformers import RobertaForSequenceClassification
+from transformers import RobertaModel, RobertaTokenizer, RobertaForSequenceClassification
 from transformers import AutoTokenizer, AutoModelForMaskedLM
 from transformers import logging
+from transformers import pipeline
+
+import nltk
+from nltk.tokenize import word_tokenize
+from nltk.corpus import stopwords
+
+import spacy
 
 device = 'cuda' if cuda.is_available() else 'cpu'
+
 logging.set_verbosity_warning()
 logging.set_verbosity_error()
 
@@ -47,6 +51,16 @@ encoding_dict = {
                 'negative':1,
                 'negativa':1
                 }
+
+eng_tokenizer = RobertaTokenizer.from_pretrained('roberta-base', truncation=True, do_lower_case=True, max_length = MAX_LEN)
+isk_tokenizer = AutoTokenizer.from_pretrained('mideind/IceBERT', truncation=True, do_lower_case=True, max_length = MAX_LEN)
+tokenizer = AutoTokenizer.from_pretrained('xlm-roberta-base', truncation=True, do_lower_case=True, max_length = MAX_LEN)
+model = AutoModelForMaskedLM.from_pretrained('xlm-roberta-base')
+
+eng_stop = set(stopwords.words('english'))
+eng_spacy = spacy.load('en_core_web_sm')
+
+isk_stop = []
 
 eng_negating = r'\s[Bb]ut\.*,*\s|\s[Hh]owever\.*,*\s'
 isk_negating = r'\s[Ee]n\.*,*\s|\s[Nn]ema\.*,*\s'
@@ -180,6 +194,40 @@ class SentimentData(Dataset):
                 'targets': torch.tensor(self.targets[index], dtype=torch.float)
         }
 
+class RawData(Dataset):
+    def __init__(self, dataframe, tokenizer, max_len):
+        self.tokenizer = tokenizer
+        self.data = dataframe
+        self.text = dataframe.answer_freetext_value
+        self.max_len = max_len
+
+    def __len__(self):
+        return len(self.text)
+
+    def __getitem__(self, index):
+        text = str(self.text[index])
+        text = " ".join(text.split())
+
+        inputs = self.tokenizer.encode_plus(
+                text,
+                None,
+                add_special_tokens=True,
+                truncation=True,
+                padding='max_length',
+                max_length=self.max_len,
+                return_token_type_ids=True
+        )
+
+        ids = inputs['input_ids']
+        mask = inputs['attention_mask']
+        token_type_ids = inputs['token_type_ids']
+
+        return {
+                'ids': torch.tensor(ids, dtype=torch.long),
+                'mask': torch.tensor(mask, dtype=torch.long),
+                'token_type_ids': torch.tensor(token_type_ids, dtype=torch.long)
+        }
+
 def data_loading(df_train, df_test, tokenizer):
     #test_size = 0.2
     #df_train, df_test = train_test_split(df, test_size=0.2, random_state=99)
@@ -208,6 +256,19 @@ def data_loading(df_train, df_test, tokenizer):
 
     return training_loader, testing_loader
 
+def general_loader(df, tokenizer):
+    df = df.reset_index(drop=True)
+    data_set = RawData(df, tokenizer, MAX_LEN)
+
+    data_params = {'batch_size': TEST_BATCH_SIZE,
+                    'shuffle': False,
+                    'num_workers': 0
+                    }
+
+    data_loader = DataLoader(data_set, **data_params)
+
+    return data_loader
+
 def accuracy(list_actual, list_prediction):
     actual = list_actual
     prediction = list_prediction
@@ -230,11 +291,6 @@ def display(scores, f1s):
     print(tabulate(df_score, headers='keys', tablefmt='pretty'))
     print(tabulate(df_average, headers='keys', tablefmt='pretty'))
 
-def calculate_accuracy(preds, targets):
-    n_correct = (preds==targets).sum().item()
-
-    return n_correct
-
 class RobertaClass(torch.nn.Module):
     def __init__(self):
         super(RobertaClass, self).__init__()
@@ -253,6 +309,30 @@ class RobertaClass(torch.nn.Module):
         output = self.classifier(pooler)
 
         return output
+
+class IceBertClass(torch.nn.Module):
+    def __init__(self):
+        super(IceBertClass, self).__init__()
+        self.l1 = AutoModelForMaskedLM.from_pretrained('mideind/IceBERT')
+        self.pre_classifier = torch.nn.Linear(768, 768)
+        self.dropout = torch.nn.Dropout(0.3)
+        self.classifier = torch.nn.Linear(768, 3)
+
+    def forward(self, input_ids, attention_mask, token_type_ids):
+        output_1 = self.l1(input_ids=input_ids, attention_mask=attention_mask, token_type_ids=token_type_ids)
+        hidden_state = output_1[0]
+        pooler = hidden_state[:, 0]
+        pooler = self.pre_classifier(pooler)
+        pooler = torch.nn.ReLU()(pooler)
+        pooler = self.dropout(pooler)
+        output = self.classifier(pooler)
+
+        return output
+
+def calculate_accuracy(preds, targets):
+    n_correct = (preds==targets).sum().item()
+
+    return n_correct
 
 def train(model, training_loader, epoch, loss_function, optimizer):
     tr_loss = 0
@@ -345,51 +425,115 @@ def valid(model, testing_loader, loss_function):
     
     return scores, f1s, actual
 
+def make_lexicon(model, data_loader):
+    #path = '../lexicons/'
 
-def tuning(tokenizer, model, tune_file, save_path):
-    dataset = LineByLineTextDataset(
-        tokenizer=tokenizer,
-        file_path=tune_file,
-        block_size=512,
-    )
+    #if lang == "EN":
+    #    file_name = 'eng_tlexicon.txt'
+    #elif lang == "IS":
+    #    file_name = 'isk_tlexicon.txt'
 
-    data_collator = DataCollatorForLanguageModeling(
-        tokenizer=tokenizer,
-        mlm=True,
-        mlm_probability=0.15,
-    )
+    model.eval()
 
-    training_args = TrainingArguments(
-        output_dir=save_path,
-        overwrite_output_dir=True,
-        num_train_epochs=25,
-        per_device_train_batch_size=48,
-        save_steps=500,
-        save_total_limits=2,
-        seed=1,
-    )
+    predicted = []
 
-    trainer = Trainer(
-        model=model,
-        args=training_args,
-        data_collator=data_collator,
-        train_dataset=dataset
-    )
+    with torch.no_grad():
+        for _, data in tqdm(enumerate(data_loader, 0)):
+            ids = data['ids'].to(device, dtype=torch.long)
+            mask = data['mask'].to(device, dtype=torch.long)
+            token_type_ids = data['token_type_ids'].to(device, dtype=torch.long)
+            
+            outputs = model(ids, mask, token_type_ids)
+            big_val, big_idx = torch.max(outputs.data, dim=1)
 
-    trainer.train()
-    trainer.save_model(save_path)
+            predicted.extend(big_idx.tolist())
+
+            print(outputs.data)
+
+    return predicted
+
+def test_vanilla(df, lang):
+    kf = KFold(n_splits=5, random_state=99, shuffle=True)
+    num_split = kf.get_n_splits(df)
+
+    scores_total = np.array([0, 0, 0])
+    f1s_total = np.array([0, 0])
+
+    for train_index, test_index in kf.split(df):
+        df_train = df.iloc[train_index]
+        df_test = df.iloc[test_index]
+
+    # Vanilla roBERTa model initialization
+    if lang == "EN":
+        vanilla_model = RobertaClass()
+        tokenizer = eng_tokenizer
+    elif lang == "IS":
+        vanilla_model = IceBertClass()
+        tokenizer = isk_tokenizer
+    vanilla_model.to(device)
+
+    # Create loss function
+    loss_function = torch.nn.CrossEntropyLoss()
+
+    for train_index, test_index in kf.split(df):
+        df_train = df.iloc[train_index]
+        df_test = df.iloc[test_index]
+
+        # Load data
+        training_loader, testing_loader = data_loading(df_train, df_test, tokenizer)
+
+        # Validate model
+        scores, f1s = valid(vanilla_model, testing_loader, loss_function)
+
+        scores_total = np.add(scores_total, scores)
+        f1s_total = np.add(f1s_total, f1s)
+
+    print("BASIC MODEL for", lang.upper())
+    display(scores_total/num_split, f1s_total/num_split)
+
+    # Save model
+    #output_model_file = 'pytorch_roberta_sentiment_vanilla.bin'
+    #output_vocab_file = './'
+
+    #model_to_save = vanilla_model
+    #torch.save(model_to_save, output_model_file)
+    #tokenizer.save_vocabulary(output_vocab_file)
+
+    #print("All files saved")
+
+def dev_lex(df):
+    df_train, df_test = train_test_split(df, test_size=0.2, shuffle=True)
+    df_test_raw = df_test.copy()
+    del df_test_raw['Sentiment']
+
+    tuned_model = RobertaClass()
+    tuned_model.to(device)
+
+    loss_function = torch.nn.CrossEntropyLoss()
+    optimizer = torch.optim.Adam(params=tuned_model.parameters(), lr=LEARNING_RATE)
+
+    tokenizer = eng_tokenizer
+
+    training_loader, testing_loader = data_loading(df_train, df_test, tokenizer)
+    data_loader = general_loader(df_test_raw, tokenizer)
+
+    EPOCHS = 1
+    for epoch in range(EPOCHS):
+        train(tuned_model, training_loader, epoch, loss_function, optimizer)
+
+    predicted = make_lexicon(tuned_model, data_loader)
+
+    display(score_tmp, f1_tmp)
 
 def test_tuned_basic(df, lang):
     df_train, df_test = train_test_split(df, test_size=0.2, shuffle=True)
-    eng_tokenizer = RobertaTokenizer.from_pretrained('roberta-base', truncation=True, do_lower_case=True, max_length = MAX_LEN)
 
     if lang == "EN":
         tuned_model = RobertaClass()
         tokenizer = eng_tokenizer
     elif lang == "IS":
-        #tuned_model = IceBertClass()
-        #tokenizer = isk_tokenizer
-        print(lang)
+        tuned_model = IceBertClass()
+        tokenizer = isk_tokenizer
     tuned_model.to(device)
 
     loss_function = torch.nn.CrossEntropyLoss()
@@ -404,3 +548,63 @@ def test_tuned_basic(df, lang):
     scores, f1s = valid(tuned_model, testing_loader, loss_function)
 
     display(scores, f1s)
+
+def test_tuned(df, lang):
+    kf = KFold(n_splits=5, random_state=99, shuffle=True)
+    num_split = kf.get_n_splits(df)
+
+    scores_total = np.array([0, 0, 0])
+    f1s_total = np.array([0, 0])
+
+    # Create loss function
+    loss_function = torch.nn.CrossEntropyLoss()
+
+    for train_index, test_index in kf.split(df):
+        df_train = df.iloc[train_index]
+        df_test = df.iloc[test_index]
+
+        # Tuned roBERTa model initilization
+        if lang == "EN":
+            tuned_model = RobertaClass()
+            tokenizer = eng_tokenizer
+        elif lang == "IS":
+            tuned_model = IceBertClass()
+            tokenizer = isk_tokenizer
+        tuned_model.to(device)
+
+        # Create optimizer
+        loss_function = torch.nn.CrossEntropyLoss()
+        optimizer = torch.optim.Adam(params = tuned_model.parameters(), lr=LEARNING_RATE)
+
+        # Load data
+        training_loader, testing_loader = data_loading(df_train, df_test, tokenizer)
+
+        # Train model
+        EPOCHS = 1
+        for epoch in range(EPOCHS):
+            train(tuned_model, training_loader, epoch, loss_function, optimizer)
+
+        # Validate model
+        scores, f1s = valid(tuned_model, testing_loader, loss_function)
+
+        scores_total = np.add(scores_total, scores)
+        f1s_total = np.add(f1s_total, f1s)
+
+    print("TUNED MODEL for", lang.upper())
+    display(scores_total/num_split, f1s_total/num_split)
+
+    # Save model
+    #output_model_file = './Models/pytorch_robert_sentiment_tuned.bin'
+    #output_vocab_file = './Models/'
+
+    #model_to_save = tuned_model
+    #torch.save(model_to_save, output_model_file)
+    #tokenizer.save_vocabulary(output_vocab_file)
+
+def check():
+    fill_mask = pipeline(
+        "fill-mask",
+        model="roberta-base",
+        tokenizer="roberta-base"
+    )
+    fill_mask("Send these <mask> back!")
