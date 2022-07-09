@@ -4,12 +4,12 @@ from transformers import LineByLineTextDataset
 from transformers import DataCollatorForLanguageModeling
 from transformers import Trainer, TrainingArguments
 
-tokenizer = RobertaTokenizer.from_pretrained('roberta-base')
-model = RobertaForMaskedLM.from_pretrained('./roberta-retrained')
+tokenizer = RobertaTokenizer.from_pretrained('mideind/IceBERT')
+model = RobertaForMaskedLM.from_pretrained('mideind/IceBERT')
 
 dataset = LineByLineTextDataset(
         tokenizer=tokenizer,
-        file_path='./tuning_eng25.txt',
+        file_path='./tuning_isk.txt',
         block_size=512,
         )
 
@@ -20,7 +20,7 @@ data_collator = DataCollatorForLanguageModeling(
         )
 
 training_args = TrainingArguments(
-        output_dir='./roberta-retrained',
+        output_dir='./icebert-retrained',
         overwrite_output_dir=True,
         num_train_epochs=25,
         per_device_train_batch_size=48,
@@ -37,7 +37,7 @@ trainer = Trainer(
         )
 
 trainer.train()
-trainer.save_model("./roberta-retrained")
+trainer.save_model("./icebert-retrained")
 
 #fill_mask = pipeline(
 #        "fill-mask",

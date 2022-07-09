@@ -1,4 +1,5 @@
 Data/
+Method-Transformer/ModelTuning/
 Method=WordTree/Models/
 *.sh
 *.log
