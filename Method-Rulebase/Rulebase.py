@@ -796,10 +796,10 @@ def find_in_lexicon(tokens, lexicon):
             score.append(lexicon[i])
             continue
         
-        # similar = find_similar(i, lexicon)
-        # if similar in lexicon:
-        #     score.append(lexicon[similar])
-        #     continue
+        similar = find_similar(i, lexicon)
+        if similar in lexicon:
+            score.append(lexicon[similar])
+            continue
         
         score.append(0)
 
