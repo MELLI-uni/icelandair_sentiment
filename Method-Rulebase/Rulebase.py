@@ -27,6 +27,9 @@ from gensim.parsing.preprocessing import STOPWORDS      # List of English Stopwo
 
 import spacy
 from spacy.lang.en import English
+
+import nltk
+nltk.download('words')
 from nltk.corpus import words
 from nltk.corpus import wordnet as wn
 from nltk.tokenize import word_tokenize
@@ -37,13 +40,13 @@ import gensim.downloader
 from reynir import Greynir
 from reynir_correct import check_single
 from reynir_correct import check
-from google_trans_new import google_translator
+#from google_trans_new import google_translator
 
 eng_spacy = spacy.load('en_core_web_sm')
 spell = SpellChecker()
 glove_vectors = gensim.downloader.load('glove-wiki-gigaword-50')
 isk_greynir = Greynir()
-translator = google_translator()       # Used to translate emoji and emoticon description to icelandic (lang code: 'is')
+#translator = google_translator()       # Used to translate emoji and emoticon description to icelandic (lang code: 'is')
 
 emoji_dict = {}
 with open('../lexicons/emoji.txt', encoding='utf-8') as f:
@@ -841,7 +844,7 @@ def label(df, lang):
 
     df['Sentiment'] = df_sentiment
 
-    df.to_excel("sentiment_labeled.xlsx")
+    #df.to_excel("sentiment_labeled.xlsx")
 
     return df
 
