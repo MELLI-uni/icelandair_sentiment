@@ -29,7 +29,7 @@ import spacy
 from spacy.lang.en import English
 
 import nltk
-nltk.download('words')
+#nltk.download('words')
 from nltk.corpus import words
 from nltk.corpus import wordnet as wn
 from nltk.tokenize import word_tokenize
