@@ -1,4 +1,3 @@
-from zlib import Z_NO_COMPRESSION
 import regex as re
 import xlwings as xws
 import string
@@ -29,7 +28,6 @@ import spacy
 from spacy.lang.en import English
 
 import nltk
-#nltk.download('words')
 from nltk.corpus import words
 from nltk.corpus import wordnet as wn
 from nltk.tokenize import word_tokenize
@@ -255,22 +253,6 @@ def sentiment_to_val(df):
 
     return df
 
-def train_dev_test_split(df):
-    """
-    train_dev_test_split function divides the dataframe into training set, development set, and testing set
-    composition ratio: 70% training, 20% dev, 10% testing
-
-    : param df: pandas dataframe that would be separated into three sets
-
-    : return: pandas dataframe divided into training, dev, and testing
-    """
-
-    df_train, df_others = train_test_split(df, test_size=0.3, shuffle=True)
-    df_dev, df_test = train_test_split(df_others, test_size=0.33, shuffle=True)
-
-    return df_train, df_dev, df_test
-
-### TO BE DELETED
 def train_n_test_split(df):
     """
     train_dev_test_split function divides the dataframe into training set, development set, and testing set
