@@ -70,4 +70,8 @@ import pandas as pd
 # Rulebase.train(df_isk_train, "IS")
 
 df_isk = pd.read_pickle('./isk_data.pkl')
-print(df_isk)
+df_train, df_test = Rulebase.train_n_test_split(df_isk)
+
+df_train.to_pickle('./isk_train.pkl')
+df_test.to_pickle('./isk_test.pkl')
+#print(df_isk)
