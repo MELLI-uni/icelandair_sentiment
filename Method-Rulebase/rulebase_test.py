@@ -44,17 +44,17 @@ import pandas as pd
 
 
 ###ICELANDIC###
-isk_data1 = '../Data/NLP_Icelandic_14FEB2022_YTD.xlsx'
-isk_sheet1 = 'Sheet1'
-isk_data2 = '../Data/NPS_freetext_MAY_2022_Icelandic_answers.xlsx'
-isk_sheet2 = 'Icelandic'
+#isk_data1 = '../Data/NLP_Icelandic_14FEB2022_YTD.xlsx'
+#isk_sheet1 = 'Sheet1'
+#isk_data2 = '../Data/NPS_freetext_MAY_2022_Icelandic_answers.xlsx'
+#isk_sheet2 = 'Icelandic'
 
-df_isk1 = Rulebase.init(isk_data1, isk_sheet1)
-df_isk2 = Rulebase.init(isk_data2, isk_sheet2)
-df_isk = Rulebase.combine_df(df_isk1, df_isk2)
-df_isk = Rulebase.separate_multi(df_isk, "IS")
+#df_isk1 = Rulebase.init(isk_data1, isk_sheet1)
+#df_isk2 = Rulebase.init(isk_data2, isk_sheet2)
+#df_isk = Rulebase.combine_df(df_isk1, df_isk2)
+#df_isk = Rulebase.separate_multi(df_isk, "IS")
 
-df_isk.to_pickle('./isk_data.pkl')
+#df_isk.to_pickle('./isk_data.pkl')
 
 # df_isk_train, df_isk_dev, df_isk_test = Rulebase.train_dev_test_split(df_isk)
 
@@ -69,3 +69,5 @@ df_isk.to_pickle('./isk_data.pkl')
 
 # Rulebase.train(df_isk_train, "IS")
 
+df_isk = pd.read_pickle('./isk_data.pkl')
+print(df_isk)
