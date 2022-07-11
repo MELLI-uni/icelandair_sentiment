@@ -9,7 +9,19 @@ from itertools import islice
 from reynir import Greynir
 from reynir_correct import tokenize
 
+import torch
+import pos
+
 g = Greynir()
+device = 'cuda' if cuda.is_available() else 'cpu'
+
+tagger: pos.Tagger = torch.hub.load(
+    repo_or_dir="cadia-lvl/POS",
+    model="tag",
+    device=device,
+    force_reload=False,
+    force_downloade=False
+)
 
 # Load all dictionaries
 # Pickle file contains
@@ -55,6 +67,10 @@ def data_cleaning(df):
 df_train = pd.read_pickle('./isk_train.pkl')
 df_test = pd.read_pickle('./isk_test.pkl')
 df_unlabeled = pd.read_pickle('./tuning_isk.pkl')
+
+tags = tagger.tag_bulk(
+    (("), (), batch_size=2)
+        )
 
 # sentences_list = data_cleaning(df_unlabeled)
 # print(sentences_list)
