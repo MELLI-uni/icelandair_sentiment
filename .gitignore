@@ -1,5 +1,6 @@
 Data/
 Method-Transformer/ModelTuning/
-Method=WordTree/Models/
+Method-Rulebase/temp/nefnir
+Method-WordTree/Models/
 *.sh
 *.log
