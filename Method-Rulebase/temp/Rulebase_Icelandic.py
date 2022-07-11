@@ -17,7 +17,7 @@ device = 'cuda' if cuda.is_available() else 'cpu'
 import pos
 
 sys.path.append('./nefnir')
-from lemmatizer import Lemmatize
+from nefnir import Lemmatize
 
 g = Greynir()
 
@@ -28,8 +28,6 @@ tagger: pos.Tagger = torch.hub.load(
     force_reload=False,
     force_downloader=False
 )
-
-nefnir = Nefnir()
 
 # Load all dictionaries
 # Pickle file contains
