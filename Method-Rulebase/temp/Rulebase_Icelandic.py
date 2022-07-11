@@ -75,11 +75,11 @@ df_test = pd.read_pickle('./isk_test.pkl')
 df_unlabeled = pd.read_pickle('./tuning_isk.pkl')
 
 
-#sample = (('Samskiptafjarlægð', 'þegar', 'nota', 'þarf', 'rútu', 'frá', 'flugstöð', 'að', 'vél', 'er', 'alltof', 'lítil', '(', 'og', 'margir', 'í', 'rútunni', ')', '.'), ('Afar', 'ánægð', 'yfirhöfuð', 'með', 'allt', ':', ')'))
+sample = (('yndislegt', 'að', 'geta', 'ferðast', 'með', 'ykkur', 'á ný', '.'))
 
 #sent = 'Samskiptafjarlægð þegar nota þarf rútu frá flugstöð að vél er alltof lítil ( og margir í rútunni ) .'
 
-sample = data_cleaning(df_unlabeled)
+#sample = data_cleaning(df_unlabeled)
 
 tags = tagger.tag_bulk(
     sample, batch_size=2
