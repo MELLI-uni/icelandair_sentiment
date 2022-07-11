@@ -79,6 +79,8 @@ df_unlabeled = pd.read_pickle('./tuning_isk.pkl')
 
 sample = (('Samskiptafjarlægð', 'þegar', 'nota', 'þarf', 'rútu', 'frá', 'flugstöð', 'að', 'vél', 'er', 'alltof', 'lítil', '(', 'og', 'margir', 'í', 'rútunni', ')', '.'), ('Afar', 'ánægð', 'yfirhöfuð', 'með', 'allt', ':', ')'))
 
+sent = 'Samskiptafjarlægð þegar nota þarf rútu frá flugstöð að vél er alltof lítil ( og margir í rútunni ) .'
+
 ##tags = tagger.tag_bulk(
 #    sample, batch_size=2
 #)  # Batch size works best with GPUs
