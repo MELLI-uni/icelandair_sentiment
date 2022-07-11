@@ -65,7 +65,7 @@ def data_cleaning(df):
             for sent in pg:
                 #sentences.append(sent.tidy_text)
                 t = tokenize(str(sent))
-                tokens = [item.txt.lower() for item in t if item.txt != '']
+                tokens = [item.txt for item in t if item.txt != '']
                 sentences.append(tokens)
 
     return sentences
@@ -75,7 +75,7 @@ df_test = pd.read_pickle('./isk_test.pkl')
 df_unlabeled = pd.read_pickle('./tuning_isk.pkl')
 
 tags = tagger.tag_bulk(
-    (("Þetta", "er", "setning", "."), ("Og", "önnur", "!")), batch_size=2
+    (('Samskiptafjarlægð', 'þegar', 'nota', 'þarf', 'rútu', 'frá', 'flugstöð', 'að', 'vél', 'er', 'alltof', 'lítil', '(', 'og', 'margir', 'í', 'rútunni', ')', '.'), ('Afar', 'ánægð', 'yfirhöfuð', 'með', 'allt', ':', ')')), batch_size=2
 )  # Batch size works best with GPUs
 print(tags)
 
