@@ -69,8 +69,9 @@ df_test = pd.read_pickle('./isk_test.pkl')
 df_unlabeled = pd.read_pickle('./tuning_isk.pkl')
 
 tags = tagger.tag_bulk(
-    (("), (), batch_size=2)
-        )
+    (("Þetta", "er", "setning", "."), ("Og", "önnur", "!")), batch_size=2
+)  # Batch size works best with GPUs
+print(tags)
 
 # sentences_list = data_cleaning(df_unlabeled)
 # print(sentences_list)
