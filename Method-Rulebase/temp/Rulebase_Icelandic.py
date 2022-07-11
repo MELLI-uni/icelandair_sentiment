@@ -65,7 +65,15 @@ def data_cleaning(df):
             for sent in pg:
                 #sentences.append(sent.tidy_text)
                 t = tokenize(str(sent))
-                tokens = [item.txt for item in t if item.txt != '']
+                tokens = []
+                for item in t:
+                    if item.txt == '':
+                        continue
+                    elif ' ' in item.txt:
+                        tokens.extend(re.split(r'\s+', item.txt))
+                    else:
+                        tokens.append(item.txt)
+
                 sentences.append(tuple(tokens))
 
     return tuple(sentences)
@@ -75,21 +83,23 @@ df_test = pd.read_pickle('./isk_test.pkl')
 df_unlabeled = pd.read_pickle('./tuning_isk.pkl')
 
 
-sample = (('yndislegt', 'að', 'geta', 'ferðast', 'með', 'ykkur', 'á ný', '.'))
+#sample = (('yndislegt', 'að', 'geta', 'ferðast', 'með', 'ykkur', 'á', 'ný', '.'), ('gott'))
 
 #sent = 'Samskiptafjarlægð þegar nota þarf rútu frá flugstöð að vél er alltof lítil ( og margir í rútunni ) .'
 
-#sample = data_cleaning(df_unlabeled)
+sample = data_cleaning(df_unlabeled)
+
+#print(sample)
 
 tags = tagger.tag_bulk(
     sample, batch_size=2
 )  # Batch size works best with GPUs
-print(tags)
+#print(tags)
 
 #print(parse(sent))
 
-#lemmas = Lemmatize(sample, tags)
-#print(lemmas)
+lemmas = Lemmatize(sample, tags)
+print(lemmas)
 
 #sentences_list = data_cleaning(df_unlabeled)
 #tags = tagger.tag_bulk(
