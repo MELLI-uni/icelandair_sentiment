@@ -1,6 +1,8 @@
+import sys
+import pickle
+
 import regex as re
 import numpy as np
-import pickle
 import pandas as pd
 pd.set_option('mode.chained_assignment', None)
 
@@ -10,18 +12,24 @@ from reynir import Greynir
 from reynir_correct import tokenize
 
 import torch
+from torch import cuda
+device = 'cuda' if cuda.is_available() else 'cpu'
 import pos
 
+sys.path.append('./nefnir')
+from lemmatizer import Lemmatize
+
 g = Greynir()
-device = 'cuda' if cuda.is_available() else 'cpu'
 
 tagger: pos.Tagger = torch.hub.load(
     repo_or_dir="cadia-lvl/POS",
     model="tag",
     device=device,
     force_reload=False,
-    force_downloade=False
+    force_downloader=False
 )
+
+nefnir = Nefnir()
 
 # Load all dictionaries
 # Pickle file contains
