@@ -36,12 +36,17 @@ tagger: pos.Tagger = torch.hub.load(
 #   1. Icelandic emoji dictionary
 #   2. Flight and destination list
 #   3. Icelandic stopwords list
+#   4. English degree adverbs dictionary
+#   5. Icelandic degree adverbs dictionary
 with open('dictionaries.pickle', 'rb') as handle:
     dictionaries = pickle.load(handle)
 
 emoji_dict = dictionaries[1]
 flight_dict = dictionaries[2]
 isk_stop = dictionaries[3]
+isk_deg = dictionaries[5]
+
+NEUTRAL_SKIP = ["N/A", "n/a", "na", "N/a", "n/A", "NA"]
 
 def data_cleaning(df):
     # Remove na values from dataframe
@@ -120,4 +125,4 @@ df_unlabeled = pd.read_pickle('./tuning_isk.pkl')
 cleaned_text = data_cleaning(df_unlabeled)
 tags, lemmas = tag_n_lemmatize(tuple(cleaned_text))
 
-train_word2vec(tuple(cleaned_text))
+#train_word2vec(tuple(cleaned_text))
