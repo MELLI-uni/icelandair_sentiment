@@ -65,19 +65,26 @@ def data_cleaning(df):
             for sent in pg:
                 #sentences.append(sent.tidy_text)
                 t = tokenize(str(sent))
-                tokens = [item.txt.lower() for item in t if item.txt != '']
-                sentences.append(tokens)
+                tokens = [item.txt for item in t if item.txt != '']
+                sentences.append(tuple(tokens))
 
-    return sentences
+    return tuple(sentences)
 
 df_train = pd.read_pickle('./isk_train.pkl')
 df_test = pd.read_pickle('./isk_test.pkl')
 df_unlabeled = pd.read_pickle('./tuning_isk.pkl')
 
-tags = tagger.tag_bulk(
-    (("Þetta", "er", "setning", "."), ("Og", "önnur", "!")), batch_size=2
-)  # Batch size works best with GPUs
-print(tags)
+#tags = tagger.tag_bulk(
+#    (("Þetta", "er", "setning", "."), ("Og", "önnur", "!")), batch_size=2
+#)  # Batch size works best with GPUs
+#print(tags)
 
-# sentences_list = data_cleaning(df_unlabeled)
-# print(sentences_list)
+sentences_list = data_cleaning(df_unlabeled)
+#tags = tagger.tag_bulk(
+#    sentences_list, batch_size=2
+#)
+
+#print(tags)
+
+for sent in sentences_list:
+    print(sent)
