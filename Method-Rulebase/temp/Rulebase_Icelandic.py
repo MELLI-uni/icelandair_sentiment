@@ -7,6 +7,7 @@ import pandas as pd
 pd.set_option('mode.chained_assignment', None)
 
 from itertools import islice
+from gensim.models import Word2Vec
 
 from reynir import Greynir
 from reynir_correct import tokenize
@@ -78,35 +79,45 @@ def data_cleaning(df):
 
     return tuple(sentences)
 
+def tag_n_lemmatize(tokenized_inputs):
+    tags = tagger.tag_bulk(
+        tokenized_inputs, 
+        batch_size=2
+    )
+
+    lemmas = Lemmatize(tokenized_inputs, tags)
+
+    return tags, lemmas
+
+def train_word2vec(tokenized_inputs):
+    skip, lemmas = tag_n_lemmatize(tokenized_inputs)
+
+    sent_corpus = []
+
+    for sent in lemmas:
+        temp = []
+        for token in sent:
+            if token.isalpha() == False:
+                continue
+            elif token in isk_stop:
+                continue
+            else:
+                temp.append(token)
+
+        sent_corpus.append(temp)
+
+    print(sent_corpus)
+
+    #model = Word2Vec(sentences=sent_corpus, vector_size=200, window=4, min_count=1, workers=4)
+    #model.save("icelandic_word2vec.model")
+
+    return
+
 df_train = pd.read_pickle('./isk_train.pkl')
 df_test = pd.read_pickle('./isk_test.pkl')
 df_unlabeled = pd.read_pickle('./tuning_isk.pkl')
 
+cleaned_text = data_cleaning(df_unlabeled)
+tags, lemmas = tag_n_lemmatize(tuple(cleaned_text))
 
-#sample = (('yndislegt', 'að', 'geta', 'ferðast', 'með', 'ykkur', 'á', 'ný', '.'), ('gott'))
-
-#sent = 'Samskiptafjarlægð þegar nota þarf rútu frá flugstöð að vél er alltof lítil ( og margir í rútunni ) .'
-
-sample = data_cleaning(df_unlabeled)
-
-#print(sample)
-
-tags = tagger.tag_bulk(
-    sample, batch_size=2
-)  # Batch size works best with GPUs
-#print(tags)
-
-#print(parse(sent))
-
-lemmas = Lemmatize(sample, tags)
-print(lemmas)
-
-#sentences_list = data_cleaning(df_unlabeled)
-#tags = tagger.tag_bulk(
-#    sentences_list, batch_size=2
-#)
-
-#print(tags)
-
-#for sent in sentences_list:
-#    print(sent)
+train_word2vec(tuple(cleaned_text))
