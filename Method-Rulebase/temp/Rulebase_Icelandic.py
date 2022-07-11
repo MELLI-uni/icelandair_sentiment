@@ -29,6 +29,8 @@ tagger: pos.Tagger = torch.hub.load(
     force_downloader=False
 )
 
+from icenlp_bridge import parse
+
 # Load all dictionaries
 # Pickle file contains
 #   0. English emoji dictionary
@@ -74,10 +76,16 @@ df_train = pd.read_pickle('./isk_train.pkl')
 df_test = pd.read_pickle('./isk_test.pkl')
 df_unlabeled = pd.read_pickle('./tuning_isk.pkl')
 
-tags = tagger.tag_bulk(
-    (('Samskiptafjarlægð', 'þegar', 'nota', 'þarf', 'rútu', 'frá', 'flugstöð', 'að', 'vél', 'er', 'alltof', 'lítil', '(', 'og', 'margir', 'í', 'rútunni', ')', '.'), ('Afar', 'ánægð', 'yfirhöfuð', 'með', 'allt', ':', ')')), batch_size=2
-)  # Batch size works best with GPUs
-print(tags)
+
+sample = (('Samskiptafjarlægð', 'þegar', 'nota', 'þarf', 'rútu', 'frá', 'flugstöð', 'að', 'vél', 'er', 'alltof', 'lítil', '(', 'og', 'margir', 'í', 'rútunni', ')', '.'), ('Afar', 'ánægð', 'yfirhöfuð', 'með', 'allt', ':', ')'))
+
+##tags = tagger.tag_bulk(
+#    sample, batch_size=2
+#)  # Batch size works best with GPUs
+#print(tags)
+
+lemmas = Lemmatize(sample, tags)
+print(lemmas)
 
 sentences_list = data_cleaning(df_unlabeled)
 #tags = tagger.tag_bulk(
@@ -86,5 +94,5 @@ sentences_list = data_cleaning(df_unlabeled)
 
 #print(tags)
 
-for sent in sentences_list:
-    print(sent)
+#for sent in sentences_list:
+#    print(sent)
