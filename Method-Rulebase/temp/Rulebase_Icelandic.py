@@ -1,5 +1,6 @@
 import sys
 import pickle
+import json
 
 import regex as re
 import numpy as np
@@ -29,6 +30,9 @@ tagger: pos.Tagger = torch.hub.load(
     force_reload=False,
     force_downloader=False
 )
+
+with open('./nefnir/tags.json', encoding='utf-8') as f:
+    tagmap = json.load(f)
 
 # Load all dictionaries
 # Pickle file contains
@@ -82,7 +86,7 @@ def data_cleaning(df):
 
                 sentences.append(tuple(tokens))
 
-    return tuple(sentences)
+    return sentences
 
 def tag_n_lemmatize(tokenized_inputs):
     tags = tagger.tag_bulk(
@@ -90,7 +94,7 @@ def tag_n_lemmatize(tokenized_inputs):
         batch_size=2
     )
 
-    lemmas = Lemmatize(tokenized_inputs, tags)
+    tags, lemmas = Lemmatize(tokenized_inputs, tags)
 
     return tags, lemmas
 
@@ -104,7 +108,10 @@ def train_word2vec(tokenized_inputs):
         for token in sent:
             if token.isalpha() == False:
                 continue
-            elif token in isk_stop:
+            elif (
+                    token in isk_stop or 
+                    token in isk_deg
+                ):
                 continue
             else:
                 temp.append(token)
@@ -118,11 +125,33 @@ def train_word2vec(tokenized_inputs):
 
     return
 
+def process_dataframe(df):
+    df.reset_index(inplace=True, drop=True)
+    del df['id']
+
+    df_text = df.copy()
+    del df_text['Sentiment']
+
+    sentences = data_cleaning(df_text)
+    tags, lemmas = tag_n_lemmatize(tuple(sentences))
+
+    del df['answer_freetext_value']
+    df = df.join(pd.Series(lemmas, name='Lemmas'))
+    df = df.join(pd.Series(tags, name='Tags'))
+
+    print(df)
+
+    return 
+
 df_train = pd.read_pickle('./isk_train.pkl')
 df_test = pd.read_pickle('./isk_test.pkl')
 df_unlabeled = pd.read_pickle('./tuning_isk.pkl')
 
-cleaned_text = data_cleaning(df_unlabeled)
-tags, lemmas = tag_n_lemmatize(tuple(cleaned_text))
+#cleaned_text = data_cleaning(df_unlabeled)
+#tags, lemmas = tag_n_lemmatize(cleaned_text)
 
-#train_word2vec(tuple(cleaned_text))
+#train_word2vec(cleaned_text)
+
+process_dataframe(df_test)
+
+#print(test_cleaned)
