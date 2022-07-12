@@ -213,10 +213,10 @@ def accuracy(list_actual, list_prediction):
     actual = list_actual
     prediction = list_prediction
 
-    precision = precision_score(actual, prediction, average=None, zero_division = 0)
-    recall = recall_score(actual, prediction, average=None, zero_division = 0)
+    precision = precision_score(actual, prediction, average=None, zero_division = 0).tolist()
+    recall = recall_score(actual, prediction, average=None, zero_division = 0).tolist()
  
-    f1_gen = f1_score(actual, prediction, average=None, zero_division = 0)
+    f1_gen = f1_score(actual, prediction, average=None, zero_division = 0).tolist()
     f1_micro = f1_score(actual, prediction, average='micro', zero_division = 0)
     f1_macro = f1_score(actual, prediction, average='macro', zero_division = 0)
 
@@ -229,26 +229,26 @@ def display(precisions, recalls, f1_gens, f1_micros, f1_macros):
     scores = []
     f1s = []
 
-    for item in set1:
-        avg = '%0.2f' % ((statistics.mean(item)) * 100)
-        std = '%0.2f' % ((statistics.stdev(item)) * 100)
-
-        item_text = avg + "+-" + std
-        scores.append(item_text)
+    #for item in set1:
+    #    tmp = np.array(item)
+    #    scores_avg = np.multiply(np.mean(tmp, axis=0), 100).tolist()
+    #    scores_std = np.multiply(np.std(tmp, axis=0), 100).tolist()
+    
+    #    for i in range(len(scores_avg)):
+            
 
     for item in set2:
-        avg = '%0.2f' % ((statistics.mean(item)) * 100)
-        std = '%0.2f' % ((statistics.stdev(item)) * 100)
+        avg = "{:.2f}".format((statistics.mean(item)) * 100)
+        std = "{:.2f}".format((statistics.stdev(item)) * 100)
 
         item_text = avg + "+-" + std
         f1s.append(item_text)
 
-    score_compile = scores
-    f1_average = f1s
-    df_score = pd.DataFrame(data=score_compile, index=['Precision', 'Recall', 'F1'], columns=CATEGORIES)
-    df_average = pd.DataFrame(data=f1_average, index=['F1 Microaverage', 'F1 Macroaverage'], columns=['Scores'])
+    #score_compile = scores
+    #df_score = pd.DataFrame(data=score_compile, index=['Precision', 'Recall', 'F1'], columns=CATEGORIES)
+    df_average = pd.DataFrame(data=f1s, index=['F1 Microaverage', 'F1 Macroaverage'], columns=['Scores'])
 
-    print(tabulate(df_score, headers='keys', tablefmt='pretty'))
+    #print(tabulate(df_score, headers='keys', tablefmt='pretty'))
     print(tabulate(df_average, headers='keys', tablefmt='pretty'))
 
 def calculate_accuracy(preds, targets):
@@ -556,7 +556,7 @@ def test_tuning_5fold(df, lang):
         f1s_total = np.add(f1s_total, f1s)
 
     print("TUNED MODEL for", lang.upper())
-    display(scores_total/num_split, f1s_total/num_split)
+    #display(scores_total/num_split, f1s_total/num_split)
 
 def test_xlm_vanilla_basic(df):
     df_train, df_test = train_test_split(df, test_size=0.2, shuffle=True)
