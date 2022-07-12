@@ -172,7 +172,148 @@ def process_dataframe(df):
     df = df.join(pd.Series(lemmas, name='tmp_lemma'))
     df = df.join(pd.Series(tags, name='tmp_tag'))
 
+    df = df.apply(lambda x: filtering(x['tmp_lemma'], x['tmp_tag'], x['Sentiment']), axis=1, result_type='expand')
+    df.columns = ['answer_freetext_value', 'Sentiment']
+
+    df = df.explode(['answer_freetext_value', 'Sentiment'], ignore_index=True)
+    df.dropna(subset = ['answer_freetext_value'], inplace=True)
+    df.dropna(subset = ['Sentiment'], inplace=True)
+
     return df
+
+def open_lexicon(path, file_name):
+    lexicon = {}
+    tuning = {}
+
+    with open((path+file_name), 'r', encoding='utf-8') as f:
+        for line in f:
+            word, mean, scores = line.split("\t")
+            lexicon[word] = float(mean.strip())
+            tuning[word] = [int(x) for x in scores.strip('\n[]').split(', ')]
+
+    f.close()
+
+    return lexicon, tuning
+
+def find_in_lexicon(tokens, lexicon):
+    score = []
+
+    for i in tokens:
+        if i in lexicon:
+            score.append(lexicon[i])
+            continue
+
+        score.append(0)
+
+    return score
+
+def calculate(tokens, lexicon, polarity):
+    indiv_score = find_in_lexicon(tokens, lexicon)
+
+    result = np.multiply(indiv_score, polarity)
+    score = sum(result)
+
+    if len(tokens) == 1 and tokens[0] in NEUTRAL_SKIP:
+        return 'neutral'
+
+    if score > 0:
+        return 'positive'
+    elif score < 0:
+        return 'negative'
+    else:
+        return 'neutral'
+
+def label(df):
+    path = './'
+    file_name = 'isk_lexicon.txt'
+
+    lexicon, tuning = open_lexicon(path, file_name)
+
+    sentences = data_cleaning(df)
+    tags, lemmas = tag_n_lemmatize(tuple(sentences))
+
+    del df['answer_freetext_value']
+    df = df.join(pd.Series(lemmas, name='tmp_lemma'))
+    df = df.join(pd.Series(tags, name='tmp_tag'))
+
+    df = df.apply(lambda x: filtering(x['tmp_lemma'], x['tmp_tag'], "Positive"), axis=1, result_type='expand')
+    df.columns = ['answer_freetext_value', 'Sentiment']
+
+    df_sentiment = df.apply(lambda x: calculate(x['answer_freetext_value'], lexicon, x['Sentiment']), axis=1)
+    df['Sentiment'] = df_sentiment
+
+    return df
+
+def accuracy(df_truth, df_predict):
+    # Open the two files and convert Sentiment column to list
+    senti_truth = df_truth['Sentiment'].tolist()
+    labels = np.unique(senti_truth)
+
+    senti_predict = df_predict['Sentiment'].tolist()
+
+    # Calculate precision, recall, accuracy
+    precision = precision_score(senti_truth, senti_predict, labels = labels, average = None)
+    recall = recall_score(senti_truth, senti_predict, labels = labels, average = None)
+    #accuracy = accuracy_score(senti_truth, senti_predict, labels = labels)
+
+    # Calculate f1 score
+    f1_gen = f1_score(senti_truth, senti_predict, labels = labels, average = None)
+    # Micro average f1 -> calculates positive and negative values globally
+    f1_micro = f1_score(senti_truth, senti_predict, labels = labels, average='micro')
+    # Macro average f1 -> takes the average of each class's F1 score
+    f1_macro = f1_score(senti_truth, senti_predict, labels = labels, average='macro')
+
+    # Compile scores in panda dataframe
+    score_compile = np.array([precision, recall, f1_gen])
+    f1_average = np.array([f1_micro, f1_macro])
+    df_score = pd.DataFrame(data=score_compile, index=['Precision', 'Recall', 'F1'], columns=labels)
+    df_average = pd.DataFrame(data=f1_average, index=['F1 Microaverage', 'F1 Macroaverage'], columns=['Scores'])
+
+    # Print dataframe in tabular format
+    print(tabulate(df_score, headers='keys', tablefmt='pretty'))
+    print(tabulate(df_average, headers='keys', tablefmt='pretty'))
+
+def update_lexicon(df):
+    path = './'
+    file_name = 'isk_lexicon.txt'
+
+    lexicon, tuning = open_lexicon(path, file_name)
+
+    f = open((path+file_name), 'w', encoding='utf-8')
+
+    for row in df.itertuples(index=False):
+        new_word = row.answer_freetext_value
+        new_score = row.Sentiment
+
+        if new_score == 1:
+            place = 0
+        elif new_score == 0:
+            place = 1
+        else:
+            place = 2
+
+        if new_word in tuning:
+            tuning[new_word][place] += 1
+        else:
+            tuning[new_word] = [0, 0, 0]
+            tuning[new_word][place] += 1
+
+    tuning = sorted(tuning.items())
+
+    for item in tuning:
+        mean = ((item[1][0] * 1) + (item[1][2] * -1)) / sum(item[1])
+        f.write(item[0] + "\t" + str(mean) + "\t" + str(item[1]) + "\n")
+
+    f.close()
+
+def test_lexicon(df):
+    df_truth = df.copy()
+    df_predict = df.copy()
+    del df_predict['Sentiment']
+
+    df_predict = label(df_predict)
+
+    return accuracy(df_truth, df_predict)
 
 df_train = pd.read_pickle('./isk_train.pkl')
 del df_train['id']
