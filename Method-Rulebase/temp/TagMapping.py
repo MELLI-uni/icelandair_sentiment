@@ -1,6 +1,7 @@
 import pickle
 import json
 
+guess_list = ['af', 'afe', 'afm']
 pos_tag_list = []
 pos_tag_dict = {}
 
@@ -15,20 +16,23 @@ f.close()
 for line in lines:
     pos_tag_list.append(line.strip())
 
-counter = 0
-non_matching = 0
-not_matching = []
-
 for tag in pos_tag_list:
+    if tag in guess_list:
+        tag = 'ao'
     if tag in tagmap:
-        pos_tag_dict[tag] = tagmap[tag]
-        counter += 1
-    else:
-        not_matching.append(tag)
-        non_matching += 1
+        if tagmap[tag].startswith('ao'):
+            pos_tag_dict[tag] = 'ADV'
 
-print("matching: ", counter)
-print("not matching: ", non_matching)
+        elif tagmap[tag].startswith('lo'):
+            pos_tag_dict[tag] = 'ADJ'
 
-for items in not_matching:
-    print(items)
+        elif tagmap[tag].startswith('no'):
+            pos_tag_dict[tag] = 'NOUN'
+
+        elif tagmap[tag].startswith('so'):
+            pos_tag_dict[tag] = 'VERB'
+
+with open('posmap.pickle', 'wb') as handle:
+    pickle.dump(pos_tag_dict, handle, protocol=pickle.HIGHEST_PROTOCOL)
+
+#print(pos_tag_dict)

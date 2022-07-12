@@ -50,6 +50,9 @@ flight_dict = dictionaries[2]
 isk_stop = dictionaries[3]
 isk_deg = dictionaries[5]
 
+with open('posmap.pickle', 'rb') as handle:
+    tag_map = pickle.load(handle)
+
 NEUTRAL_SKIP = ["N/A", "n/a", "na", "N/a", "n/A", "NA"]
 
 def data_cleaning(df):
