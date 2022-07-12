@@ -1,0 +1,965 @@
+['endilega'] ['ADV'] [-1]
+[] [] []
+['aldrei'] ['ADV'] [1]
+"['ömurlegur', 'smár']" "['ADJ', 'ADJ']" "[-1, -1]"
+['snemmt'] ['ADV'] [-1]
+"['alltaf', 'góður']" "['ADV', 'ADJ']" "[-1, -1]"
+['góður'] ['ADJ'] [1]
+[] [] []
+"['slakur', 'mannlegur', 'mannlegur', 'góður']" "['ADJ', 'ADJ', 'ADJ', 'ADJ']" "[-1, -1, -1, -1]"
+[] [] []
+"['alltaf', 'almennilegur', 'góður']" "['ADV', 'ADJ', 'ADJ']" "[-1, -1, -1]"
+"['bara', 'mikilvægur']" "['ADV', 'ADJ']" "[-1, -1]"
+['áfram'] ['ADV'] [0]
+"['góður', 'inni', 'síðust', 'eðlilega', 'harla', 'aftur']" "['ADJ', 'ADV', 'ADV', 'ADV', 'ADV', 'ADV']" "[1, 1, 1, 1, 1, 1]"
+"['búinn', 'svangur', 'langur']" "['ADJ', 'ADJ', 'ADJ']" "[-1, -1, -1]"
+"['góður', 'hvar']" "['ADJ', 'ADV']" "[1, 1]"
+['fínn'] ['ADJ'] [-1]
+['ánægður'] ['ADJ'] [-1]
+['illa'] ['ADV'] [1]
+[] [] []
+[] [] []
+"['góður', 'sjaldgæfur', 'ágætur']" "['ADJ', 'ADJ', 'ADJ']" "[1, -1, -1]"
+"['lítill', 'hvernig', 'stór']" "['ADJ', 'ADV', 'ADJ']" "[1, -1, 1]"
+"['hálfur', 'tæpur']" "['ADJ', 'ADJ']" "[1, 1]"
+"['nógur', 'góður', 'slakur', 'alltof', 'þröngur']" "['ADJ', 'ADJ', 'ADJ', 'ADV', 'ADJ']" "[-1, 1, 1, 1, 1]"
+[] [] []
+['sáttur'] ['ADJ'] [-1]
+"['bókaður', 'beinn', 'heim']" "['ADJ', 'ADJ', 'ADV']" "[-1, -1, -1]"
+"['örstuttur', 'tilheyrandi']" "['ADJ', 'ADJ']" "[0, 0]"
+"['fyrstur', 'almennilegur', 'frábær', 'akkúrat', 'alltaf']" "['ADJ', 'ADJ', 'ADJ', 'ADV', 'ADV']" "[-1, -1, -1, -1, -1]"
+[] [] []
+"['margur', 'bilaður', 'fúll', 'vanur']" "['ADJ', 'ADJ', 'ADJ', 'ADJ']" "[-1, -1, -1, -1]"
+"['algjör', 'vægur']" "['ADJ', 'ADJ']" "[-1, -1]"
+['inni'] ['ADV'] [-1]
+['við-'] ['ADV'] [0]
+[] [] []
+"['góður', 'lítill']" "['ADJ', 'ADJ']" "[-1, -1]"
+[] [] []
+['yndislegur'] ['ADJ'] [-1]
+"['hægur', 'tilgreindur']" "['ADJ', 'ADJ']" "[-1, 1]"
+"['ruglingslegur', 'núverandi']" "['ADJ', 'ADJ']" "[1, 1]"
+['ábótavant'] ['ADJ'] [1]
+['ömurlegur'] ['ADJ'] [1]
+[] [] []
+"['almennur', 'erfiður', 'aftur']" "['ADJ', 'ADJ', 'ADV']" "[-1, -1, -1]"
+"['inni', 'alltaf', 'aftur']" "['ADV', 'ADV', 'ADV']" "[-1, -1, -1]"
+['frábær'] ['ADJ'] [-1]
+"['kurteis', 'framúrskarandi', 'hjálpsamur']" "['ADJ', 'ADV', 'ADJ']" "[-1, -1, -1]"
+"['bara', 'frábær']" "['ADV', 'ADJ']" "[-1, -1]"
+['mikilvægur'] ['ADJ'] [1]
+"['gjarna', 'langur']" "['ADV', 'ADJ']" "[1, 1]"
+"['afar', 'skrítinn', 'íslenskur']" "['ADV', 'ADJ', 'ADJ']" "[1, 1, 1]"
+['kjánalegur'] ['ADJ'] [-1]
+[] [] []
+"['misjafn', 'glær']" "['ADJ', 'ADJ']" "[-1, -1]"
+"['hræðilegur', 'mögulega', 'viðeigandi', 'tilbúinn', 'hálfur', 'áður', 'langur']" "['ADJ', 'ADV', 'ADJ', 'ADJ', 'ADJ', 'ADV', 'ADJ']" "[0, 0, 0, 0, 0, 0, 0]"
+[] [] []
+"['náið', 'búinn']" "['ADV', 'ADJ']" "[1, 1]"
+"['alltaf', 'góður', 'sérstakur']" "['ADV', 'ADJ', 'ADJ']" "[1, 1, 1]"
+"['lítill', 'fullvaxinn']" "['ADJ', 'ADJ']" "[1, 1]"
+"['full', 'harður']" "['ADV', 'ADJ']" "[-1, -1]"
+['óaðlaðandi'] ['ADJ'] [0]
+[] [] []
+"['vonandi', 'nýr']" "['ADV', 'ADJ']" "[-1, -1]"
+"['áður', 'hér', 'ánægður', 'skemmdur']" "['ADV', 'ADV', 'ADJ', 'ADJ']" "[0, 0, 0, 0]"
+['kær'] ['ADJ'] [0]
+['búinn'] ['ADJ'] [-1]
+[] [] []
+['áður'] ['ADV'] [1]
+[] [] []
+[] [] []
+[] [] []
+[] [] []
+['almennur'] ['ADJ'] [-1]
+['góður'] ['ADJ'] [-1]
+[] [] []
+[] [] []
+['góður'] ['ADJ'] [-1]
+['fríður'] ['ADJ'] [-1]
+['dásamlegur'] ['ADJ'] [-1]
+['eiginn'] ['ADJ'] [-1]
+['hvernig'] ['ADV'] [1]
+['góður'] ['ADJ'] [1]
+"['óvar', 'þægilegur']" "['ADJ', 'ADJ']" "[1, -1]"
+"['ávallt', 'ánægður']" "['ADV', 'ADJ']" "[1, 1]"
+"['óánægður', 'upphaflegur', 'hæglega', 'hægur']" "['ADJ', 'ADJ', 'ADV', 'ADJ']" "[-1, -1, -1, -1]"
+"['einnig', 'fáránlegur', 'bara']" "['ADV', 'ADJ', 'ADV']" "[1, 1, 1]"
+"['langur', 'upphaflegur']" "['ADJ', 'ADJ']" "[1, -1]"
+['ömurlegur'] ['ADJ'] [1]
+"['þrátt', 'góður', 'þreyttur', 'lítill', 'gamall', 'einnig', 'hægur', 'aftur', 'óþægilegur']" "['ADV', 'ADJ', 'ADJ', 'ADJ', 'ADJ', 'ADV', 'ADJ', 'ADV', 'ADJ']" "[0, 0, 0, 0, 0, 0, 0, 0, 0]"
+['búinn'] ['ADJ'] [1]
+"['einnig', 'ómögulegur']" "['ADV', 'ADJ']" "[1, 1]"
+[] [] []
+"['aftur', 'aftur']" "['ADV', 'ADV']" "[0, 0]"
+['neikvæður'] ['ADJ'] [-1]
+['jafnvel'] ['ADV'] [-1]
+['heim'] ['ADV'] [0]
+[] [] []
+['frábær'] ['ADJ'] [-1]
+[] [] []
+['alltaf'] ['ADV'] [-1]
+"['þröngur', 'þægilegur', 'langur']" "['ADJ', 'ADJ', 'ADJ']" "[0, 0, 0]"
+"['áður', 'afar', 'hægur']" "['ADV', 'ADV', 'ADJ']" "[-1, -1, -1]"
+[] [] []
+"['smá', 'pirrandi', 'eiginlega']" "['ADV', 'ADJ', 'ADV']" "[-1, -1, -1]"
+['kær'] ['ADJ'] [-1]
+[] [] []
+['aukinn'] ['ADJ'] [-1]
+"['heim', 'sambærilegur']" "['ADV', 'ADJ']" "[1, -1]"
+['þröngur'] ['ADJ'] [0]
+"['þarna', 'góður', 'sambærilegur']" "['ADV', 'ADJ', 'ADJ']" "[-1, -1, -1]"
+"['bara', 'ánægður']" "['ADV', 'ADJ']" "[-1, -1]"
+[] [] []
+['heim'] ['ADV'] [0]
+"['frábær', 'yndislegur', 'hjálplegur']" "['ADJ', 'ADJ', 'ADJ']" "[-1, -1, -1]"
+[] [] []
+"['ungur', 'dásamlegur']" "['ADJ', 'ADJ']" "[1, 1]"
+['sofandi'] ['ADJ'] [1]
+['dásamlegur'] ['ADJ'] [-1]
+"['frábær', 'hrós']" "['ADJ', 'ADJ']" "[-1, -1]"
+"['hversu', 'þakklátur', 'hversu', 'frábær']" "['ADV', 'ADJ', 'ADV', 'ADJ']" "[-1, -1, -1, -1]"
+"['bara', 'frábær', 'fagmannlegur', 'vingjarnlegur', 'persónulegur']" "['ADV', 'ADJ', 'ADJ', 'ADJ', 'ADJ']" "[0, 0, 0, 0, 0]"
+[] [] []
+"['náið', 'búinn', 'strax', 'eflaust', 'illa', 'bara', 'lítt']" "['ADV', 'ADJ', 'ADV', 'ADV', 'ADV', 'ADV', 'ADV']" "[1, 1, 1, 1, 1, 1, -1]"
+[] [] []
+"['algjör', 'hægur', 'fullur']" "['ADJ', 'ADJ', 'ADJ']" "[-1, -1, 1]"
+['frábær'] ['ADJ'] [-1]
+['harður'] ['ADJ'] [-1]
+[] [] []
+"['síðar', 'náið', 'alltaf']" "['ADV', 'ADV', 'ADV']" "[-1, -1, -1]"
+['fúll'] ['ADJ'] [-1]
+[] [] []
+"['góður', 'þrátt', 'ruglaður']" "['ADJ', 'ADV', 'ADJ']" "[-1, -1, -1]"
+['hægur'] ['ADJ'] [-1]
+"['bara', 'almennur']" "['ADV', 'ADJ']" "[-1, -1]"
+['fljótur'] ['ADJ'] [1]
+[] [] []
+"['fullur', 'almennur', 'tæplega', 'hálfrotaður']" "['ADJ', 'ADJ', 'ADV', 'ADJ']" "[-1, -1, -1, -1]"
+"['gjarnan', 'islenskur']" "['ADV', 'ADJ']" "[-1, -1]"
+[] [] []
+['frábær'] ['ADJ'] [-1]
+"['ónotalega', 'blautur']" "['ADV', 'ADJ']" "[0, 0]"
+[] [] []
+"['lélegur', 'langur']" "['ADJ', 'ADJ']" "[1, 1]"
+"['lélegur', 'réttur']" "['ADJ', 'ADJ']" "[1, -1]"
+"['hægur', 'aftur']" "['ADJ', 'ADV']" "[-1, 1]"
+['framan'] ['ADV'] [1]
+"['óþægilegur', 'langur']" "['ADJ', 'ADJ']" "[0, 0]"
+"['langur', 'langur', 'langt', 'góður']" "['ADJ', 'ADJ', 'ADV', 'ADJ']" "[-1, -1, -1, 1]"
+['tyrfinn'] ['ADJ'] [1]
+['fríður'] ['ADJ'] [-1]
+"['þriðji', 'hvernig', 'örlítill']" "['ADJ', 'ADV', 'ADJ']" "[0, 0, 0]"
+"['súr', 'örugglega', 'tækur', 'áður']" "['ADJ', 'ADV', 'ADJ', 'ADV']" "[-1, -1, -1, -1]"
+"['góður', 'heim', 'ágætur', 'leiðinlegur']" "['ADJ', 'ADV', 'ADJ', 'ADJ']" "[-1, -1, -1, -1]"
+['snemmt'] ['ADV'] [-1]
+[] [] []
+[] [] []
+[] [] []
+['búinn'] ['ADJ'] [-1]
+"['góður', 'réttur']" "['ADJ', 'ADJ']" "[1, 1]"
+['skemmdur'] ['ADJ'] [1]
+"['sammála', 'frábær', 'góður', 'bara', 'kærlega']" "['ADJ', 'ADJ', 'ADJ', 'ADV', 'ADV']" "[-1, -1, -1, -1, -1]"
+[] [] []
+"['faglega', 'fumlaust']" "['ADV', 'ADV']" "[-1, -1]"
+['stór'] ['ADJ'] [1]
+[] [] []
+['ömurlegur'] ['ADJ'] [1]
+['fínn'] ['ADJ'] [1]
+['langur'] ['ADJ'] [-1]
+['fullkominn'] ['ADJ'] [1]
+['góður'] ['ADJ'] [-1]
+[] [] []
+['flottur'] ['ADJ'] [-1]
+['frábær'] ['ADJ'] [1]
+[] [] []
+['frábær'] ['ADJ'] [-1]
+['þröngur'] ['ADJ'] [1]
+['alltaf'] ['ADV'] [1]
+[] [] []
+[] [] []
+"['nýr', 'fjölbreyttur']" "['ADJ', 'ADJ']" "[-1, -1]"
+['slæmur'] ['ADJ'] [1]
+[] [] []
+"['bara', 'fínn']" "['ADV', 'ADJ']" "[-1, -1]"
+['góður'] ['ADJ'] [0]
+"['dapur', 'góður']" "['ADJ', 'ADJ']" "[-1, -1]"
+"['breytanlegur', 'fyndinn', 'pirrandi', 'snemmt', 'senn', 'aftur', 'arður', 'góður']" "['ADJ', 'ADJ', 'ADJ', 'ADV', 'ADV', 'ADV', 'ADJ', 'ADJ']" "[1, -1, 1, -1, 1, 1, 1, -1]"
+"['hvergi', 'skýr']" "['ADV', 'ADJ']" "[1, 1]"
+['frábær'] ['ADJ'] [1]
+"['lítill', 'nýr']" "['ADJ', 'ADJ']" "[-1, -1]"
+"['almennt', 'gær']" "['ADV', 'ADV']" "[0, 0]"
+"['heim', 'heim']" "['ADV', 'ADV']" "[-1, -1]"
+['aldrei'] ['ADV'] [1]
+['óþægilegur'] ['ADJ'] [-1]
+"['illa', 'þarna', 'slæmur']" "['ADV', 'ADV', 'ADJ']" "[-1, -1, -1]"
+[] [] []
+"['ömurlegur', 'lítill', 'gær', 'snemmt', 'illur', 'síðari', 'bara', 'ömurlegur']" "['ADJ', 'ADJ', 'ADV', 'ADV', 'ADJ', 'ADJ', 'ADV', 'ADJ']" "[-1, 1, -1, 1, -1, -1, 1, -1]"
+[] [] []
+['mismunandi'] ['ADJ'] [0]
+['síðar'] ['ADV'] [-1]
+['bókaður'] ['ADJ'] [1]
+['snemmt'] ['ADV'] [-1]
+['ánægður'] ['ADJ'] [-1]
+[] [] []
+['rangur'] ['ADJ'] [-1]
+"['oft', 'dýr']" "['ADV', 'ADJ']" "[0, 0]"
+[] [] []
+"['fúll', 'leiðinlegur']" "['ADJ', 'ADJ']" "[-1, -1]"
+['þangað'] ['ADV'] [-1]
+['flottur'] ['ADJ'] [-1]
+['fyrri'] ['ADJ'] [-1]
+"['ömurlegur', 'mjór', 'mjór', 'lítill']" "['ADJ', 'ADJ', 'ADJ', 'ADJ']" "[-1, -1, -1, -1]"
+[] [] []
+"['furðulegur', 'náið', 'allavega']" "['ADJ', 'ADV', 'ADV']" "[1, -1, 1]"
+"['oft', 'hugsi', 'núna', 'allavega']" "['ADV', 'ADJ', 'ADV', 'ADV']" "[-1, -1, -1, -1]"
+['íslenskur'] ['ADJ'] [-1]
+"['þarna', 'íslenskur']" "['ADV', 'ADJ']" "[1, 1]"
+['stoltur'] ['ADJ'] [1]
+[] [] []
+"['einstaklega', 'góður']" "['ADV', 'ADJ']" "[1, 1]"
+[] [] []
+"['fáránlegur', 'langur', 'óþægilegur']" "['ADJ', 'ADJ', 'ADJ']" "[0, 0, 0]"
+['góður'] ['ADJ'] [-1]
+['góður'] ['ADJ'] [-1]
+['góður'] ['ADJ'] [1]
+[] [] []
+[] [] []
+"['rúmur', 'margur']" "['ADJ', 'ADJ']" "[-1, 1]"
+"['virkur', 'aukur', 'bara']" "['ADJ', 'ADJ', 'ADV']" "[1, -1, -1]"
+[] [] []
+['snemmt'] ['ADV'] [0]
+"['áður', 'endurtekinn', 'hræðilegur', 'áður']" "['ADV', 'ADJ', 'ADJ', 'ADV']" "[-1, -1, -1, -1]"
+[] [] []
+['góður'] ['ADJ'] [1]
+"['frábær', 'einnig']" "['ADJ', 'ADV']" "[0, 0]"
+[] [] []
+"['heilt', 'flottur', 'mögulegur', 'þráðlaus', 'aðeins', 'hægur', 'innifalinn', 'mikilvægur', 'boðlegur']" "['ADV', 'ADJ', 'ADJ', 'ADJ', 'ADV', 'ADJ', 'ADJ', 'ADJ', 'ADJ']" "[0, 0, 0, 0, 0, 0, 0, 0, 0]"
+"['einnig', 'búinn', 'aðeins', 'hægur', 'þráðlaus', 'fyrri']" "['ADV', 'ADJ', 'ADV', 'ADJ', 'ADJ', 'ADJ']" "[-1, -1, -1, -1, -1, -1]"
+['ósnyrtilegur'] ['ADJ'] [-1]
+"['búinn', 'búinn', 'aftur', 'aftur']" "['ADJ', 'ADJ', 'ADV', 'ADV']" "[1, 1, 1, 1]"
+"['rúmlega', 'snemmt', 'smár', 'dýr', 'innanlands', 'aftur', 'almennilegur', 'skrýtinn', 'kær']" "['ADV', 'ADV', 'ADJ', 'ADJ', 'ADV', 'ADV', 'ADJ', 'ADJ', 'ADJ']" "[0, 0, 0, 0, 0, 0, 0, 0, 0]"
+"['erfiður', 'miður', 'góður', 'illur']" "['ADJ', 'ADJ', 'ADJ', 'ADJ']" "[1, 1, 1, 1]"
+"['tæpt', 'fljótlegur', 'ódýr', 'ofangreindur']" "['ADV', 'ADJ', 'ADJ', 'ADJ']" "[0, 0, 0, 0]"
+['góður'] ['ADJ'] [-1]
+"['magnaður', 'reyndar', 'aldrei', 'áður']" "['ADJ', 'ADV', 'ADV', 'ADV']" "[0, 0, 0, 0]"
+[] [] []
+"['góður', 'ólíkur', 'fyrri']" "['ADJ', 'ADJ', 'ADJ']" "[1, -1, -1]"
+"['margur', 'ólíkur', 'fyrri']" "['ADJ', 'ADJ', 'ADJ']" "[1, -1, -1]"
+"['kær', 'frábær']" "['ADJ', 'ADJ']" "[-1, -1]"
+['glataður'] ['ADJ'] [1]
+"['íslenskur', 'fyrstur', 'fríður', 'frábær', 'erfiður']" "['ADJ', 'ADJ', 'ADJ', 'ADJ', 'ADJ']" "[-1, -1, -1, -1, -1]"
+"['vís', 'skítugur', 'leiðinlegur', 'búinn']" "['ADJ', 'ADJ', 'ADJ', 'ADJ']" "[-1, -1, -1, -1]"
+['æðislegur'] ['ADJ'] [-1]
+['góður'] ['ADJ'] [1]
+['illa'] ['ADV'] [-1]
+['heim'] ['ADV'] [-1]
+"['lítill', 'sennilega', 'jafn']" "['ADJ', 'ADV', 'ADV']" "[1, 1, 1]"
+[] [] []
+"['venjulegur', 'líkt']" "['ADJ', 'ADV']" "[-1, -1]"
+['langur'] ['ADJ'] [1]
+"['jafnvel', 'aukalega', 'stór']" "['ADV', 'ADV', 'ADJ']" "[-1, 1, 1]"
+[] [] []
+"['ítrekað', 'sèrstaklega']" "['ADV', 'ADV']" "[-1, -1]"
+"['þrátt', 'þrisvar', 'snemmt', 'aftarlega', 'ì']" "['ADV', 'ADV', 'ADV', 'ADV', 'ADV']" "[-1, -1, 1, -1, -1]"
+['à'] ['ADV'] [0]
+"['ì', 'fljòtlega']" "['ADV', 'ADV']" "[-1, -1]"
+"['þannig', 'ì', 'aukalega']" "['ADV', 'ADV', 'ADV']" "[-1, -1, -1]"
+['fínn'] ['ADJ'] [0]
+"['ánægjulegur', 'fyrstur', 'langur']" "['ADJ', 'ADJ', 'ADJ']" "[-1, -1, -1]"
+['verður'] ['ADJ'] [-1]
+['frábær'] ['ADJ'] [-1]
+"['óþolandi', 'beinn', 'fyrirvaralaust', 'þannig', 'margur', 'lélegur', 'seinn']" "['ADJ', 'ADJ', 'ADV', 'ADV', 'ADJ', 'ADJ', 'ADJ']" "[-1, -1, -1, -1, -1, -1, -1]"
+[] [] []
+"['heim', 'þaðan']" "['ADV', 'ADV']" "[-1, -1]"
+"['snemmt', 'nýr']" "['ADV', 'ADJ']" "[1, 1]"
+"['heim', 'langur']" "['ADV', 'ADJ']" "[0, 0]"
+['góður'] ['ADJ'] [1]
+"['óþægilegur', 'beint']" "['ADJ', 'ADV']" "[-1, -1]"
+"['glaðlegur', 'vinalegur']" "['ADJ', 'ADJ']" "[-1, -1]"
+"['ósáttur', 'heim']" "['ADJ', 'ADV']" "[1, 1]"
+[] [] []
+['greiddur'] ['ADJ'] [1]
+"['snemmt', 'aftur']" "['ADV', 'ADV']" "[-1, -1]"
+[] [] []
+['góður'] ['ADJ'] [-1]
+['réttur'] ['ADJ'] [1]
+"['góður', 'framúrskarandi']" "['ADJ', 'ADJ']" "[-1, -1]"
+"['seint', 'afar', 'óheppilegur']" "['ADV', 'ADV', 'ADJ']" "[1, 1, 1]"
+['góður'] ['ADJ'] [1]
+[] [] []
+['upphaflega'] ['ADV'] [-1]
+[] [] []
+"['rúmlega', 'áætlaður']" "['ADV', 'ADJ']" "[1, 1]"
+[] [] []
+"['snemmt', 'þrátt']" "['ADV', 'ADV']" "[1, -1]"
+[] [] []
+"['bara', 'vondur']" "['ADV', 'ADJ']" "[1, 1]"
+['erfiður'] ['ADJ'] [-1]
+[] [] []
+['góður'] ['ADJ'] [0]
+"['alltaf', 'góður']" "['ADV', 'ADJ']" "[-1, -1]"
+[] [] []
+"['óánægður', 'hversu', 'margur', 'búinn']" "['ADJ', 'ADV', 'ADJ', 'ADJ']" "[-1, -1, -1, -1]"
+['ítrekað'] ['ADV'] [-1]
+['búinn'] ['ADJ'] [1]
+['þrátt'] ['ADV'] [-1]
+[] [] []
+['ósáttur'] ['ADJ'] [-1]
+['lélegur'] ['ADJ'] [-1]
+[] [] []
+"['náið', 'tómur']" "['ADV', 'ADJ']" "[1, 1]"
+"['eflaust', 'úthlutaður', 'þannig', 'hægur']" "['ADV', 'ADJ', 'ADV', 'ADJ']" "[-1, 1, 1, -1]"
+"['frábær', 'flottur', 'alltaf', 'tilbúinn', 'hlýr']" "['ADJ', 'ADJ', 'ADV', 'ADJ', 'ADJ']" "[-1, -1, -1, -1, -1]"
+"['góður', 'fullur', 'lítill']" "['ADJ', 'ADJ', 'ADJ']" "[1, -1, 1]"
+"['erfiður', 'langur', 'frábær', 'góður']" "['ADJ', 'ADJ', 'ADJ', 'ADJ']" "[1, 1, 1, 1]"
+[] [] []
+"['bara', 'góður']" "['ADV', 'ADJ']" "[-1, -1]"
+"['óvenjulega', 'erilsamur']" "['ADV', 'ADJ']" "[1, 1]"
+"['áberandi', 'vondur']" "['ADV', 'ADJ']" "[0, 0]"
+[] [] []
+[] [] []
+['bókaður'] ['ADJ'] [-1]
+"['einfaldur', 'sniðugur']" "['ADJ', 'ADJ']" "[1, 1]"
+['illa'] ['ADV'] [-1]
+[] [] []
+"['margur', 'lengi']" "['ADJ', 'ADV']" "[-1, 1]"
+"['alltaf', 'góður']" "['ADV', 'ADJ']" "[-1, -1]"
+['viðvarandi'] ['ADJ'] [1]
+['heim'] ['ADV'] [-1]
+[] [] []
+"['íslenskur', 'einstaklega', 'hjálpsamur', 'heim']" "['ADJ', 'ADV', 'ADJ', 'ADV']" "[-1, -1, -1, -1]"
+"['góður', 'ljótlega', 'aftur']" "['ADJ', 'ADV', 'ADV']" "[-1, -1, -1]"
+[] [] []
+"['alltaf', 'fyrstur']" "['ADV', 'ADJ']" "[1, 1]"
+"['svekktur', 'langur']" "['ADJ', 'ADJ']" "[-1, -1]"
+"['góður', 'hægur']" "['ADJ', 'ADJ']" "[0, 0]"
+['góður'] ['ADJ'] [1]
+"['góður', 'aðeins']" "['ADJ', 'ADV']" "[0, 0]"
+['bragðlaus'] ['ADJ'] [-1]
+"['endilega', 'áfram']" "['ADV', 'ADV']" "[0, 0]"
+['staddur'] ['ADJ'] [-1]
+"['heim', 'heim', 'vondur', 'dýr']" "['ADV', 'ADV', 'ADJ', 'ADJ']" "[-1, 1, -1, -1]"
+[] [] []
+"['áður', 'aftur']" "['ADV', 'ADV']" "[-1, -1]"
+['lítill'] ['ADJ'] [1]
+"['auðvitað', 'misvanur']" "['ADV', 'ADJ']" "[1, 1]"
+[] [] []
+['góður'] ['ADJ'] [-1]
+"['einstaklega', 'elskulegur']" "['ADV', 'ADJ']" "[-1, -1]"
+['einstakur'] ['ADJ'] [-1]
+[] [] []
+"['aftari', 'þrátt', 'laus', 'frammi']" "['ADJ', 'ADV', 'ADJ', 'ADV']" "[-1, -1, -1, -1]"
+"['langur', 'góður']" "['ADJ', 'ADJ']" "[1, 1]"
+['góður'] ['ADJ'] [0]
+[] [] []
+"['brúnn', 'framan', 'ógeðslegur']" "['ADJ', 'ADV', 'ADJ']" "[-1, -1, -1]"
+"['hreinlega', 'óvar', 'þarna']" "['ADV', 'ADJ', 'ADV']" "[-1, -1, -1]"
+"['erfiður', 'næs', 'hratt']" "['ADJ', 'ADJ', 'ADV']" "[1, -1, 1]"
+"['óánægður', 'bara', 'hrifinn']" "['ADJ', 'ADV', 'ADJ']" "[1, -1, 1]"
+['ófær'] ['ADJ'] [0]
+[] [] []
+[] [] []
+"['flókinn', 'margur']" "['ADJ', 'ADJ']" "[0, 0]"
+[] [] []
+"['góður', 'áður', 'snemmt']" "['ADJ', 'ADV', 'ADV']" "[-1, -1, -1]"
+[] [] []
+"['ósannur', 'framan', 'hægur']" "['ADJ', 'ADV', 'ADJ']" "[1, 1, -1]"
+"['snemmt', 'gott']" "['ADV', 'ADV']" "[-1, -1]"
+[] [] []
+['fullur'] ['ADJ'] [1]
+[] [] []
+"['dýr', 'bókaður']" "['ADJ', 'ADJ']" "[1, -1]"
+['traustur'] ['ADJ'] [1]
+[] [] []
+[] [] []
+"['búinn', 'aukalega']" "['ADJ', 'ADV']" "[1, 1]"
+[] [] []
+"['áfram', 'góður']" "['ADV', 'ADJ']" "[1, 1]"
+['upphaflega'] ['ADV'] [1]
+[] [] []
+['síður'] ['ADJ'] [0]
+"['lokaður', 'augljóslega', 'nægur', 'leiðinlegur']" "['ADJ', 'ADV', 'ADJ', 'ADJ']" "[1, 1, 1, 1]"
+"['einnig', 'frábær']" "['ADV', 'ADJ']" "[1, 1]"
+"['rosalega', 'flughræddur', 'misgóður', 'hreint', 'frábær', 'reglulega']" "['ADV', 'ADJ', 'ADJ', 'ADV', 'ADJ', 'ADV']" "[-1, -1, -1, -1, -1, -1]"
+"['innilega', 'áleiðis']" "['ADV', 'ADV']" "[0, 0]"
+['tímanlega'] ['ADV'] [-1]
+[] [] []
+[] [] []
+[] [] []
+[] [] []
+['aftur'] ['ADV'] [1]
+['búinn'] ['ADJ'] [-1]
+['óþægilegur'] ['ADJ'] [-1]
+['þarna'] ['ADV'] [1]
+"['ánægjulegur', 'hér']" "['ADJ', 'ADV']" "[0, 0]"
+[] [] []
+"['þrátt', 'innritaður', 'síður']" "['ADV', 'ADJ', 'ADJ']" "[1, 1, 1]"
+[] [] []
+"['langsíðastur', 'langur']" "['ADJ', 'ADJ']" "[0, 0]"
+"['aldrei', 'rúmlega']" "['ADV', 'ADV']" "[1, 1]"
+"['bara', 'góður']" "['ADV', 'ADJ']" "[0, 0]"
+"['stór', 'oft', 'lítill']" "['ADJ', 'ADV', 'ADJ']" "[1, 1, 1]"
+"['hvar', 'viðkomandi']" "['ADV', 'ADJ']" "[0, 0]"
+"['ánægður', 'ungur', 'gamall', 'alvörugefinn', 'flottur', 'hvernig', 'reynslumikill', 'chillaður']" "['ADJ', 'ADJ', 'ADJ', 'ADJ', 'ADJ', 'ADV', 'ADJ', 'ADJ']" "[-1, -1, -1, 1, -1, -1, -1, -1]"
+"['ungur', 'kannski', 'hár', 'þannig', 'oft', 'lítill']" "['ADJ', 'ADV', 'ADJ', 'ADV', 'ADV', 'ADJ']" "[0, 0, 0, 0, 0, 0]"
+[] [] []
+['hræðilegur'] ['ADJ'] [-1]
+[] [] []
+['afleitur'] ['ADJ'] [-1]
+['lakur'] ['ADJ'] [-1]
+['góður'] ['ADJ'] [1]
+['slæmur'] ['ADJ'] [-1]
+"['þrátt', 'öruggur']" "['ADV', 'ADJ']" "[-1, -1]"
+[] [] []
+"['alltaf', 'góður', 'aldrei']" "['ADV', 'ADJ', 'ADV']" "[0, 0, 0]"
+"['framan', 'náið']" "['ADV', 'ADV']" "[-1, -1]"
+['áður'] ['ADV'] [1]
+['alltaf'] ['ADV'] [-1]
+['leiðinlegur'] ['ADJ'] [-1]
+['frábær'] ['ADJ'] [1]
+"['beinn', 'heim', 'þannig', 'næstur']" "['ADJ', 'ADV', 'ADV', 'ADJ']" "[0, 0, 0, 0]"
+['góður'] ['ADJ'] [-1]
+"['fáránlegur', 'óþolandi', 'langur']" "['ADJ', 'ADJ', 'ADJ']" "[-1, -1, 1]"
+"['góður', 'augljós']" "['ADJ', 'ADJ']" "[-1, -1]"
+[] [] []
+"['góður', 'flughræddur']" "['ADJ', 'ADJ']" "[1, 1]"
+['aðgengilegur'] ['ADJ'] [-1]
+[] [] []
+"['ömurlegur', 'illa', 'hannaður']" "['ADJ', 'ADV', 'ADJ']" "[0, 0, 0]"
+[] [] []
+"['snemmt', 'lélegur']" "['ADV', 'ADJ']" "[-1, 1]"
+"['einnig', 'fyrirvaralaust', 'tíður']" "['ADV', 'ADV', 'ADJ']" "[1, 1, 1]"
+['sérstakur'] ['ADJ'] [-1]
+"['vinsamlega', 'fullur', 'hægur', 'einfaldur']" "['ADV', 'ADJ', 'ADJ', 'ADJ']" "[-1, -1, 1, -1]"
+['alltaf'] ['ADV'] [1]
+[] [] []
+['ábótavant'] ['ADJ'] [0]
+"['náið', 'sára', 'lítill']" "['ADV', 'ADV', 'ADJ']" "[-1, -1, -1]"
+"['úreldur', 'töluvert', 'enn', 'fár']" "['ADJ', 'ADV', 'ADV', 'ADJ']" "[-1, -1, -1, -1]"
+[] [] []
+['framúrskarandi'] ['ADJ'] [-1]
+[] [] []
+['fínn'] ['ADJ'] [-1]
+['stakur'] ['ADJ'] [-1]
+['glataður'] ['ADJ'] [-1]
+[] [] []
+['hægur'] ['ADJ'] [-1]
+"['hægur', 'auðveldur']" "['ADJ', 'ADJ']" "[-1, -1]"
+"['slæmur', 'undanfarandi', 'verulegur', 'síðari']" "['ADJ', 'ADJ', 'ADJ', 'ADJ']" "[0, 0, 0, 0]"
+"['alvarlegur', 'margur']" "['ADJ', 'ADJ']" "[-1, -1]"
+"['takmarkaður', 'lélegur']" "['ADJ', 'ADJ']" "[-1, -1]"
+['góður'] ['ADJ'] [-1]
+"['síðari', 'illa']" "['ADJ', 'ADV']" "[-1, -1]"
+"['bara', 'aldrei', 'viðsjárverður']" "['ADV', 'ADV', 'ADJ']" "[1, 1, 1]"
+"['góður', 'þangað', 'loks', 'óþægilegur', 'kvíðafullur']" "['ADJ', 'ADV', 'ADV', 'ADJ', 'ADJ']" "[-1, -1, -1, -1, -1]"
+['góður'] ['ADJ'] [-1]
+"['oft', 'langt', 'nákvæmlega']" "['ADV', 'ADV', 'ADV']" "[1, 1, 1]"
+"['illa', 'fyrri', 'erfiður', 'núna']" "['ADV', 'ADJ', 'ADJ', 'ADV']" "[-1, -1, -1, -1]"
+[] [] []
+"['náið', 'áður']" "['ADV', 'ADV']" "[-1, -1]"
+['langur'] ['ADJ'] [0]
+['erfiður'] ['ADJ'] [1]
+[] [] []
+"['síðari', 'síðari', 'haltrandi']" "['ADJ', 'ADJ', 'ADJ']" "[-1, -1, -1]"
+['strax'] ['ADV'] [-1]
+"['niðurlægjandi', 'erfiður']" "['ADJ', 'ADJ']" "[-1, -1]"
+['lítt'] ['ADV'] [-1]
+[] [] []
+['framan'] ['ADV'] [1]
+"['snemmt', 'margur']" "['ADV', 'ADJ']" "[1, -1]"
+"['fyrstur', 'margur', 'loksins']" "['ADJ', 'ADJ', 'ADV']" "[-1, -1, -1]"
+"['bara', 'bráðlega']" "['ADV', 'ADV']" "[-1, -1]"
+['óþolandi'] ['ADJ'] [1]
+"['snemmt', 'lítill', 'loftlaus', 'tilbúinn']" "['ADV', 'ADJ', 'ADJ', 'ADJ']" "[1, 1, 1, 1]"
+['þannig'] ['ADV'] [1]
+['beint'] ['ADV'] [0]
+['heill'] ['ADJ'] [-1]
+['loftlaus'] ['ADJ'] [1]
+['líklega'] ['ADV'] [-1]
+['fríska'] ['ADV'] [1]
+[] [] []
+[] [] []
+['næstur'] ['ADJ'] [1]
+[] [] []
+[] [] []
+"['hálfur', 'lifandi']" "['ADJ', 'ADJ']" "[-1, -1]"
+['bara'] ['ADV'] [-1]
+['goða'] ['ADJ'] [1]
+['skyndilegur'] ['ADJ'] [-1]
+['hjálplegur'] ['ADJ'] [0]
+"['notalegur', 'hægur', 'skyndilegur']" "['ADJ', 'ADJ', 'ADJ']" "[-1, -1, -1]"
+"['lítt', 'hjálplegur', 'ítrekað']" "['ADV', 'ADJ', 'ADV']" "[1, -1, 1]"
+['einnig'] ['ADV'] [-1]
+['erfiður'] ['ADJ'] [0]
+"['góður', 'goða', 'mögulegur']" "['ADJ', 'ADJ', 'ADJ']" "[-1, -1, -1]"
+"['stór', 'margur', 'glataður']" "['ADJ', 'ADJ', 'ADJ']" "[-1, -1, -1]"
+"['beinn', 'margur']" "['ADJ', 'ADJ']" "[1, 1]"
+"['bara', 'heim', 'hátt', 'stanslaust']" "['ADV', 'ADV', 'ADV', 'ADV']" "[0, 0, 0, 0]"
+"['heitur', 'ómótt']" "['ADJ', 'ADJ']" "[-1, -1]"
+['hægur'] ['ADJ'] [-1]
+['bókaður'] ['ADJ'] [-1]
+"['núna', 'fullur', 'nýr', 'fínn', 'hálftómur', 'heill', 'góður', 'ömurlegur', 'þjappaður']" "['ADV', 'ADJ', 'ADJ', 'ADJ', 'ADJ', 'ADJ', 'ADJ', 'ADJ', 'ADJ']" "[-1, -1, 1, -1, -1, -1, -1, -1, -1]"
+"['líklega', 'bara', 'allavega', 'lítill', 'lélegur']" "['ADV', 'ADV', 'ADV', 'ADJ', 'ADJ']" "[1, 1, 1, 1, 1]"
+"['afar', 'óhress', 'hægur', 'bara', 'smá', 'breyttur', 'óánægður', 'margur']" "['ADV', 'ADJ', 'ADJ', 'ADV', 'ADV', 'ADJ', 'ADJ', 'ADJ']" "[1, 1, 1, 1, 1, 1, 1, 1]"
+['hægur'] ['ADJ'] [1]
+"['hræðilega', 'lítt', 'hvernig']" "['ADV', 'ADV', 'ADV']" "[1, 1, 1]"
+['aftur'] ['ADV'] [-1]
+['illa'] ['ADV'] [-1]
+"['allgjörlega', 'ömurlegur', 'rétt']" "['ADV', 'ADJ', 'ADV']" "[1, 1, -1]"
+['góður'] ['ADJ'] [1]
+[] [] []
+"['enn', 'aftur', 'margur']" "['ADV', 'ADV', 'ADJ']" "[1, 1, 1]"
+['topp'] ['ADJ'] [-1]
+[] [] []
+"['fínn', 'ljúfur']" "['ADJ', 'ADJ']" "[-1, -1]"
+"['fyrstur', 'kærkominn']" "['ADJ', 'ADJ']" "[-1, -1]"
+[] [] []
+['beinn'] ['ADJ'] [0]
+[] [] []
+['boðlegur'] ['ADJ'] [0]
+[] [] []
+['enn'] ['ADV'] [-1]
+"['alltaf', 'góður']" "['ADV', 'ADJ']" "[-1, -1]"
+"['hér', 'drukkinn', 'grímulaus']" "['ADV', 'ADJ', 'ADJ']" "[1, -1, -1]"
+[] [] []
+['ánægður'] ['ADJ'] [-1]
+"['oft', 'fríðindamerktur', 'síður']" "['ADV', 'ADJ', 'ADJ']" "[0, 0, 0]"
+"['góður', 'fljótur']" "['ADJ', 'ADJ']" "[1, 1]"
+"['hinsvegar', 'hreinlega']" "['ADV', 'ADV']" "[-1, -1]"
+"['glataður', 'alltof', 'hár']" "['ADJ', 'ADV', 'ADJ']" "[1, -1, -1]"
+['góður'] ['ADJ'] [-1]
+"['góður', 'góður', 'hljóðlátur']" "['ADJ', 'ADJ', 'ADJ']" "[1, 1, 1]"
+['frábær'] ['ADJ'] [-1]
+"['fastur', 'búinn']" "['ADJ', 'ADJ']" "[-1, -1]"
+['þrátt'] ['ADV'] [-1]
+"['langur', 'búinn']" "['ADJ', 'ADJ']" "[-1, -1]"
+[] [] []
+['óásættanlegur'] ['ADJ'] [-1]
+[] [] []
+"['einungis', 'hátt', 'búinn']" "['ADV', 'ADV', 'ADJ']" "[1, 1, -1]"
+"['hvernig', 'áður', 'ó-loftræstur']" "['ADV', 'ADV', 'ADJ']" "[0, 0, 0]"
+"['dýr', 'ánægjulegur', 'margur', 'þrátt']" "['ADJ', 'ADJ', 'ADJ', 'ADV']" "[-1, 1, 1, -1]"
+"['nýrra', 'ferskur', 'snemmt']" "['ADJ', 'ADJ', 'ADV']" "[1, 1, 1]"
+['óþægilegur'] ['ADJ'] [1]
+[] [] []
+['áður'] ['ADV'] [1]
+['sniðugur'] ['ADJ'] [1]
+"['bara', 'lélegur']" "['ADV', 'ADJ']" "[1, 1]"
+['ákveðinn'] ['ADJ'] [1]
+['aftur'] ['ADV'] [-1]
+[] [] []
+['dásamlegur'] ['ADJ'] [1]
+[] [] []
+[] [] []
+[] [] []
+"['óheppinn', 'síðari', 'heim', 'búinn', 'aftur', 'hægur', 'stífur', 'þægilegur', 'óvirkur', 'búinn', 'tæpur', 'áður', 'lítið', 'hægur']" "['ADJ', 'ADJ', 'ADV', 'ADJ', 'ADV', 'ADJ', 'ADJ', 'ADJ', 'ADJ', 'ADJ', 'ADJ', 'ADV', 'ADV', 'ADJ']" "[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]"
+['ánægður'] ['ADJ'] [-1]
+"['lélegur', 'hægur']" "['ADJ', 'ADJ']" "[0, 0]"
+[] [] []
+"['hér', 'áður', 'snemmt']" "['ADV', 'ADV', 'ADV']" "[1, 1, 1]"
+[] [] []
+[] [] []
+[] [] []
+[] [] []
+[] [] []
+['hræðilegur'] ['ADJ'] [1]
+[] [] []
+"['settur', 'oft']" "['ADJ', 'ADV']" "[1, 1]"
+['góður'] ['ADJ'] [1]
+"['þægilegur', 'goður']" "['ADJ', 'ADJ']" "[1, 1]"
+"['góður', 'notalegur']" "['ADJ', 'ADJ']" "[1, 1]"
+"['ansi', 'klénn']" "['ADV', 'ADJ']" "[-1, 1]"
+['góður'] ['ADJ'] [-1]
+['bágborinn'] ['ADJ'] [1]
+"['aftur', 'áfram', 'loksins', 'þangað']" "['ADV', 'ADV', 'ADV', 'ADV']" "[0, 0, 0, 0]"
+['stuttur'] ['ADJ'] [1]
+[] [] []
+"['loksins', 'búinn', 'rúmur']" "['ADV', 'ADJ', 'ADJ']" "[1, 1, 1]"
+"['búinn', 'langur']" "['ADJ', 'ADJ']" "[-1, 1]"
+"['bilaður', 'stuttur']" "['ADJ', 'ADJ']" "[1, 1]"
+"['góður', 'fár', 'skýr']" "['ADJ', 'ADJ', 'ADJ']" "[-1, -1, -1]"
+['frábær'] ['ADJ'] [0]
+[] [] []
+"['undarlegur', 'enn']" "['ADJ', 'ADV']" "[-1, -1]"
+[] [] []
+['góður'] ['ADJ'] [-1]
+[] [] []
+[] [] []
+['erfiður'] ['ADJ'] [-1]
+"['þakklátur', 'einnig', 'ákveðinn', 'góður']" "['ADJ', 'ADV', 'ADJ', 'ADJ']" "[-1, -1, -1, -1]"
+['frábær'] ['ADJ'] [0]
+['kærlega'] ['ADV'] [-1]
+['ömulegur'] ['ADJ'] [1]
+[] [] []
+[] [] []
+['góður'] ['ADJ'] [0]
+['góður'] ['ADJ'] [1]
+['almennt'] ['ADV'] [1]
+['framúrskarandi'] ['ADJ'] [1]
+['gamall'] ['ADJ'] [1]
+['einnig'] ['ADV'] [-1]
+"['alltaf', 'kolvetnasnauður']" "['ADV', 'ADJ']" "[-1, -1]"
+"['almennt', 'jákvæður']" "['ADV', 'ADJ']" "[1, 1]"
+"['super', 'góður']" "['ADV', 'ADJ']" "[-1, -1]"
+[] [] []
+[] [] []
+['góður'] ['ADJ'] [-1]
+[] [] []
+"['undanskilinn', 'vondur', 'bara']" "['ADJ', 'ADJ', 'ADV']" "[-1, -1, -1]"
+"['nógur', 'góður']" "['ADJ', 'ADJ']" "[1, -1]"
+[] [] []
+[] [] []
+['ánægður'] ['ADJ'] [1]
+"['aldrei', 'uppi']" "['ADV', 'ADV']" "[1, 1]"
+['klárlega'] ['ADV'] [1]
+[] [] []
+['tilbúinn'] ['ADJ'] [1]
+"['vinstri', 'hægri']" "['ADJ', 'ADJ']" "[-1, -1]"
+"['þarna', 'úti']" "['ADV', 'ADV']" "[1, 1]"
+['seint'] ['ADV'] [-1]
+['innritaður'] ['ADJ'] [-1]
+"['ömurlegur', 'alltaf']" "['ADJ', 'ADV']" "[1, 1]"
+[] [] []
+['flottur'] ['ADJ'] [1]
+['notalegur'] ['ADJ'] [-1]
+['bara'] ['ADV'] [1]
+['ásættanlegur'] ['ADJ'] [-1]
+['sárlega'] ['ADV'] [0]
+['margur'] ['ADJ'] [-1]
+['almennur'] ['ADJ'] [0]
+"['hvernig', 'áður']" "['ADV', 'ADV']" "[1, 1]"
+"['óþægilegur', 'næstur', 'snemmt', 'seint']" "['ADJ', 'ADJ', 'ADV', 'ADV']" "[-1, -1, 1, -1]"
+"['áfram', 'tilheyrandi']" "['ADV', 'ADJ']" "[1, 1]"
+"['nánar', 'góður', 'næstur', 'endurgreiddur']" "['ADJ', 'ADJ', 'ADJ', 'ADJ']" "[-1, -1, -1, -1]"
+"['góður', 'snemmt']" "['ADJ', 'ADV']" "[-1, 1]"
+['enn'] ['ADV'] [-1]
+"['víst', 'framan']" "['ADV', 'ADV']" "[-1, -1]"
+"['framan', 'lítill']" "['ADV', 'ADJ']" "[1, -1]"
+['illa'] ['ADV'] [1]
+['lítill'] ['ADJ'] [1]
+['frábær'] ['ADJ'] [-1]
+['þægilegur'] ['ADJ'] [0]
+"['aldrei', 'jafn', 'góður']" "['ADV', 'ADV', 'ADJ']" "[-1, -1, -1]"
+"['fríður', 'hár']" "['ADJ', 'ADJ']" "[-1, -1]"
+[] [] []
+"['erfiður', 'hálfur']" "['ADJ', 'ADJ']" "[-1, -1]"
+[] [] []
+"['einnig', 'óþægilegur', 'breyttur', 'ítrekað']" "['ADV', 'ADJ', 'ADJ', 'ADV']" "[-1, -1, -1, -1]"
+"['auðveldur', 'breyttur', 'enn', 'pirrandi', 'illa']" "['ADJ', 'ADJ', 'ADV', 'ADJ', 'ADV']" "[-1, -1, -1, -1, -1]"
+[] [] []
+"['snemmt', 'góður']" "['ADV', 'ADJ']" "[-1, -1]"
+"['góður', 'glaðlegur']" "['ADJ', 'ADJ']" "[1, 1]"
+"['bara', 'fínn']" "['ADV', 'ADJ']" "[-1, -1]"
+"['hvass', 'kannski', 'hægur']" "['ADJ', 'ADV', 'ADJ']" "[-1, -1, 1]"
+['góður'] ['ADJ'] [-1]
+"['óþolandi', 'ítrekað', 'bókaður', 'þannig']" "['ADJ', 'ADV', 'ADJ', 'ADV']" "[0, 0, 0, 0]"
+[] [] []
+['hratt'] ['ADV'] [-1]
+"['örugglega', 'aftur']" "['ADV', 'ADV']" "[0, 0]"
+"['skrítinn', 'endurtekið']" "['ADJ', 'ADV']" "[1, 1]"
+[] [] []
+[] [] []
+['alltaf'] ['ADV'] [1]
+[] [] []
+['kannski'] ['ADV'] [-1]
+['góður'] ['ADJ'] [1]
+"['fljótur', 'seinn']" "['ADJ', 'ADJ']" "[-1, -1]"
+"['enn', 'búinn', 'síðari']" "['ADV', 'ADJ', 'ADJ']" "[1, -1, -1]"
+[] [] []
+"['hægur', 'áreiðanlegur']" "['ADJ', 'ADJ']" "[1, 1]"
+"['áður', 'oft', 'síður', 'hvernig', 'snemmt', 'topp', 'ánægður', 'oft']" "['ADV', 'ADV', 'ADJ', 'ADV', 'ADV', 'ADJ', 'ADJ', 'ADV']" "[1, 1, -1, 1, 1, 1, 1, 1]"
+[] [] []
+"['frábær', 'alltaf', 'traustur']" "['ADJ', 'ADV', 'ADJ']" "[-1, -1, -1]"
+['allavega'] ['ADV'] [-1]
+['allavega'] ['ADV'] [1]
+['góður'] ['ADJ'] [1]
+"['beinn', 'bókaður']" "['ADJ', 'ADJ']" "[0, 0]"
+[] [] []
+[] [] []
+['þrátt'] ['ADV'] [-1]
+[] [] []
+[] [] []
+['þangað'] ['ADV'] [0]
+[] [] []
+[] [] []
+"['einfaldur', 'beinn']" "['ADJ', 'ADJ']" "[1, 1]"
+[] [] []
+['þjónustulundaður'] ['ADJ'] [-1]
+"['íslenskur', 'margur']" "['ADJ', 'ADJ']" "[-1, -1]"
+"['einstaklega', 'almennilegur']" "['ADV', 'ADJ']" "[-1, -1]"
+['alltaf'] ['ADV'] [-1]
+[] [] []
+"['einnig', 'jákvæður', 'brosmildur', 'flottur']" "['ADV', 'ADJ', 'ADJ', 'ADJ']" "[1, 1, 1, 1]"
+[] [] []
+[] [] []
+"['snemmt', 'ítrekað']" "['ADV', 'ADV']" "[-1, -1]"
+[] [] []
+"['langur', 'þægilegur']" "['ADJ', 'ADJ']" "[0, 0]"
+['alltaf'] ['ADV'] [1]
+"['þrátt', 'hingað']" "['ADV', 'ADV']" "[-1, -1]"
+"['bara', 'ósáttur', 'gær', 'töluverður', 'góður', 'langt']" "['ADV', 'ADJ', 'ADV', 'ADJ', 'ADJ', 'ADV']" "[1, -1, -1, -1, -1, -1]"
+[] [] []
+"['neikvæður', 'réttur']" "['ADJ', 'ADJ']" "[0, 0]"
+[] [] []
+[] [] []
+[] [] []
+[] [] []
+[] [] []
+[] [] []
+[] [] []
+['nógur'] ['ADJ'] [1]
+[] [] []
+[] [] []
+"['illa', 'upplýstur']" "['ADV', 'ADJ']" "[0, 0]"
+"['bara', 'góður']" "['ADV', 'ADJ']" "[1, 1]"
+"['óhagstæður', 'eðlilegur', 'hagstæður', 'nógur']" "['ADJ', 'ADJ', 'ADJ', 'ADJ']" "[-1, 1, -1, -1]"
+['frábær'] ['ADJ'] [-1]
+['einstakur'] ['ADJ'] [-1]
+['bara'] ['ADV'] [1]
+"['bara', 'frábær']" "['ADV', 'ADJ']" "[1, 1]"
+['sáttur'] ['ADJ'] [-1]
+"['jákvæður', 'góður']" "['ADJ', 'ADJ']" "[-1, -1]"
+"['þægilegur', 'vandræðalaus']" "['ADJ', 'ADJ']" "[-1, -1]"
+['erfiður'] ['ADJ'] [1]
+"['innanlands', 'fyrri']" "['ADV', 'ADJ']" "[-1, -1]"
+[] [] []
+[] [] []
+['góður'] ['ADJ'] [1]
+['áður'] ['ADV'] [1]
+['tómur'] ['ADJ'] [1]
+['viðskila'] ['ADJ'] [-1]
+['heim'] ['ADV'] [-1]
+[] [] []
+"['búinn', 'heim', 'sár', 'reiður']" "['ADJ', 'ADV', 'ADJ', 'ADJ']" "[-1, -1, -1, -1]"
+"['heill', 'heim', 'aldeilis']" "['ADJ', 'ADV', 'ADV']" "[-1, -1, -1]"
+[] [] []
+"['langur', 'aftur']" "['ADJ', 'ADV']" "[1, 1]"
+['áður'] ['ADV'] [-1]
+[] [] []
+['loks'] ['ADV'] [1]
+['uppi'] ['ADV'] [-1]
+[] [] []
+[] [] []
+"['góður', 'aðeins']" "['ADJ', 'ADV']" "[-1, -1]"
+['sáttur'] ['ADJ'] [-1]
+"['hreint', 'frábær']" "['ADV', 'ADJ']" "[-1, -1]"
+"['ok', 'bjánalegur', 'bara']" "['ADV', 'ADJ', 'ADV']" "[-1, -1, 1]"
+['góður'] ['ADJ'] [-1]
+[] [] []
+['rafrænt'] ['ADV'] [-1]
+"['almennt', 'ánægður']" "['ADV', 'ADJ']" "[-1, -1]"
+"['langur', 'erlendur']" "['ADJ', 'ADJ']" "[-1, -1]"
+"['ólíkur', 'leiðinlegur']" "['ADJ', 'ADJ']" "[0, 0]"
+['kær'] ['ADJ'] [-1]
+[] [] []
+"['ánægjulegur', 'heim']" "['ADJ', 'ADV']" "[-1, -1]"
+"['heill', 'fáránlegur']" "['ADJ', 'ADJ']" "[1, 1]"
+['góður'] ['ADJ'] [-1]
+['ánægður'] ['ADJ'] [1]
+"['góður', 'hratt']" "['ADJ', 'ADV']" "[1, 1]"
+['bara'] ['ADV'] [0]
+"['illur', 'heim', 'pantaður', 'miðr']" "['ADJ', 'ADV', 'ADJ', 'ADJ']" "[-1, -1, -1, -1]"
+['fullur'] ['ADJ'] [-1]
+['ósáttur'] ['ADJ'] [-1]
+"['annaður', 'þráðlaus', 'þrátt', 'frítt', 'frábær', 'lengi']" "['ADJ', 'ADJ', 'ADV', 'ADV', 'ADJ', 'ADV']" "[0, 0, 0, 0, 0, 0]"
+"['lítt', 'ánægður']" "['ADV', 'ADJ']" "[-1, 1]"
+"['hægur', 'þannig', 'framan']" "['ADJ', 'ADV', 'ADV']" "[1, -1, -1]"
+[] [] []
+[] [] []
+['ómarkviss'] ['ADJ'] [0]
+[] [] []
+"['reyndar', 'heim']" "['ADV', 'ADV']" "[-1, -1]"
+"['dónalegur', 'augljós', 'nýr', 'sérstakur']" "['ADJ', 'ADJ', 'ADJ', 'ADJ']" "[-1, -1, -1, -1]"
+"['alltaf', 'jafn', 'ömurlegur', 'framan']" "['ADV', 'ADV', 'ADJ', 'ADV']" "[-1, -1, -1, -1]"
+"['alltof', 'þröngur']" "['ADV', 'ADJ']" "[1, 1]"
+['góður'] ['ADJ'] [1]
+['núna'] ['ADV'] [0]
+[] [] []
+['rosalegur'] ['ADJ'] [-1]
+['gjarnan'] ['ADV'] [0]
+['ungur'] ['ADJ'] [0]
+"['óhress', 'snemmt', 'snemmt', 'þannig', 'íslenskur']" "['ADJ', 'ADV', 'ADV', 'ADV', 'ADJ']" "[1, 1, 1, 1, 1]"
+"['snemmt', 'velkominn', 'heim', 'lítt', 'lengi']" "['ADV', 'ADJ', 'ADV', 'ADV', 'ADV']" "[1, 1, 1, 1, -1]"
+['oft'] ['ADV'] [-1]
+['enn'] ['ADV'] [-1]
+['langur'] ['ADJ'] [0]
+['þægilegur'] ['ADJ'] [-1]
+[] [] []
+['stuttur'] ['ADJ'] [1]
+[] [] []
+['leiðinlegur'] ['ADJ'] [-1]
+['góður'] ['ADJ'] [-1]
+"['kurteis', 'þægilegur']" "['ADJ', 'ADJ']" "[-1, -1]"
+"['bara', 'flottur']" "['ADV', 'ADJ']" "[-1, -1]"
+['áður'] ['ADV'] [1]
+"['bara', 'þannig']" "['ADV', 'ADV']" "[-1, 1]"
+[] [] []
+['góður'] ['ADJ'] [1]
+"['klarlega', 'góður']" "['ADV', 'ADJ']" "[-1, -1]"
+"['íslenskur', 'áberandi', 'góður']" "['ADJ', 'ADV', 'ADJ']" "[-1, -1, -1]"
+"['fyrstur', 'heim']" "['ADJ', 'ADV']" "[1, 1]"
+['framúrskarandi'] ['ADJ'] [1]
+['frabar'] ['ADJ'] [1]
+['slæmur'] ['ADJ'] [-1]
+"['erfiður', 'mikillur']" "['ADJ', 'ADJ']" "[1, 1]"
+[] [] []
+"['tvennur', 'afþregingur', 'gamall', 'takmarkaður', 'fullur', 'bara', 'alþjóðlegur']" "['ADJ', 'ADJ', 'ADJ', 'ADJ', 'ADJ', 'ADV', 'ADJ']" "[-1, -1, -1, -1, 1, -1, -1]"
+[] [] []
+['mikilvægast'] ['ADJ'] [1]
+[] [] []
+"['glaður', 'góður', 'skinkur', 'langlokur', 'hreinlega', 'samborinn']" "['ADJ', 'ADJ', 'ADJ', 'ADJ', 'ADV', 'ADJ']" "[-1, -1, -1, -1, -1, 1]"
+['íhugaður'] ['ADJ'] [1]
+['þarna'] ['ADV'] [-1]
+['lúinn'] ['ADJ'] [-1]
+[] [] []
+['slæmur'] ['ADJ'] [-1]
+['lélegur'] ['ADJ'] [-1]
+[] [] []
+['óþægilegur'] ['ADJ'] [-1]
+[] [] []
+['meðvitaður'] ['ADJ'] [-1]
+"['heim', 'heim', 'heim', 'gífurlegur', 'aftur', 'hægur']" "['ADV', 'ADV', 'ADV', 'ADJ', 'ADV', 'ADJ']" "[-1, -1, -1, -1, -1, 1]"
+['langur'] ['ADJ'] [-1]
+"['extra', 'meiri', 'skelfilega', 'þröngur', 'óðægilegur', 'hægur', 'örugglega', 'óðægilegur', 'góður']" "['ADV', 'ADJ', 'ADV', 'ADJ', 'ADJ', 'ADJ', 'ADV', 'ADJ', 'ADJ']" "[1, 1, 1, 1, 1, -1, 1, 1, 1]"
+['úreldur'] ['ADJ'] [-1]
+"['fár', 'eldgamall']" "['ADJ', 'ADJ']" "[-1, -1]"
+['áhugaverður'] ['ADJ'] [1]
+[] [] []
+['lítill'] ['ADJ'] [-1]
+"['algengur', 'jafnvel', 'ómögulegur', 'hvernig']" "['ADJ', 'ADV', 'ADJ', 'ADV']" "[1, 1, 1, 1]"
+"['ungur', 'íslenskur', 'aftan', 'alltaf', 'stanslaust', 'bara']" "['ADJ', 'ADJ', 'ADV', 'ADV', 'ADV', 'ADV']" "[0, 0, 0, 0, 0, 0]"
+"['óöruggur', 'bara', 'full', 'afslappaður', 'kannski', 'íslenskur', 'sterkt', 'þarna']" "['ADJ', 'ADV', 'ADV', 'ADJ', 'ADV', 'ADJ', 'ADV', 'ADV']" "[1, 1, 1, 1, 1, 1, 1, 1]"
+[] [] []
+"['ýmislegur', 'aldrei', 'lengi', 'stuttur', 'gær']" "['ADJ', 'ADV', 'ADV', 'ADJ', 'ADV']" "[-1, 1, -1, -1, -1]"
+"['fyllilega', 'hér', 'snemmt', 'allavega']" "['ADV', 'ADV', 'ADV', 'ADV']" "[1, 1, -1, 1]"
+"['tímanlega', 'meðvitaður', 'hægt', 'núna']" "['ADV', 'ADJ', 'ADV', 'ADV']" "[-1, -1, -1, -1]"
+"['fyrstur', 'strax']" "['ADJ', 'ADV']" "[-1, 1]"
+"['góður', 'framarlega']" "['ADJ', 'ADV']" "[0, 0]"
+"['framan', 'rúmlega']" "['ADV', 'ADV']" "[1, 1]"
+"['alltaf', 'vinstri', 'bara', 'hægri', 'megin']" "['ADV', 'ADJ', 'ADV', 'ADJ', 'ADV']" "[1, 1, 1, 1, 1]"
+"['loksins', 'búinn']" "['ADV', 'ADJ']" "[-1, -1]"
+"['aftur', 'sjálfsagður', 'þannig', 'hægur', 'þarna']" "['ADV', 'ADJ', 'ADV', 'ADJ', 'ADV']" "[-1, 1, -1, -1, -1]"
+"['gær', 'sjálfsagður', 'alltaf', 'langbestur']" "['ADV', 'ADJ', 'ADV', 'ADJ']" "[-1, -1, -1, -1]"
+"['aftur', 'hvar']" "['ADV', 'ADV']" "[-1, -1]"
+"['kaldur', 'fínn', 'enn']" "['ADJ', 'ADJ', 'ADV']" "[1, 1, 1]"
+"['oft', 'áður']" "['ADV', 'ADV']" "[-1, -1]"
+['kaldur'] ['ADJ'] [1]
+"['frábær', 'réttur']" "['ADJ', 'ADJ']" "[1, -1]"
+"['ítrekað', 'alltaf', 'samanlagt']" "['ADV', 'ADV', 'ADV']" "[1, 1, 1]"
+['gær'] ['ADV'] [-1]
+"['áður', 'almennt']" "['ADV', 'ADV']" "[-1, 1]"
+"['góður', 'kýrskýr']" "['ADJ', 'ADJ']" "[-1, -1]"
+['grár'] ['ADJ'] [-1]
+"['góður', 'góður']" "['ADJ', 'ADJ']" "[-1, -1]"
+['hægur'] ['ADJ'] [0]
+['týndur'] ['ADJ'] [1]
+"['persónulegur', 'algjörlega', 'einstakur']" "['ADJ', 'ADV', 'ADJ']" "[-1, -1, -1]"
+['kærkominn'] ['ADJ'] [1]
+[] [] []
+[] [] []
+['óþægilegur'] ['ADJ'] [0]
+['nýr'] ['ADJ'] [1]
+"['aftur', 'aftur']" "['ADV', 'ADV']" "[-1, -1]"
+"['æðislegur', 'góður']" "['ADJ', 'ADJ']" "[-1, -1]"
+['fínn'] ['ADJ'] [-1]
+['undanfarið'] ['ADV'] [1]
+[] [] []
+[] [] []
+"['frábær', 'búinn']" "['ADJ', 'ADJ']" "[-1, -1]"
+['sterkur'] ['ADJ'] [1]
+[] [] []
+['lengi'] ['ADV'] [1]
+['strax'] ['ADV'] [-1]
+['þangað'] ['ADV'] [-1]
+"['fár', 'nýr', 'margur', 'íslenskur']" "['ADJ', 'ADJ', 'ADJ', 'ADJ']" "[-1, -1, -1, -1]"
+[] [] []
+[] [] []
+['lítt'] ['ADV'] [1]
+[] [] []
+"['hægur', 'upplýstur']" "['ADJ', 'ADJ']" "[-1, -1]"
+"['erfiður', 'hagstæður']" "['ADJ', 'ADJ']" "[-1, 1]"
+"['reglulega', 'ánægður', 'hvernig', 'enn']" "['ADV', 'ADJ', 'ADV', 'ADV']" "[-1, -1, -1, -1]"
+['alltaf'] ['ADV'] [-1]
+"['bara', 'góður']" "['ADV', 'ADJ']" "[-1, -1]"
+['áfram'] ['ADV'] [1]
+"['nógur', 'góður']" "['ADJ', 'ADJ']" "[1, -1]"
+"['aðgengilegur', 'sjálfvirkur', 'sjálfvirkur']" "['ADJ', 'ADJ', 'ADJ']" "[-1, -1, -1]"
+"['sæmilegur', 'inni']" "['ADJ', 'ADV']" "[-1, -1]"
+"['bara', 'hálf', 'fullur', 'troðfullur', 'hátt', 'hissa', 'hversu', 'fár', 'ódýr', 'sáttur']" "['ADV', 'ADV', 'ADJ', 'ADJ', 'ADV', 'ADJ', 'ADV', 'ADJ', 'ADJ', 'ADJ']" "[-1, -1, -1, -1, -1, -1, -1, -1, -1, 1]"
+['snemmt'] ['ADV'] [-1]
+"['lengi', 'góður', 'áður', 'orðið', 'fullur']" "['ADV', 'ADJ', 'ADV', 'ADV', 'ADJ']" "[1, 1, 1, 1, 1]"
+['góður'] ['ADJ'] [-1]
+['endalaus'] ['ADJ'] [-1]
+"['góður', 'einfaldur', 'síðar']" "['ADJ', 'ADJ', 'ADV']" "[0, 0, 0]"
+['nægilegur'] ['ADJ'] [1]
+"['alltaf', 'notalegur', 'góður']" "['ADV', 'ADJ', 'ADJ']" "[1, 1, 1]"
+"['alltaf', 'góður', 'þægilegur', 'góður']" "['ADV', 'ADJ', 'ADJ', 'ADJ']" "[1, 1, 1, 1]"
+"['góður', 'góður']" "['ADJ', 'ADJ']" "[-1, -1]"
+[] [] []
+['erfiður'] ['ADJ'] [-1]
+['afslappaður'] ['ADJ'] [1]
+"['þannig', 'snemmt', 'margur', 'seint', 'dreifður']" "['ADV', 'ADV', 'ADJ', 'ADV', 'ADJ']" "[-1, 1, -1, -1, -1]"
+['búinn'] ['ADJ'] [0]
+[] [] []
+['aldrei'] ['ADV'] [-1]
+[] [] []
+['ósáttur'] ['ADJ'] [0]
+"['sjálfkrafa', 'aftur']" "['ADV', 'ADV']" "[0, 0]"
+"['framan', 'sennilega', 'fyrrum', 'almennur', 'sáttur']" "['ADV', 'ADV', 'ADV', 'ADJ', 'ADJ']" "[1, 1, 1, 1, -1]"
+[] [] []
+[] [] []
+['frábær'] ['ADJ'] [1]
+"['neikvæður', 'dýr', 'innanlands']" "['ADJ', 'ADJ', 'ADV']" "[0, 0, 0]"
+[] [] []
+['hissa'] ['ADJ'] [0]
+['illa'] ['ADV'] [0]
+[] [] []
+"['góður', 'heim', 'nýr', 'alltaf', 'aftur']" "['ADJ', 'ADV', 'ADJ', 'ADV', 'ADV']" "[-1, -1, -1, -1, -1]"
+"['töluvert', 'skrítinn']" "['ADV', 'ADJ']" "[-1, -1]"
+"['búinn', 'aftur', 'standard']" "['ADJ', 'ADV', 'ADJ']" "[1, 1, 1]"
+"['fyrstur', 'aukinn']" "['ADJ', 'ADJ']" "[-1, -1]"
+[] [] []
+[] [] []
+"['síðari', 'góður', 'hissa']" "['ADJ', 'ADJ', 'ADJ']" "[1, -1, 1]"
+"['illa', 'hannaður', 'óskaplegur']" "['ADV', 'ADJ', 'ADJ']" "[-1, -1, -1]"
+['rólegur'] ['ADJ'] [-1]
+['rúmur'] ['ADJ'] [-1]
+"['illa', 'uppfærður']" "['ADV', 'ADJ']" "[1, 1]"
+"['alltaf', 'notalegur', 'ávallt']" "['ADV', 'ADJ', 'ADV']" "[-1, -1, -1]"
+"['náið', 'alltaf']" "['ADV', 'ADV']" "[-1, -1]"
+"['alltaf', 'pottþétt', 'réttur', 'bölvaður', 'alltaf', 'þannig']" "['ADV', 'ADV', 'ADJ', 'ADJ', 'ADV', 'ADV']" "[1, 1, 1, 1, 1, 1]"
+[] [] []
+[] [] []
+"['beinn', 'bókaður']" "['ADJ', 'ADJ']" "[1, 1]"
+[] [] []
+[] [] []
+['þrátt'] ['ADV'] [-1]
+[] [] []
+[] [] []
+['þangað'] ['ADV'] [-1]
+[] [] []
+['lufthans'] ['ADJ'] [-1]
+['þarna'] ['ADV'] [1]
+[] [] []
+"['einfaldur', 'beinn']" "['ADJ', 'ADJ']" "[-1, -1]"
+[] [] []
+"['þreytandi', 'endalaus']" "['ADJ', 'ADJ']" "[-1, -1]"
+"['rekinn', 'eiginn']" "['ADJ', 'ADJ']" "[-1, -1]"
+[] [] []
+"['góður', 'útá', 'fullur']" "['ADJ', 'ADV', 'ADJ']" "[0, 0, 0]"
+['góður'] ['ADJ'] [-1]
+"['góður', 'góður']" "['ADJ', 'ADJ']" "[-1, -1]"
+[] [] []
+"['bara', 'góður']" "['ADV', 'ADJ']" "[1, 1]"
+[] [] []
+['aðeins'] ['ADV'] [-1]
+[] [] []
+"['langur', 'seinn', 'lítill', 'auðveldur']" "['ADJ', 'ADJ', 'ADJ', 'ADJ']" "[-1, -1, -1, -1]"
+['bara'] ['ADV'] [-1]
+"['ósáttur', 'snemmt']" "['ADJ', 'ADV']" "[1, 1]"
+"['slæmur', 'íslenskur']" "['ADJ', 'ADJ']" "[1, 1]"
+"['flókinn', 'reyndar']" "['ADJ', 'ADV']" "[1, 1]"
+[] [] []
+[] [] []
+['sérlegur'] ['ADJ'] [-1]

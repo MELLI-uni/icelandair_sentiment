@@ -140,24 +140,31 @@ def filtering(lemma_list, tag_list, sentiment):
     else:
         score = 0
 
-    polarity = score
+    negated = False
 
     for i in range(len(tag_list)):
-        if lemma_list[i] == 'ekki':
-            if lemma_mod and lemma_mod[-1] not in isk_modal:
-                senti_mod[-1] *= -1
-            else:
-                polarity *= -1
+        if lemma_list[i] == "ekki":
+            negated = True
+            continue
+
+        if lemma_list[i] in isk_deg:
+            continue
+
+        if lemma_list[i] in isk_stop:
             continue
 
         if tag_list[i] in tagmap:
-            tag_mod.append(tagmap[tag_list[i]])
-            lemma_mod.append(lemma_list[i])
-            senti_mod.append(polarity)
+            gen_tag = tagmap[tag_list[i]]
+            if gen_tag == "ADJ" or gen_tag == "ADV":
+                tag_mod.append(tagmap[tag_list[i]])
+                lemma_mod.append(lemma_list[i])
+                if negated == True:
+                    senti_mod.append(-score)
+                    negated = False
+                else: 
+                    senti_mod.append(score)
 
-            polarity = score
-
-    return lemma_mod, senti_mod
+    return lemma_mod, tag_mod, senti_mod
 
 def process_dataframe(df):
     df.reset_index(inplace=True, drop=True)
@@ -171,6 +178,11 @@ def process_dataframe(df):
     del df['answer_freetext_value']
     df = df.join(pd.Series(lemmas, name='tmp_lemma'))
     df = df.join(pd.Series(tags, name='tmp_tag'))
+
+    df = df.apply(lambda x: filtering(x['tmp_lemma'], x['tmp_tag'], x['Sentiment']), axis=1, result_type='expand')
+    df.columns = ['answer_freetext_value', 'tag', 'sentiment']
+
+    del df['tag']
 
     return df
 
@@ -186,4 +198,5 @@ df_unlabeled = pd.read_pickle('./tuning_isk.pkl')
 #test_lexicon(df_test)
 
 cleaned_df = process_dataframe(df_train)
+cleaned_df.to_csv('checkpoint.txt', header=None, index=None, sep=' ', mode='w')
 
