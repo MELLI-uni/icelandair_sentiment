@@ -188,7 +188,7 @@ def open_lexicon(path, file_name):
     with open((path+file_name), 'r', encoding='utf-8') as f:
         for line in f:
             word, mean, scores = line.split("\t")
-            lexicon[word] = float(mean.strip())
+            lexicon[word] = [float(x) for x mean.strip('[]').split(', ')]
             tuning[word] = [int(x) for x in scores.strip('\n[]').split(', ')]
 
     f.close()
@@ -203,12 +203,21 @@ def find_in_lexicon(tokens, lexicon):
             score.append(lexicon[i])
             continue
 
-        score.append(0)
+        score.append("NA")
 
     return score
 
 def calculate(tokens, lexicon, polarity):
     indiv_score = find_in_lexicon(tokens, lexicon)
+
+    base = [1, 1, 1]
+
+    for i in range(len(polarity)):
+        if polarity[i] == -1:
+
+    for det in polarity:
+        if det == -1:
+
 
     result = np.multiply(indiv_score, polarity)
     score = sum(result)
@@ -301,8 +310,13 @@ def update_lexicon(df):
     tuning = sorted(tuning.items())
 
     for item in tuning:
-        mean = ((item[1][0] * 1) + (item[1][2] * -1)) / sum(item[1])
-        f.write(item[0] + "\t" + str(mean) + "\t" + str(item[1]) + "\n")
+        total = sum(item[1])
+        per_pos = item[1][0] / total
+        per_neu = item[1][1] / total
+        per_neg = item[1][2] / total
+
+        percentage = [per_pos, per_neu, per_neg]
+        f.write(item[0] + "\t" + str(percentage) + "\t" + str(item[1]) + "\n")
 
     f.close()
 
