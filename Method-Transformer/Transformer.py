@@ -220,11 +220,31 @@ def accuracy(list_actual, list_prediction):
     f1_micro = f1_score(actual, prediction, average='micro', zero_division = 0)
     f1_macro = f1_score(actual, prediction, average='macro', zero_division = 0)
 
-    return [precision, recall, f1_gen], [f1_micro, f1_macro]
+    return precision, recall, f1_gen, f1_micro, f1_macro
 
-def display(scores, f1s):
-    score_compile = np.array([scores[0], scores[1], scores[2]])
-    f1_average = np.array([f1s[0], f1s[1]])
+def display(precisions, recalls, f1_gens, f1_micros, f1_macros):
+    set1 = [precisions, recalls, f1_gens]
+    set2 = [f1_micros, f1_macros]
+
+    scores = []
+    f1s = []
+
+    for item in set1:
+        avg = '%0.2f' % ((statistics.mean(item)) * 100)
+        std = '%0.2f' % ((statistics.stdev(item)) * 100)
+
+        item_text = avg + "+-" + std
+        scores.append(item_text)
+
+    for item in set2:
+        avg = '%0.2f' % ((statistics.mean(item)) * 100)
+        std = '%0.2f' % ((statistics.stdev(item)) * 100)
+
+        item_text = avg + "+-" + std
+        f1s.append(item_text)
+
+    score_compile = scores
+    f1_average = f1s
     df_score = pd.DataFrame(data=score_compile, index=['Precision', 'Recall', 'F1'], columns=CATEGORIES)
     df_average = pd.DataFrame(data=f1_average, index=['F1 Microaverage', 'F1 Macroaverage'], columns=['Scores'])
 
@@ -393,10 +413,8 @@ def valid(model, testing_loader, loss_function):
 
     print(f"Validation Loss Epoch: {epoch_loss}")
     print(f"Validation Accuracy Epoch: {epoch_accu}")
-
-    scores, f1s = accuracy(actual, predicted)
     
-    return scores, f1s
+    return accuracy(actual, predicted)
 
 def test_vanilla_basic(df, lang):
     df_train, df_test = train_test_split(df, test_size=0.2, shuffle=True)
@@ -426,8 +444,11 @@ def test_vanilla_5fold(df, lang):
     kf = KFold(n_splits=5, random_state=99, shuffle=True)
     num_split = kf.get_n_splits(df)
 
-    scores_total = np.array([0, 0, 0])
-    f1s_total = np.array([0, 0])
+    precisions = []
+    recalls = []
+    f1_gens = []
+    f1_micros = []
+    f1_macros = []
 
     # Create loss function
     loss_function = torch.nn.CrossEntropyLoss()
@@ -458,13 +479,16 @@ def test_vanilla_5fold(df, lang):
             train(vanilla_model, training_loader, epoch, loss_function, optimizer)
 
         # Validate model
-        scores, f1s = valid(vanilla_model, testing_loader, loss_function)
+        precision, recall, f1_gen, f1_micro, f1_macro = valid(vanilla_model, testing_loader, loss_function)
 
-        scores_total = np.add(scores_total, scores)
-        f1s_total = np.add(f1s_total, f1s)
+        precisions.append(precision)
+        recalls.append(recall)
+        f1_gens.append(f1_gen)
+        f1_micros.append(f1_micro)
+        f1_macros.append(f1_macro)
 
     print("VANILLA MODEL for", lang.upper())
-    display(scores_total/num_split, f1s_total/num_split)
+    display(precisions, recalls, f1_gens, f1_micros, f1_macros)
 
 def test_tuning_basic(df, lang):
     df_train, df_test = train_test_split(df, test_size=0.2, shuffle=True)
