@@ -33,10 +33,10 @@ df_isk = pd.read_pickle('../Data/isk_total.pkl')
 df_isk = Transformer.sentiment_mapping(df_isk)
 
 #Transformer.test_vanilla_basic(df_isk, "IS")
-#Transformer.test_vanilla_5fold(df_isk, "IS")
+Transformer.test_vanilla_5fold(df_isk, "IS")
 #Transformer.test_tuning_5fold(df_isk, "IS")
 
-Transformer.test_xlm_vanilla_5fold(df_isk)
+#Transformer.test_xlm_vanilla_5fold(df_isk)
 
 # Convert tuning pickle file into text file
 # English tuning file contains 30380 Lines
