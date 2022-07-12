@@ -24,6 +24,7 @@ from torch.utils.data import Dataset, DataLoader
 
 import transformers
 from transformers import RobertaTokenizer, RobertaModel, RobertaForMaskedLM
+from transformers import XLMRobertaTokenizer, XLMRobertaModel
 from transformers import LineByLineTextDataset
 from transformers import DataCollatorForLanguageModeling
 from transformers import Trainer, TrainingArguments
@@ -238,6 +239,25 @@ class RobertaClass(torch.nn.Module):
     def __init__(self, model_name):
         super(RobertaClass, self).__init__()
         self.l1 = RobertaModel.from_pretrained(model_name)
+        self.pre_classifier = torch.nn.Linear(768, 768)
+        self.dropout = torch.nn.Dropout(0.3)
+        self.classifier = torch.nn.Linear(768, 3)
+
+    def forward(self, input_ids, attention_mask, token_type_ids):
+        output_1 = self.l1(input_ids=input_ids, attention_mask=attention_mask, token_type_ids=token_type_ids)
+        hidden_state = output_1[0]
+        pooler = hidden_state[:, 0]
+        pooler = self.pre_classifier(pooler)
+        pooler = torch.nn.ReLU()(pooler)
+        pooler = self.dropout(pooler)
+        output = self.classifier(pooler)
+
+        return output
+
+class XLMRobertaClass(torch.nn.Module):
+    def __init__(self, model_name):
+        super(XLMRobertaClass, self).__init__()
+        self.l1 = XLMRobertaModel.from_pretrained(model_name)
         self.pre_classifier = torch.nn.Linear(768, 768)
         self.dropout = torch.nn.Dropout(0.3)
         self.classifier = torch.nn.Linear(768, 3)
@@ -512,3 +532,24 @@ def test_tuning_5fold(df, lang):
 
     print("TUNED MODEL for", lang.upper())
     display(scores_total/num_split, f1s_total/num_split)
+
+### Using XLMRoberta
+def test_xlm_vanilla_basic(df):
+    df_train, df_test = train_test_split(df, test_size=0.2, shuffle=True)
+
+    vanilla_model = XLMRobertaClass('xlm-roberta-base')
+    tokenizer = XLMRobertaTokenizer.from_pretrained('xlm-roberta-base', truncation=True, do_lower_case=True, max_length = MAX_LEN)
+    vanilla_model.to(device)
+
+    loss_function = torch.nn.CrossEntropyLoss()
+    optimizer = torch.optim.Adam(params=vanilla_model.parameters(), lr=LEARNING_RATE)
+
+    training_loader, testing_loader = data_loading(df_train, df_test, tokenizer)
+
+    EPOCHS = 1
+    for epoch in range(EPOCHS):
+        train(vanilla_model, training_loader, epoch, loss_function, optimizer)
+
+    scores, f1s = valid(vanilla_model, testing_loader, loss_function)
+
+    display(scores, f1s)
