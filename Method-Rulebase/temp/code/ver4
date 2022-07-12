@@ -13,6 +13,7 @@ from sklearn.metrics import recall_score
 from tabulate import tabulate
 
 from itertools import islice
+from collections import Counter
 from gensim.models import Word2Vec
 
 from reynir import Greynir
@@ -157,7 +158,27 @@ def filtering(lemma_list, tag_list, sentiment):
 
             polarity = score
 
-    return lemma_mod, senti_mod
+    list_tag = Counter(tag_mod).keys()
+
+    tag_dict = {}
+
+    weight = 1
+    if "NOUN" in list_tag:
+        tag_dict["NOUN"] = 0.5
+    if "VERB" in list_tag:
+        tag_dict["VERB"] = weight
+        weight += 1
+    if "ADV" in list_tag:
+        tag_dict["ADV"] = weight
+        weight += 1
+    if "ADJ" in list_tag:
+        tag_dict["ADJ"] = weight
+        weight += 1
+
+    apply_weight = map(lambda tag: tag_dict[tag], tag_mod)
+    weight_mod = list(apply_weight)
+    
+    return lemma_mod, senti_mod, weight_mod
 
 def process_dataframe(df):
     df.reset_index(inplace=True, drop=True)
@@ -207,10 +228,11 @@ def find_in_lexicon(tokens, lexicon):
 
     return score
 
-def calculate(tokens, lexicon, polarity):
+def calculate(tokens, lexicon, polarity, weights):
     indiv_score = find_in_lexicon(tokens, lexicon)
 
     result = np.multiply(indiv_score, polarity)
+    result = np.multiply(result, weights)
     score = sum(result)
 
     if len(tokens) == 1 and tokens[0] in NEUTRAL_SKIP:
@@ -237,9 +259,9 @@ def label(df):
     df = df.join(pd.Series(tags, name='tmp_tag'))
 
     df = df.apply(lambda x: filtering(x['tmp_lemma'], x['tmp_tag'], "Positive"), axis=1, result_type='expand')
-    df.columns = ['answer_freetext_value', 'Sentiment']
+    df.columns = ['answer_freetext_value', 'Sentiment', 'Weights']
 
-    df_sentiment = df.apply(lambda x: calculate(x['answer_freetext_value'], lexicon, x['Sentiment']), axis=1)
+    df_sentiment = df.apply(lambda x: calculate(x['answer_freetext_value'], lexicon, x['Sentiment'], x['Weights']), axis=1)
     df['Sentiment'] = df_sentiment
 
     return df
@@ -324,7 +346,4 @@ df_unlabeled = pd.read_pickle('./tuning_isk.pkl')
 #cleaned_df = process_dataframe(df_train)
 #update_lexicon(cleaned_df)
 
-#test_lexicon(df_test)
-
-cleaned_df = process_dataframe(df_train)
-
+test_lexicon(df_test)
