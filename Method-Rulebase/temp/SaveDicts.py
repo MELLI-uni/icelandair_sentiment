@@ -36,6 +36,20 @@ with open('../../lexicons/isk_stop.txt', encoding='utf-8') as f:
         isk_stop.append(line.strip())
 dictionaries.append(isk_stop)
 
+# with open('dictionaries.pickle', 'rb') as handle:
+#     tmp = pickle.load(handle)
+
+# dictionaries.append(tmp[0])
+# dictionaries.append(tmp[1])
+# dictionaries.append(tmp[2])
+# dictionaries.append(tmp[3])
+
+isk_modal = []
+with open('../../lexicons/isk_modal.txt', encoding='utf-8') as f:
+    for line in f:
+        isk_modal.append(line.strip())
+dictionaries.append(isk_modal)
+
 # Dictionary of English degree adverbs
 ENG_ADV = {'a bit':'DEC', 'adequately':'DEC', 'almost':'DEC', 'barely':'DEC', 'fairly':'DEC', 'hardly':'DEC', 'just enough':'DEC', 'kind of':'DEC', 'kinda':'DEC', 
             'kindof':'DEC', 'kind-of':'DEC', 'less':'DEC', 'little':'DEC', 'marginal':'DEC', 'marginally':'DEC', 'moderately':'DEC', 'modest':'DEC', 'nearly':'DEC', 

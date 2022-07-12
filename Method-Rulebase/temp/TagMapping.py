@@ -17,7 +17,7 @@ for line in lines:
     pos_tag_list.append(line.strip())
 
 for tag in pos_tag_list:
-    if tag in guess_list:
+    if tag in ['af', 'afe', 'afm']:
         tag = 'ao'
     if tag in tagmap:
         if tagmap[tag].startswith('ao'):

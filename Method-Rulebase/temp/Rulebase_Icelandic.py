@@ -37,18 +37,23 @@ tagger: pos.Tagger = torch.hub.load(
 #   1. Icelandic emoji dictionary
 #   2. Flight and destination list
 #   3. Icelandic stopwords list
-#   4. English degree adverbs dictionary
-#   5. Icelandic degree adverbs dictionary
+#   4. Icelandic modal verb list
+#   5. English degree adverbs dictionary
+#   6. Icelandic degree adverbs dictionary
 with open('dictionaries.pickle', 'rb') as handle:
     dictionaries = pickle.load(handle)
 
 emoji_dict = dictionaries[1]
 flight_dict = dictionaries[2]
 isk_stop = dictionaries[3]
-isk_deg = dictionaries[5]
+isk_modal = dictionaries[4]
+isk_deg = dictionaries[6]
+
+handle.close()
 
 with open('posmap.pickle', 'rb') as handle:
     tagmap = pickle.load(handle)
+handle.close()
 
 NEUTRAL_SKIP = ["N/A", "n/a", "na", "N/a", "n/A", "NA"]
 
@@ -134,8 +139,10 @@ def filtering(lemma_list, tag_list, sentiment):
 
     for i in range(len(tag_list)):
         if lemma_list[i] == 'ekki':
-            polarity *= -1
-            continue
+            if lemma_list[-1] and lemma_list[-1] not in isk_modal:
+                senti_mod[-1] *= -1
+            else:
+                polarity *= -1
 
         if tag_list[i] in tagmap:
             tag_mod.append(tagmap[tag_list[i]])
@@ -144,7 +151,7 @@ def filtering(lemma_list, tag_list, sentiment):
 
             polarity = score
 
-    return lemma_mod, tag_mod
+    return lemma_mod, tag_mod, senti_mod
 
 def process_dataframe(df):
     df.reset_index(inplace=True, drop=True)
@@ -160,7 +167,8 @@ def process_dataframe(df):
     df = df.join(pd.Series(lemmas, name='tmp_lemma'))
     df = df.join(pd.Series(tags, name='tmp_tag'))
 
-    #df = df.apply(lambda x: filtering(x['tmp_lemma'], x['tmp_tag'], x['Sentiment']))
+    df = df.apply(lambda x: filtering(x['tmp_lemma'], x['tmp_tag'], x['Sentiment']), axis=1, result_type='expand')
+    df.columns = ['answer_freetext_value', 'Temp Tags', 'Polarity']
 
     print(df)
 
@@ -226,7 +234,7 @@ df_unlabeled = pd.read_pickle('./tuning_isk.pkl')
 
 #print(test_cleaned)
 
-cleaned_text = process_dataframe(df_train)
+cleaned_text = process_dataframe(df_test)
 
 #with open('checkpoint.pickle', 'wb') as handle:
 #    pickle.dump()
