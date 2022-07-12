@@ -139,10 +139,11 @@ def filtering(lemma_list, tag_list, sentiment):
 
     for i in range(len(tag_list)):
         if lemma_list[i] == 'ekki':
-            if lemma_list[-1] and lemma_list[-1] not in isk_modal:
+            if lemma_mod and lemma_mod[-1] not in isk_modal:
                 senti_mod[-1] *= -1
             else:
                 polarity *= -1
+            continue
 
         if tag_list[i] in tagmap:
             tag_mod.append(tagmap[tag_list[i]])
@@ -151,11 +152,10 @@ def filtering(lemma_list, tag_list, sentiment):
 
             polarity = score
 
-    return lemma_mod, tag_mod, senti_mod
+    return lemma_mod, senti_mod
 
 def process_dataframe(df):
     df.reset_index(inplace=True, drop=True)
-    del df['id']
 
     df_text = df.copy()
     del df_text['Sentiment']
@@ -168,11 +168,15 @@ def process_dataframe(df):
     df = df.join(pd.Series(tags, name='tmp_tag'))
 
     df = df.apply(lambda x: filtering(x['tmp_lemma'], x['tmp_tag'], x['Sentiment']), axis=1, result_type='expand')
-    df.columns = ['answer_freetext_value', 'Temp Tags', 'Polarity']
+    df.columns = ['answer_freetext_value', 'Sentiment']
 
-    print(df)
+    df = df.explode(['answer_freetext_value', 'Sentiment'], ignore_index=True)
+    df.dropna(subset = ['answer_freetext_value'], inplace=True)
+    df.dropna(subset = ['Sentiment'], inplace=True)
 
-    return 
+    #print(df)
+
+    return df
 
 def open_lexicon(path, file_name):
     lexicon = {}
@@ -221,20 +225,19 @@ def update_lexicon(df):
 
     f.close()
 
+def test_lexicon(df):
+    df_truth = df.copy()
+    df_predict = df.copy()
+    del df_predict['Sentiment']
+
+    df_predict = label(df_predict)
+    return accuracy(df_truth, df_predict)
+
 df_train = pd.read_pickle('./isk_train.pkl')
+del df_train['id']
 df_test = pd.read_pickle('./isk_test.pkl')
+del df_test['id']
 df_unlabeled = pd.read_pickle('./tuning_isk.pkl')
 
-#cleaned_text = data_cleaning(df_unlabeled)
-#tags, lemmas = tag_n_lemmatize(cleaned_text)
-
-#train_word2vec(cleaned_text)
-
-#process_dataframe(df_test)
-
-#print(test_cleaned)
-
-cleaned_text = process_dataframe(df_test)
-
-#with open('checkpoint.pickle', 'wb') as handle:
-#    pickle.dump()
+cleaned_df = process_dataframe(df_test)
+update_lexicon(cleaned_df)
