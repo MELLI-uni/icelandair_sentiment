@@ -180,11 +180,64 @@ def process_dataframe(df):
     df = df.join(pd.Series(tags, name='tmp_tag'))
 
     df = df.apply(lambda x: filtering(x['tmp_lemma'], x['tmp_tag'], x['Sentiment']), axis=1, result_type='expand')
-    df.columns = ['answer_freetext_value', 'tag', 'sentiment']
+    df.columns = ['answer_freetext_value', 'tag', 'Sentiment']
 
     del df['tag']
-
+    
     return df
+
+def open_lexicon(file_name):
+    path = './'
+
+    lexicon = {}
+    tuning = {}
+
+    with open((path+file_name), encoding='utf-8') as f:
+        for line in f:
+            word, mean, scores = line.split("\t")
+            lexicon[word] = float(mean.strip())
+            tuning[word] = [int(x) for x in scores.strip('\n[]').split(', ')]
+
+    f.close()
+
+    return lexicon, tuning
+
+def update_lexicon(df):
+    path = './'
+    file_name = 'isk_lexicon.txt'
+
+    lexicon, tuning = open_lexicon(file_name)
+
+    df = df.explode(['answer_freetext_value', 'Sentiment'], ignore_index=True)
+    df.dropna(subset = ['answer_freetext_value'], inplace=True)
+    df.dropna(subset = ['Sentiment'], inplace=True)
+
+    f = open((path+file_name), 'w', encoding='utf-8')
+
+    for row in df.itertuples(index=False):
+        new_word = row.answer_freetext_value
+        new_score = row.Sentiment
+
+        if new_score == 1:
+            place = 0
+        elif new_score == 0:
+            place = 1
+        else:
+            place = 2
+
+        if new_word in tuning:
+            tuning[new_word][place] += 1
+        else:
+            tuning[new_word] = [0, 0, 0]
+            tuning[new_word][place] += 1
+        
+    tuning = sorted(tuning.items())
+
+    for item in tuning:
+        mean = ((item[1][0] * 1) + (item[1][2] * -1)) / sum(item[1])
+        f.write(item[0] + "\t" + str(mean) + "\t" + str(item[1]) + "\n")
+
+    f.close()
 
 df_train = pd.read_pickle('./isk_train.pkl')
 del df_train['id']
@@ -198,5 +251,6 @@ df_unlabeled = pd.read_pickle('./tuning_isk.pkl')
 #test_lexicon(df_test)
 
 cleaned_df = process_dataframe(df_train)
-cleaned_df.to_csv('checkpoint.txt', header=None, index=None, sep=' ', mode='w')
+update_lexicon(cleaned_df)
+#cleaned_df.to_csv('checkpoint.txt', header=None, index=None, sep=' ', mode='w')
 
