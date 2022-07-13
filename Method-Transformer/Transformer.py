@@ -244,7 +244,6 @@ def display(precisions, recalls, f1_gens, f1_micros, f1_macros):
             scores_ite.append(item_text)
 
         scores.append(scores_ite)
-            
 
     for item in set2:
         avg = "{:.2f}".format((statistics.mean(item)) * 100)
@@ -525,32 +524,15 @@ def test_tuning_5fold(df, lang):
     print("TUNED MODEL for", lang.upper())
     display(precisions, recalls, f1_gens, f1_micros, f1_macros)
 
-def test_xlm_vanilla_basic(df):
-    df_train, df_test = train_test_split(df, test_size=0.2, shuffle=True)
-
-    vanilla_model = XLMRobertaClass('xlm-roberta-base')
-    tokenizer = XLMRobertaTokenizer.from_pretrained('xlm-roberta-base', truncation=True, do_lower_case=True, max_length = MAX_LEN)
-    vanilla_model.to(device)
-
-    loss_function = torch.nn.CrossEntropyLoss()
-    optimizer = torch.optim.Adam(params=vanilla_model.parameters(), lr=LEARNING_RATE)
-
-    training_loader, testing_loader = data_loading(df_train, df_test, tokenizer)
-
-    EPOCHS = 1
-    for epoch in range(EPOCHS):
-        train(vanilla_model, training_loader, epoch, loss_function, optimizer)
-
-    scores, f1s = valid(vanilla_model, testing_loader, loss_function)
-
-    display(scores, f1s)
-
 def test_xlm_vanilla_5fold(df):
     kf = KFold(n_splits=5, random_state=99, shuffle=True)
     num_split = kf.get_n_splits(df)
 
-    scores_total = np.array([0, 0, 0])
-    f1s_total = np.array([0, 0])
+    precisions = []
+    recalls = []
+    f1_gens = []
+    f1_micros = []
+    f1_macros = []
 
     # Create loss function
     loss_function = torch.nn.CrossEntropyLoss()
@@ -576,9 +558,12 @@ def test_xlm_vanilla_5fold(df):
             train(vanilla_model, training_loader, epoch, loss_function, optimizer)
 
         # Validate model
-        scores, f1s = valid(vanilla_model, testing_loader, loss_function)
+        precision, recall, f1_gen, f1_micro, f1_macro = valid(vanilla_model, testing_loader, loss_function)
 
-        scores_total = np.add(scores_total, scores)
-        f1s_total = np.add(f1s_total, f1s)
+        precisions.append(precision)
+        recalls.append(recall)
+        f1_gens.append(f1_gen)
+        f1_micros.append(f1_micro)
+        f1_macros.append(f1_macro)
 
-    display(scores_total/num_split, f1s_total/num_split)
+    display(precisions, recalls, f1_gens, f1_micros, f1_macros)
