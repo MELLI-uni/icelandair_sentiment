@@ -16,4 +16,4 @@ df_eng = pd.read_pickle('../Data/eng_total.pkl')
 df_isk = pd.read_pickle('../Data/isk_total.pkl')
 
 Baseline.baseline(df_eng, "EN")
-Baseline.baseline(df_isk, "IS")
+#Baseline.baseline(df_isk, "IS")

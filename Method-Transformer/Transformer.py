@@ -568,7 +568,7 @@ def test_xlm_vanilla_5fold(df):
 
     display(precisions, recalls, f1_gens, f1_micros, f1_macros)
 
-def test_xlm_vanilla_5fold(df):
+def test_xlm_tuning_5fold(df):
     kf = KFold(n_splits=5, random_state=99, shuffle=True)
     num_split = kf.get_n_splits(df)
 
