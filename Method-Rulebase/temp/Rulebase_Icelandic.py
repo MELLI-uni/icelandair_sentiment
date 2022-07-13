@@ -62,6 +62,21 @@ handle.close()
 
 NEUTRAL_SKIP = ["N/A", "n/a", "na", "N/a", "n/A", "NA", "nei", "Nei"]
 
+encoding_dict = {
+                'positive':0,
+                'neutral':2,
+                'negative':1,
+                'negativa':1
+                }
+
+def sentiment_mapping(df):
+    df['Sentiment'] = df.Sentiment.map(encoding_dict)
+
+    # Line will be deleted later
+    del df['id']
+
+    return df
+
 def data_cleaning(df):
     # Remove na values from dataframe
     df.dropna(inplace=True)
@@ -315,10 +330,24 @@ def test_lexicon(df):
 
     return accuracy(df_truth, df_predict)
 
+def retrain_lexicon(df):
+    df_truth = df.copy()
+    df_retrain = df.copy()
+    del df_retrain['Sentiment']
+
+    df_retrain = label(df_retrain)
+    df_retrain.rename(columns = {'Sentiment':'prediction'}, inplace=True)
+    del df_retrain['answer_freetext_value']
+
+    df_retrain = pd.concat([df_truth, df_retrain], axis=1)
+    df_retrain.to_csv('checkpoint.txt', sep=' ', index=False, header=False, encoding='utf-8')
+
 df_train = pd.read_pickle('./isk_train.pkl')
 del df_train['id']
+
 df_test = pd.read_pickle('./isk_test.pkl')
 del df_test['id']
+
 df_unlabeled = pd.read_pickle('./tuning_isk.pkl')
 
 #cleaned_df = process_dataframe(df_train)
