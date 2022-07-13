@@ -10,6 +10,7 @@ pd.set_option('mode.chained_assignment', None)
 
 import matplotlib
 import matplotlib.pyplot as plt
+import statistics
 
 from sklearn.model_selection import KFold
 from sklearn.feature_extraction.text import TfidfVectorizer
@@ -163,24 +164,64 @@ def accuracy(df_actual, df_prediction):
     # Macro average f1 -> takes the average of each class's F1 score
     f1_macro = f1_score(actual, prediction, average='macro', zero_division = 0)
 
-    return [precision, recall, f1_gen], [f1_micro, f1_macro]
+    return precision, recall, f1_gen, f1_micro, f1_macro
 
-def display(scores, f1s):
+def display(results):
     """
     display function shows the results in a table
 
     : param scores: 3 by 3 np array with Sentiments as columns and [Precision, Recall, F1] as indexes
     : param f1s: list containing f1 microaverage and f1 macroaverage
     """
-    # Compile scores in panda dataframe
-    score_compile = np.array([scores[0], scores[1], scores[2]])
-    f1_average = np.array([f1s[0], f1s[1]])
-    df_score = pd.DataFrame(data=score_compile, index=['Precision', 'Recall', 'F1'], columns=CATEGORIES)
-    df_average = pd.DataFrame(data=f1_average, index=['F1 Microaverage', 'F1 Macroaverage'], columns=['Scores'])
+    precisions = []
+    recalls = []
+    f1_gens = []
+    f1_micros = []
+    f1_macros = []
 
-    # Print dataframe in tabular format
+    for items in results:
+        precisions.append(items[0])
+        recalls.append(items[1])
+        f1_gens.append(items[2])
+        f1_micros.append(items[3])
+        f1_macros.append(items[4])
+
+    set1 = [precisions, recalls, f1_gens]
+    set2 = [f1_micros, f1_macros]
+
+    scores = []
+    f1s = []
+
+    for item in set1:
+        tmp = np.array(item)
+        scores_avg = np.multiply(np.mean(tmp, axis=0), 100).tolist()
+        scores_std = np.multiply(np.std(tmp, axis=0), 100).tolist()
+
+        scores_ite = []
+    
+        for i in range(len(scores_avg)):
+            avg = "{:.2f}".format(scores_avg[i])
+            std = "{:.2f}".format(scores_std[i])
+
+            item_text = avg + "+-" + std
+            scores_ite.append(item_text)
+
+        scores.append(scores_ite)
+
+    for item in set2:
+        avg = "{:.2f}".format((statistics.mean(item)) * 100)
+        std = "{:.2f}".format((statistics.stdev(item)) * 100)
+
+        item_text = avg + "+-" + std
+        f1s.append(item_text)
+
+    #score_compile = scores
+    df_score = pd.DataFrame(data=scores, index=['Precision', 'Recall', 'F1'], columns=CATEGORIES)
+    df_average = pd.DataFrame(data=f1s, index=['F1 Microaverage', 'F1 Macroaverage'], columns=['Scores'])
+
     print(tabulate(df_score, headers='keys', tablefmt='pretty'))
     print(tabulate(df_average, headers='keys', tablefmt='pretty'))
+
 
 def classify(train, test, pipeline):
     """
@@ -232,30 +273,31 @@ def baseline(df, lang):
     f1_SVC = [0, 0]
     f1_LogReg = [0, 0]
 
+    results_NB = []
+    results_SVC = []
+    results_LogReg = []
+
     for train_index, test_index in kf.split(df):
         train = df.iloc[train_index]
         test = df.iloc[test_index]
 
-        scores, f1s = classify(train, test, NB)
-        scores_NB = np.add(scores_NB, scores)
-        f1_NB = np.add(f1_NB, f1s)
+        result = classify(train, test, NB)
+        results_NB.append(result)
 
-        scores, f1s = classify(train, test, SVC)
-        scores_SVC = np.add(scores_SVC, scores)
-        f1_SVC = np.add(f1_SVC, f1s)
+        result = classify(train, test, SVC)
+        results_SVC.append(result)
         
-        scores, f1s = classify(train, test, LogReg)
-        scores_LogReg = np.add(scores_LogReg, scores)
-        f1_LogReg = np.add(f1_LogReg, f1s)
+        result = classify(train, test, LogReg)
+        results_LogReg.append(result)
 
     print(lang)
     print("Naive Bayes")
-    display(scores_NB/num_split, f1_NB/num_split)
+    display(results_NB)
 
     print("\n\nLinear SVC")
-    display(scores_SVC/num_split, f1_SVC/num_split)
+    display(results_SVC)
 
     print("\n\nLogistic Regression")
-    display(scores_LogReg/num_split, f1_LogReg/num_split)
+    display(results_LogReg)
 
     print("\n\n\n\n")
