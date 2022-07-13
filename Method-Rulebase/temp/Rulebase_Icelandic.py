@@ -146,6 +146,7 @@ def train_word2vec(tokenized_inputs):
 def filtering(lemma_list, tag_list, sentiment):
     lemma_mod = []
     tag_mod = []
+    senti_pure_mod = []
     senti_mod = []
 
     if sentiment.lower() == "positive":
@@ -155,14 +156,35 @@ def filtering(lemma_list, tag_list, sentiment):
     else:
         score = 0
 
-    polarity = score
+    token_score = score
+    auxiliary = []
+    mark_down = 0
+    mark_list = []
+    negate = False
+    comp_neg = False
+
+    score_deg = 0
+    flag_deg = False
 
     for i in range(len(tag_list)):
+        if lemma_list[i] in flight_dict:
+            continue
+        
+        if tag_list[i] == 'ADV' and lemma_list[i] in isk_deg:
+            flag_deg = True
+
+            if token.lemma[i] == doc[-1]:
+                polarity[-1] += score_deg
+                score_deg = 0
+                flag_deg = False
+
+            continue
+
         if lemma_list[i] == 'ekki':
             if lemma_mod and lemma_mod[-1] not in isk_modal:
                 senti_mod[-1] *= -1
             else:
-                polarity *= -1
+                negate = True
             continue
 
         if tag_list[i] in tagmap:
@@ -353,4 +375,4 @@ df_unlabeled = pd.read_pickle('./tuning_isk.pkl')
 #cleaned_df = process_dataframe(df_train)
 #update_lexicon(cleaned_df)
 
-test_lexicon(df_train)
+test_lexicon(df_test)
