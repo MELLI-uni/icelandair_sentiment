@@ -1,4 +1,42 @@
-import torch.optim as optim
+import xlwings as xws
+import regex as re
+import string
+
+import numpy as np
+import pandas as pd
+pd.set_option('mode.chained_assignment', None)
+
+import seaborn as sns
+import matplotlib
+import matplotlib.pyplot as plt
+import statistics
+
+from sklearn.model_selection import train_test_split
+from sklearn.model_selection import KFold
+from sklearn.metrics import f1_score
+from sklearn.metrics import precision_score
+from sklearn.metrics import recall_score
+from tabulate import tabulate
+from tqdm import tqdm
+
+import torch
+from torch import cuda
+from torch.utils.data import Dataset, DataLoader
+from torchtext.legacy import data
+from torchtext.legacy import datasets
+
+device = 'cuda' if cuda.is_available() else 'cpu'
+
+TEXT = data.Field(sequential=True, batch_first=True, lower=True)
+LABEL = data.Field(sequential=True, batch_first=True)
+
+trainset, testset = datasets.IMDB.splits(TEXT, LABEL)
+
+TEXT.build_vocab(trainset, min_freq=5)
+LABEL.build_vocab(trainset)
+
+vocab_size = len(TEXT.vocab)
+n_classes = 3
 
 class CNN(torch.nn.Module):
     def __init__(self, vocab_size, embedding_dim, n_filters, filter_sizes, output_dim, dropout, pad_idx):
@@ -14,7 +52,7 @@ class CNN(torch.nn.Module):
         ])
 
         self.fc = torch.nn.Linear(len(filter_sizes) * n_filters, output_dim)
-        self.dropout = nn.Dropout(dropout)
+        self.dropout = torch.nn.Dropout(dropout)
 
     def forward(self, text):
         text = text.permute(1, 0)
@@ -25,6 +63,66 @@ class CNN(torch.nn.Module):
         cat = self.dropout(torch.cat(pooled, dim=1))
 
         return self.fc(cat)
+
+def calculate_accuracy(preds, y):
+    top_pred = preds.argmax(1, keepdim-True)
+    correct = top_pred.eq(y.view_as(top_pred)).sum()
+    acc = correct.float() / y.shape[0]
+
+    return acc
+
+def train(model, iterator, loss_function, optimizer):
+    epoch_loss = 0
+    epoch_acc = 0
+
+    model.train()
+
+    for batch in iterator:
+        optimizer.zero_grad()
+
+        predictions = model(batch.text)
+        loss = loss_function(predictions, batch.label)
+        acc = calculate_accuracy(predictions, batch.label)
+
+        loss.backward()
+        optimizer.step()
+
+        epoch_loss += loss.item()
+        epoch_acc = acc.item()
+
+    return epoch_loss / len(iterator), epoch_acc / len(iterator)
+
+def evaluate(model, iterator, loss_function):
+    epoch_loss = 0
+    epoch_acc = 0
+    
+    model.eval()
+
+    with torch.no_grad():
+        for batch in iterator:
+            predictions = model(batch.text)
+
+            loss = loss_function(predictions, batch.label)
+            acc = calculate_accuracy(predictions, batch.label)
+
+            epoch_loss += loss.item()
+            epoch_acc += acc.item()
+
+    return epoch_loss / len(iterator), epoch_acc / len(iterator)
+
+def predict_class(model, sentence, min_len = 4):
+    model.eval()
+
+    if len(tokenized) < min_len:
+        tokenized += ['<pad>'] * (min_len - len(tokenized))
+
+    indexed = [TEXT.vocab.stoi[t] for t in tokenized]
+    tensor = torch.LongTensor(indexed).to(device)
+    tensor = tensor.unsqueeze(1)
+    preds = model(tensor)
+    max_preds = preds.argmax(dim = 1)
+
+    return max_preds.item()
 
 INPUT_DIM = len(TEXT.vocab)
 EMBEDDING_DIM = 200
@@ -48,3 +146,5 @@ criterion = nn.CrossEntropyLoss()
 
 model = model.to(device)
 criterion = criterion.to(device)
+
+#pred_class = predict_class(model, "sentence")
