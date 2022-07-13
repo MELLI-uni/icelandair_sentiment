@@ -567,3 +567,47 @@ def test_xlm_vanilla_5fold(df):
         f1_macros.append(f1_macro)
 
     display(precisions, recalls, f1_gens, f1_micros, f1_macros)
+
+def test_xlm_vanilla_5fold(df):
+    kf = KFold(n_splits=5, random_state=99, shuffle=True)
+    num_split = kf.get_n_splits(df)
+
+    precisions = []
+    recalls = []
+    f1_gens = []
+    f1_micros = []
+    f1_macros = []
+
+    # Create loss function
+    loss_function = torch.nn.CrossEntropyLoss()
+
+    for train_index, test_index in kf.split(df):
+        df_train = df.iloc[train_index]
+        df_test = df.iloc[test_index]
+
+        vanilla_model = XLMRobertaClass('ModelTuning/isk_xlm_roberta-retrained')
+        tokenizer = XLMRobertaTokenizer.from_pretrained('xlm-roberta-base', truncation=True, do_lower_case=True, max_length = MAX_LEN)
+        vanilla_model.to(device)
+
+        # Create optimizer
+        loss_function = torch.nn.CrossEntropyLoss()
+        optimizer = torch.optim.Adam(params = vanilla_model.parameters(), lr=LEARNING_RATE)
+
+        # Load data
+        training_loader, testing_loader = data_loading(df_train, df_test, tokenizer)
+
+        # Train model
+        EPOCHS = 1
+        for epoch in range(EPOCHS):
+            train(vanilla_model, training_loader, epoch, loss_function, optimizer)
+
+        # Validate model
+        precision, recall, f1_gen, f1_micro, f1_macro = valid(vanilla_model, testing_loader, loss_function)
+
+        precisions.append(precision)
+        recalls.append(recall)
+        f1_gens.append(f1_gen)
+        f1_micros.append(f1_micro)
+        f1_macros.append(f1_macro)
+
+    display(precisions, recalls, f1_gens, f1_micros, f1_macros)
