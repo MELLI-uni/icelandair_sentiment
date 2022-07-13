@@ -229,12 +229,21 @@ def display(precisions, recalls, f1_gens, f1_micros, f1_macros):
     scores = []
     f1s = []
 
-    #for item in set1:
-    #    tmp = np.array(item)
-    #    scores_avg = np.multiply(np.mean(tmp, axis=0), 100).tolist()
-    #    scores_std = np.multiply(np.std(tmp, axis=0), 100).tolist()
+    for item in set1:
+        tmp = np.array(item)
+        scores_avg = np.multiply(np.mean(tmp, axis=0), 100).tolist()
+        scores_std = np.multiply(np.std(tmp, axis=0), 100).tolist()
+
+        scores_ite = []
     
-    #    for i in range(len(scores_avg)):
+        for i in range(len(scores_avg)):
+            avg = "{:.2f}".format(scores_avg[i])
+            std = "{:.2f}".format(scores_std[i])
+
+            item_text = avg + "+-" + std
+            scores_ite.append(item_text)
+
+        scores.append(scores_ite)
             
 
     for item in set2:
@@ -245,10 +254,10 @@ def display(precisions, recalls, f1_gens, f1_micros, f1_macros):
         f1s.append(item_text)
 
     #score_compile = scores
-    #df_score = pd.DataFrame(data=score_compile, index=['Precision', 'Recall', 'F1'], columns=CATEGORIES)
+    df_score = pd.DataFrame(data=scores, index=['Precision', 'Recall', 'F1'], columns=CATEGORIES)
     df_average = pd.DataFrame(data=f1s, index=['F1 Microaverage', 'F1 Macroaverage'], columns=['Scores'])
 
-    #print(tabulate(df_score, headers='keys', tablefmt='pretty'))
+    print(tabulate(df_score, headers='keys', tablefmt='pretty'))
     print(tabulate(df_average, headers='keys', tablefmt='pretty'))
 
 def calculate_accuracy(preds, targets):
