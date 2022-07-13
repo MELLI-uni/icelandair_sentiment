@@ -140,24 +140,31 @@ def filtering(lemma_list, tag_list, sentiment):
     else:
         score = 0
 
-    polarity = score
+    negated = False
 
     for i in range(len(tag_list)):
-        if lemma_list[i] == 'ekki':
-            if lemma_mod and lemma_mod[-1] not in isk_modal:
-                senti_mod[-1] *= -1
-            else:
-                polarity *= -1
+        if lemma_list[i] == "ekki":
+            negated = True
+            continue
+
+        if lemma_list[i] in isk_deg:
+            continue
+
+        if lemma_list[i] in isk_stop:
             continue
 
         if tag_list[i] in tagmap:
-            tag_mod.append(tagmap[tag_list[i]])
-            lemma_mod.append(lemma_list[i])
-            senti_mod.append(polarity)
+            gen_tag = tagmap[tag_list[i]]
+            if gen_tag == "ADJ" or gen_tag == "ADV":
+                tag_mod.append(tagmap[tag_list[i]])
+                lemma_mod.append(lemma_list[i])
+                if negated == True:
+                    senti_mod.append(-score)
+                    negated = False
+                else: 
+                    senti_mod.append(score)
 
-            polarity = score
-
-    return lemma_mod, senti_mod
+    return lemma_mod, tag_mod, senti_mod
 
 def process_dataframe(df):
     df.reset_index(inplace=True, drop=True)
@@ -173,19 +180,17 @@ def process_dataframe(df):
     df = df.join(pd.Series(tags, name='tmp_tag'))
 
     df = df.apply(lambda x: filtering(x['tmp_lemma'], x['tmp_tag'], x['Sentiment']), axis=1, result_type='expand')
-    df.columns = ['answer_freetext_value', 'Sentiment']
+    df.columns = ['answer_freetext_value', 'tag', 'Sentiment']
 
-    df = df.explode(['answer_freetext_value', 'Sentiment'], ignore_index=True)
-    df.dropna(subset = ['answer_freetext_value'], inplace=True)
-    df.dropna(subset = ['Sentiment'], inplace=True)
-
+    del df['tag']
+    
     return df
 
 def open_lexicon(path, file_name):
     lexicon = {}
     tuning = {}
 
-    with open((path+file_name), 'r', encoding='utf-8') as f:
+    with open((path+file_name), encoding='utf-8') as f:
         for line in f:
             word, mean, scores = line.split("\t")
             lexicon[word] = float(mean.strip())
@@ -237,7 +242,8 @@ def label(df):
     df = df.join(pd.Series(tags, name='tmp_tag'))
 
     df = df.apply(lambda x: filtering(x['tmp_lemma'], x['tmp_tag'], "Positive"), axis=1, result_type='expand')
-    df.columns = ['answer_freetext_value', 'Sentiment']
+    df.columns = ['answer_freetext_value', 'tag', 'Sentiment']
+    del df['tag']
 
     df_sentiment = df.apply(lambda x: calculate(x['answer_freetext_value'], lexicon, x['Sentiment']), axis=1)
     df['Sentiment'] = df_sentiment
@@ -277,7 +283,11 @@ def update_lexicon(df):
     path = './'
     file_name = 'isk_lexicon.txt'
 
-    lexicon, tuning = open_lexicon(path, file_name)
+    lexicon, tuning = open_lexicon(file_name)
+
+    df = df.explode(['answer_freetext_value', 'Sentiment'], ignore_index=True)
+    df.dropna(subset = ['answer_freetext_value'], inplace=True)
+    df.dropna(subset = ['Sentiment'], inplace=True)
 
     f = open((path+file_name), 'w', encoding='utf-8')
 
@@ -297,7 +307,7 @@ def update_lexicon(df):
         else:
             tuning[new_word] = [0, 0, 0]
             tuning[new_word][place] += 1
-
+        
     tuning = sorted(tuning.items())
 
     for item in tuning:
@@ -324,4 +334,9 @@ df_unlabeled = pd.read_pickle('./tuning_isk.pkl')
 #cleaned_df = process_dataframe(df_train)
 #update_lexicon(cleaned_df)
 
-test_lexicon(df_train)
+test_lexicon(df_test)
+
+#cleaned_df = process_dataframe(df_train)
+#update_lexicon(cleaned_df)
+#cleaned_df.to_csv('checkpoint.txt', header=None, index=None, sep=' ', mode='w')
+
