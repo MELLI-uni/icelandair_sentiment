@@ -44,7 +44,7 @@ with open('../lexicons/isk_stop.txt', encoding='utf-8') as f:
     for line in f:
         isk_stop.append(line.strip())
 
-CATEGORIES = ['Positive', 'Negative', 'Neutral']
+CATEGORIES = ['positive', 'negative', 'neutral']
 
 def lemmatize_eng(input):
     return " ".join([token.lemma_ for token in eng_spacy(input) if token.text not in string.punctuation])
