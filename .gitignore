@@ -2,5 +2,7 @@ Data/
 Method-Transformer/ModelTuning/
 Method-Rulebase/temp/nefnir
 Method-WordTree/Models/
+ordgreypingar_embeddings/
 *.sh
 *.log
+*.model

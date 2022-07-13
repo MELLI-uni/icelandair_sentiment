@@ -173,15 +173,15 @@ def filtering(lemma_list, tag_list, sentiment):
         if tag_list[i] == 'ADV' and lemma_list[i] in isk_deg:
             flag_deg = True
 
-            if token.lemma[i] == doc[-1]:
-                polarity[-1] += score_deg
-                score_deg = 0
-                flag_deg = False
+            #if lemma_list[i] :
+            #    polarity[-1] += score_deg
+            #    score_deg = 0
+            #    flag_deg = False
 
             continue
 
         if lemma_list[i] == 'ekki':
-            if lemma_mod and lemma_mod[-1] not in isk_modal:
+            if lemma_mod and lemma_mod[-1] in isk_modal and tag_mod[-1] == "VERB":
                 senti_mod[-1] *= -1
             else:
                 negate = True
@@ -190,9 +190,13 @@ def filtering(lemma_list, tag_list, sentiment):
         if tag_list[i] in tagmap:
             tag_mod.append(tagmap[tag_list[i]])
             lemma_mod.append(lemma_list[i])
-            senti_mod.append(polarity)
 
-            polarity = score
+            if negate == True:
+                senti_mod.append(-token_score)
+            else:
+                senti_mod.append(token_score)
+
+            token_score = score
 
     return lemma_mod, senti_mod
 
