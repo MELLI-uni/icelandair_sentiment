@@ -43,6 +43,8 @@ LABEL = data.Field(sequential=True, batch_first=True)
 
 trainset, testset = datasets.IMDB.splits(TEXT, LABEL)
 
+print(testset)
+
 TEXT.build_vocab(trainset, min_freq=5)
 LABEL.build_vocab(trainset)
 
