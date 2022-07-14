@@ -33,49 +33,50 @@ from tqdm import tqdm
 import torch
 from torch import cuda
 from torch.utils.data import Dataset, DataLoader
-from torchtext.legacy import data
-from torchtext.legacy import datasets
+from torchtext import data, datasets
 
 device = 'cuda' if cuda.is_available() else 'cpu'
 
 TEXT = data.Field(sequential=True, batch_first=True, lower=True)
-LABEL = data.Field(sequential=True, batch_first=True)
+LABEL = data.Field(sequential=False, batch_first=True)
 
-trainset, testset = datasets.IMDB.splits(TEXT, LABEL)
+trainset , testset = datasets.IMDB.splits(TEXT,LABEL)
 
-print(testset)
+print(vars(trainset.examples[0]))
 
-TEXT.build_vocab(trainset, min_freq=5)
-LABEL.build_vocab(trainset)
+# print(testset)
 
-vocab_size = len(TEXT.vocab)
-n_classes = 3
+# TEXT.build_vocab(trainset, min_freq=5)
+# LABEL.build_vocab(trainset)
 
-class CNN(torch.nn.Module):
-    def __init__(self, vocab_size, embedding_dim, n_filters, filter_sizes, output_dim, dropout, pad_idx):
-        super().__init__()
+# vocab_size = len(TEXT.vocab)
+# n_classes = 3
 
-        self.embedding = torch.nn.Embedding(vocab_size, embedding_dim)
+# class CNN(torch.nn.Module):
+#     def __init__(self, vocab_size, embedding_dim, n_filters, filter_sizes, output_dim, dropout, pad_idx):
+#         super().__init__()
 
-        self.convs = torch.nn.ModuleList([
-            torch.nn.Conv2d(in_channels = 1,
-                out_channels = n_filters,
-                kernel_size = (fs, embedding_dim))
-            for fs in filter_sizes
-        ])
+#         self.embedding = torch.nn.Embedding(vocab_size, embedding_dim)
 
-        self.fc = torch.nn.Linear(len(filter_sizes) * n_filters, output_dim)
-        self.dropout = torch.nn.Dropout(dropout)
+#         self.convs = torch.nn.ModuleList([
+#             torch.nn.Conv2d(in_channels = 1,
+#                 out_channels = n_filters,
+#                 kernel_size = (fs, embedding_dim))
+#             for fs in filter_sizes
+#         ])
 
-    def forward(self, text):
-        text = text.permute(1, 0)
-        embedded = self.embedding(text)
-        embedded = embedded.unsqueeze(1)
-        conved = [torch.nn.functional.relu(conv(embedded)).squeeze(3) for conv in self.convs]
-        pooled = [torch.nn.functional.max_pool1d(conv, conv.shape[2]).squeeze(2) for conv in conved]
-        cat = self.dropout(torch.cat(pooled, dim=1))
+#         self.fc = torch.nn.Linear(len(filter_sizes) * n_filters, output_dim)
+#         self.dropout = torch.nn.Dropout(dropout)
 
-        return self.fc(cat)
+#     def forward(self, text):
+#         text = text.permute(1, 0)
+#         embedded = self.embedding(text)
+#         embedded = embedded.unsqueeze(1)
+#         conved = [torch.nn.functional.relu(conv(embedded)).squeeze(3) for conv in self.convs]
+#         pooled = [torch.nn.functional.max_pool1d(conv, conv.shape[2]).squeeze(2) for conv in conved]
+#         cat = self.dropout(torch.cat(pooled, dim=1))
+
+#         return self.fc(cat)
 
 class cLSTM(torch.nn.Module):
     def __init__(self, n_layers, hidden_size, n_vocab, embedding_size, n_classes, num_dirs=1, dropout=0.5):
@@ -112,87 +113,87 @@ class cLSTM(torch.nn.Module):
 
         return logit
 
-def calculate_accuracy(preds, y):
-    top_pred = preds.argmax(1, keepdim-True)
-    correct = top_pred.eq(y.view_as(top_pred)).sum()
-    acc = correct.float() / y.shape[0]
+# def calculate_accuracy(preds, y):
+#     top_pred = preds.argmax(1, keepdim-True)
+#     correct = top_pred.eq(y.view_as(top_pred)).sum()
+#     acc = correct.float() / y.shape[0]
 
-    return acc
+#     return acc
 
-def train(model, iterator, loss_function, optimizer):
-    epoch_loss = 0
-    epoch_acc = 0
+# def train(model, iterator, loss_function, optimizer):
+#     epoch_loss = 0
+#     epoch_acc = 0
 
-    model.train()
+#     model.train()
 
-    for batch in iterator:
-        optimizer.zero_grad()
+#     for batch in iterator:
+#         optimizer.zero_grad()
 
-        predictions = model(batch.text)
-        loss = loss_function(predictions, batch.label)
-        acc = calculate_accuracy(predictions, batch.label)
+#         predictions = model(batch.text)
+#         loss = loss_function(predictions, batch.label)
+#         acc = calculate_accuracy(predictions, batch.label)
 
-        loss.backward()
-        optimizer.step()
+#         loss.backward()
+#         optimizer.step()
 
-        epoch_loss += loss.item()
-        epoch_acc = acc.item()
+#         epoch_loss += loss.item()
+#         epoch_acc = acc.item()
 
-    return epoch_loss / len(iterator), epoch_acc / len(iterator)
+#     return epoch_loss / len(iterator), epoch_acc / len(iterator)
 
-def evaluate(model, iterator, loss_function):
-    epoch_loss = 0
-    epoch_acc = 0
+# def evaluate(model, iterator, loss_function):
+#     epoch_loss = 0
+#     epoch_acc = 0
     
-    model.eval()
+#     model.eval()
 
-    with torch.no_grad():
-        for batch in iterator:
-            predictions = model(batch.text)
+#     with torch.no_grad():
+#         for batch in iterator:
+#             predictions = model(batch.text)
 
-            loss = loss_function(predictions, batch.label)
-            acc = calculate_accuracy(predictions, batch.label)
+#             loss = loss_function(predictions, batch.label)
+#             acc = calculate_accuracy(predictions, batch.label)
 
-            epoch_loss += loss.item()
-            epoch_acc += acc.item()
+#             epoch_loss += loss.item()
+#             epoch_acc += acc.item()
 
-    return epoch_loss / len(iterator), epoch_acc / len(iterator)
+#     return epoch_loss / len(iterator), epoch_acc / len(iterator)
 
-def predict_class(model, sentence, min_len = 4):
-    model.eval()
+# def predict_class(model, sentence, min_len = 4):
+#     model.eval()
 
-    if len(tokenized) < min_len:
-        tokenized += ['<pad>'] * (min_len - len(tokenized))
+#     if len(tokenized) < min_len:
+#         tokenized += ['<pad>'] * (min_len - len(tokenized))
 
-    indexed = [TEXT.vocab.stoi[t] for t in tokenized]
-    tensor = torch.LongTensor(indexed).to(device)
-    tensor = tensor.unsqueeze(1)
-    preds = model(tensor)
-    max_preds = preds.argmax(dim = 1)
+#     indexed = [TEXT.vocab.stoi[t] for t in tokenized]
+#     tensor = torch.LongTensor(indexed).to(device)
+#     tensor = tensor.unsqueeze(1)
+#     preds = model(tensor)
+#     max_preds = preds.argmax(dim = 1)
 
-    return max_preds.item()
+#     return max_preds.item()
 
-INPUT_DIM = len(TEXT.vocab)
-EMBEDDING_DIM = 200
-N_FILTERS = 100
-FILTER_SIZES = [3, 4, 5]
-OUTPUT_DIM = len(LABEL.vocab)
-DROPOUT = 0.5
-PAD_IDX = TEXT.vocab.stoi[TEXT.pad_token]
-model = CNN(INPUT_DIM, EMBEDDING_DIM, N_FILTERS, FILTER_SIZES, OUTPUT_DIM, DROPOUT, PAD_IDX)
+# INPUT_DIM = len(TEXT.vocab)
+# EMBEDDING_DIM = 200
+# N_FILTERS = 100
+# FILTER_SIZES = [3, 4, 5]
+# OUTPUT_DIM = len(LABEL.vocab)
+# DROPOUT = 0.5
+# PAD_IDX = TEXT.vocab.stoi[TEXT.pad_token]
+# model = CNN(INPUT_DIM, EMBEDDING_DIM, N_FILTERS, FILTER_SIZES, OUTPUT_DIM, DROPOUT, PAD_IDX)
 
-pretrained_embeddings = TEXT.vocab.vectors
-model.embedding.weight.data.copy_(pretrained_embeddings)
+# pretrained_embeddings = TEXT.vocab.vectors
+# model.embedding.weight.data.copy_(pretrained_embeddings)
 
-UNK_IDX = TEXT.vocab.stoi[TEXT.unk_token]
+# UNK_IDX = TEXT.vocab.stoi[TEXT.unk_token]
 
-model.embedding.weight.data[UNK_IDX] = torch.zeros(EMBEDDING_DIM)
-model.embedding.weight.data[PAD_IDX] = torch.zeros(EMBEDDING_DIM)
+# model.embedding.weight.data[UNK_IDX] = torch.zeros(EMBEDDING_DIM)
+# model.embedding.weight.data[PAD_IDX] = torch.zeros(EMBEDDING_DIM)
 
-optimizer = optim.Adam(model.parameters())
-criterion = nn.CrossEntropyLoss()
+# optimizer = optim.Adam(model.parameters())
+# criterion = nn.CrossEntropyLoss()
 
-model = model.to(device)
-criterion = criterion.to(device)
+# model = model.to(device)
+# criterion = criterion.to(device)
 
 #pred_class = predict_class(model, "sentence")
