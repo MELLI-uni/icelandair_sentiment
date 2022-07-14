@@ -40,7 +40,7 @@ isk_greynir = Greynir()
 
 # Stopwords from: https://github.com/atlijas/icelandic-stop-words/blob/master/all_stop_words.txt
 isk_stop = []       # List of Icelandic Stopwords
-with open('../lexicons/isk_stop.txt', encoding='utf-8') as f:
+with open('../lexicons/isk_stop.txt', 'r', encoding='utf-8') as f:
     for line in f:
         isk_stop.append(line.strip())
 
@@ -110,7 +110,12 @@ def init(file_name, sheet_name, lang):
         df['answer_freetext_value'] = df['answer_freetext_value'].apply(lambda x: lemmatize_isk(x))
 
     return df
-   
+
+def combine_df(df1, df2):
+    df = pd.concat([df1, df2], ignore_index=True)
+
+    return df
+
 def initialize_pipelines(stop):
     """
     initialize_pipelines function initializes the three basic pipelines: naive bayes, linear SVC, and logistic regression

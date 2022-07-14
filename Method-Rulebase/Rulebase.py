@@ -418,7 +418,6 @@ def process_eng(input, sentiment):
                 comp_neg = True
             continue
 
-        # TODO: double check this portion
         if token.dep_ == 'cc':
             comp_neg = False
             continue

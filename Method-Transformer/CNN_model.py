@@ -1,3 +1,14 @@
+# Reference:
+#   https://blahblahlab.tistory.com/135
+#   https://srinivas-yeeda.medium.com/sentiment-analysis-using-word2vec-and-glove-embeddings-5ad7d50ddb0d
+#   https://github.com/bentrevett/pytorch-sentiment-analysis/blob/master/5%20-%20Multi-class%20Sentiment%20Analysis.ipynb
+#   https://www.knime.com/blog/lexicon-based-sentiment-analysis
+#   https://www.icelandicmadeeasier.com/posts/basic-word-order
+#   http://learn101.org/icelandic_grammar.php
+#   https://github.com/bentrevett/pytorch-sentiment-analysis/blob/master/4%20-%20Convolutional%20Sentiment%20Analysis.ipynb
+#   https://github.com/bentrevett/pytorch-sentiment-analysis/blob/master/2%20-%20Upgraded%20Sentiment%20Analysis.ipynb
+#   https://github.com/stofnun-arna-magnussonar/ordgreypingar_embeddings/blob/c3c6759eded5421e39ef14ce89135039b2bc8edc/word2vec/train_w2v.py#L65
+
 import xlwings as xws
 import regex as re
 import string
@@ -63,6 +74,41 @@ class CNN(torch.nn.Module):
         cat = self.dropout(torch.cat(pooled, dim=1))
 
         return self.fc(cat)
+
+class cLSTM(torch.nn.Module):
+    def __init__(self, n_layers, hidden_size, n_vocab, embedding_size, n_classes, num_dirs=1, dropout=0.5):
+        super(cLSTM.self).__init__()
+
+        self.n_layers = n_layers
+        self.hidden_size = hidden_size
+        self.embedding_size = embedding_size
+        self.embed = torch.nn.Embedding(vocab_size, embedding_size)
+        self.num_dirs = num_dirs
+
+        self.lstm = torch.nn.LSTM(
+            input_size = embedding_size,
+            hidden_size = hidden_size,
+            num_layers = n_layers,
+            batch_first = True,
+            bidirectional = True if num_dirs > 1 else False
+        )
+
+        self.out = torch.nn.Linear(hidden_size * n_layers, n_classes)
+        self.droout = torch.nn.Dropout(dropout)
+
+    def forward(self, x):
+        x = self.embeded(x)
+        h_0 = torch.zeros((self.n_layers * self.num_dirs, x.shape[0], self.hidden_size)).to(device)
+        c_0 = torch.zeros((self.n_layers * self.num_dirs, x.shape[0], self.hidden_size)).to(device)
+
+        hidden_states, h_n, c_n = self.lstm(x, (h_0, c_0))
+        self.droptout(h_n)
+
+        h_n = h_n.view(h_n.shape[1], -1)
+
+        logit = self.out(h_n)
+
+        return logit
 
 def calculate_accuracy(preds, y):
     top_pred = preds.argmax(1, keepdim-True)
