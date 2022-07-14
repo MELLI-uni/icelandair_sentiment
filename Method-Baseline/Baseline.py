@@ -18,6 +18,7 @@ from sklearn.naive_bayes import MultinomialNB
 from sklearn.multiclass import OneVsRestClassifier
 from sklearn.svm import LinearSVC
 from sklearn.linear_model import LogisticRegression
+from sklearn.linear_model import LinearRegression
 from sklearn.pipeline import Pipeline
 
 from sklearn.metrics import f1_score
@@ -44,7 +45,7 @@ with open('../lexicons/isk_stop.txt', 'r', encoding='utf-8') as f:
     for line in f:
         isk_stop.append(line.strip())
 
-CATEGORIES = ['positive', 'negative', 'neutral']
+CATEGORIES = ['Positive', 'Negative', 'Neutral']
 
 def lemmatize_eng(input):
     return " ".join([token.lemma_ for token in eng_spacy(input) if token.text not in string.punctuation])
@@ -142,7 +143,12 @@ def initialize_pipelines(stop):
                 solver='sag'), n_jobs=1))
             ])
 
-    return NB, SVC, LogReg
+    LinReg = Pipeline([
+            ('tfidf', TfidfVectorizer(stop_words = stop)),
+            ('clf', OneVsRestClassifier(LinearRegression(), n_jobs=1))
+            ])
+
+    return NB, SVC, LogReg, LinReg
 
 def accuracy(df_actual, df_prediction):
     """
@@ -265,7 +271,7 @@ def baseline(df, lang):
     elif lang == "IS":
         stop = isk_stop
 
-    [NB, SVC, LogReg] = initialize_pipelines(stop)
+    [NB, SVC, LogReg, LinReg] = initialize_pipelines(stop)
 
     kf = KFold(n_splits=5, random_state=99, shuffle=True)
     num_split = kf.get_n_splits(df)
@@ -273,14 +279,17 @@ def baseline(df, lang):
     scores_NB = np.array([0, 0, 0])
     scores_SVC = np.array([0, 0, 0])
     scores_LogReg = np.array([0, 0, 0])
+    scores_LinReg = np.array([0, 0, 0])
 
     f1_NB = [0, 0]
     f1_SVC = [0, 0]
     f1_LogReg = [0, 0]
+    f1_LinReg = [0, 0]
 
     results_NB = []
     results_SVC = []
     results_LogReg = []
+    results_LinReg = []
 
     for train_index, test_index in kf.split(df):
         train = df.iloc[train_index]
@@ -295,6 +304,9 @@ def baseline(df, lang):
         result = classify(train, test, LogReg)
         results_LogReg.append(result)
 
+        result = classify(train, test, LinReg)
+        results_LinReg.append(result)
+
     print(lang)
     print("Naive Bayes")
     display(results_NB)
@@ -304,5 +316,8 @@ def baseline(df, lang):
 
     print("\n\nLogistic Regression")
     display(results_LogReg)
+
+    print("\n\nLinear Regression")
+    display(results_LinReg)
 
     print("\n\n\n\n")
