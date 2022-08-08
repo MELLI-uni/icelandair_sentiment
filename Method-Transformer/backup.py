@@ -13,14 +13,28 @@ SEED = 99
 torch.manual_seed(SEED)
 torch.backends.cudnn.deterministic = True
 
+df_eng = pd.read_pickle('../Data/eng_total.pkl')
+del df_eng['id']
+
+json_eng = df_eng.to_json('eng.json', orient='records', lines=True)
+
 TEXT = data.Field(tokenize = 'spacy',
                   tokenizer_language = 'en_core_web_sm',
                   include_lengths = True)
 
 LABEL = data.LabelField(dtype = torch.float)
 
-train_data, test_data = datasets.IMDB.splits(TEXT, LABEL)
-train_data, valid_data = train_data.split(random_state = random.seed(SEED))
+fields = {'answer_freetext_value': ('text', TEXT), 'Sentiment': ('label', LABEL)}
+
+dataset = torchtext.legacy.data.TabularDataset(
+        path='eng.json',
+        format="json",
+        fields=fields)
+
+(train_data, test_data) = dataset.split(split_ratio=[0.8,0.2])
+
+#train_data, test_data = datasets.IMDB.splits(TEXT, LABEL)
+#train_data, valid_data = train_data.split(random_state = random.seed(SEED))
 
 MAX_VOCAB_SIZE = 25_000
 
@@ -34,8 +48,8 @@ BATCH_SIZE = 64
 
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
-train_iterator, valid_iterator, test_iterator = data.BucketIterator.splits(
-    (train_data, valid_data, test_data), 
+train_iterator, test_iterator = data.BucketIterator.splits(
+    (train_data, test_data), 
     batch_size = BATCH_SIZE,
     sort_within_batch = True,
     device = device)
