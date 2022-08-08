@@ -81,6 +81,7 @@ class biLSTM(torch.nn.Module):
         self.dropout = torch.nn.Dropout(dropout)
         
     def forward(self, text, text_lengths):
+        text = text.permute(1, 0)
         embedded = self.dropout(self.embedding(text))
         packed_embedded = torch.nn.utils.rnn.pack_padded_sequence(embedded, text_lengths.to('cpu'))
         
