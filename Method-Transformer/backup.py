@@ -52,6 +52,7 @@ train_iterator, test_iterator = data.BucketIterator.splits(
     (train_data, test_data), 
     batch_size = BATCH_SIZE,
     sort_within_batch = True,
+    sort_key = lambda x: len(x.text),
     device = device)
 
 class RNN(nn.Module):
