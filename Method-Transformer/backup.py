@@ -4,6 +4,8 @@ import torch.optim as optim
 
 import random
 import time
+import pandas as pd
+import numpy as np
 
 from torchtext.legacy import data
 from torchtext.legacy import datasets
