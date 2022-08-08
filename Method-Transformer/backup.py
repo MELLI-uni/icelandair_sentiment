@@ -395,4 +395,4 @@ def test_CNN_5fold(json_file, lang):
 
     display(precisions, recalls, f1_gens, f1_micros, f1_macros)
 
-test_CNN('eng.json', 'EN')
+test_CNN_5fold('eng.json', 'EN')
