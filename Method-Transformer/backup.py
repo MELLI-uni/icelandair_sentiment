@@ -20,23 +20,23 @@ TEXT = data.Field(tokenize = 'spacy',
                   tokenizer_language = 'en_core_web_sm',
                   include_lengths = True)
 
-LABEL = data.LabelField(dtype = torch.float)
+LABEL = data.LabelField()
 
 fields = {'answer_freetext_value': ('text', TEXT), 'Sentiment': ('label', LABEL)}
 
-# df_eng = pd.read_pickle('../Data/eng_total.pkl')
-# del df_eng['id']
+df_eng = pd.read_pickle('../Data/eng_total.pkl')
+del df_eng['id']
 
-# json_eng = df_eng.to_json('eng.json', orient='records', lines=True)
-# dataset = torchtext.legacy.data.TabularDataset(
-#         path='eng.json',
-#         format="json",
-#         fields=fields)
+json_eng = df_eng.to_json('eng.json', orient='records', lines=True)
+dataset = torchtext.legacy.data.TabularDataset(
+        path='eng.json',
+        format="json",
+        fields=fields)
 
-# (train_data, test_data) = dataset.split(split_ratio=[0.8,0.2])
+(train_data, test_data) = dataset.split(split_ratio=[0.8,0.2])
 
-train_data, test_data = datasets.IMDB.splits(TEXT, LABEL)
-train_data, valid_data = train_data.split(random_state = random.seed(SEED))
+# train_data, test_data = datasets.IMDB.splits(TEXT, LABEL)
+# train_data, valid_data = train_data.split(random_state = random.seed(SEED))
 
 
 MAX_VOCAB_SIZE = 25_000
