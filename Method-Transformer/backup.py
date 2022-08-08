@@ -62,54 +62,66 @@ class CNN(torch.nn.Module):
 
         return self.fc(cat)
 
-# def accuracy(list_actual, list_prediction):
-#     actual = list_actual
-#     prediction = list_prediction
+def categorical_accuracy(preds, targets):
+    top_pred = preds.argmax(1, keepdim = True)
+    correct = top_pred.eq(targets.view_as(top_pred)).sum()
+    acc = correct.float() / targets.shape[0]
 
-#     precision = precision_score(actual, prediction, average=None, zero_division=0).tolist()
-#     recall = recall_score(actual, prediction, average=None, zero_division=0).tolist()
+    return acc
 
-#     f1_gen = f1_score(actual, prediction, average=None, zero_division=0).tolist()
-#     f1_micro = f1_score(actual, prediction, average='micro', zero_division=0).tolist()
-#     f1_macro = f1_score(actual, prediction, average='macro', zero_division=0).tolist()
+def calculate_accuracy(preds, targets):
+    n_correct = (preds==targets).sum().item()
 
-#     return precision, recall, f1_gen, f1_micro, f1_macro
+    return n_correct
 
-# def display(precisions, recalls, f1_gens, f1_micros, f1_macros):
-#     set1 = [precisions, recalls, f1_gens]
-#     set2 = [f1_micros, f1_macros]
+def accuracy(list_actual, list_prediction):
+    actual = list_actual
+    prediction = list_prediction
 
-#     scores = []
-#     f1s = []
+    precision = precision_score(actual, prediction, average=None, zero_division=0).tolist()
+    recall = recall_score(actual, prediction, average=None, zero_division=0).tolist()
 
-#     for item in set1:
-#         tmp = np.array(item)
-#         scores_avg = np.multiply(np.mean(tmp, axis=0), 100).tolist()
-#         scores_std = np.multiply(np.std(tmp, axis=0), 100).tolist()
+    f1_gen = f1_score(actual, prediction, average=None, zero_division=0).tolist()
+    f1_micro = f1_score(actual, prediction, average='micro', zero_division=0).tolist()
+    f1_macro = f1_score(actual, prediction, average='macro', zero_division=0).tolist()
 
-#         scores_ite = []
+    return precision, recall, f1_gen, f1_micro, f1_macro
 
-#         for i in range(len(scores_avg)):
-#             avg = "{:.2f}".format(scores_avg[i])
-#             std = "{:.2f}".format(scores_std[i])
+def display(precisions, recalls, f1_gens, f1_micros, f1_macros):
+    set1 = [precisions, recalls, f1_gens]
+    set2 = [f1_micros, f1_macros]
 
-#             item_text = avg + "+-" + std
-#             scores_ite.append(item_text)
+    scores = []
+    f1s = []
 
-#         scores.append(scores_ite)
+    for item in set1:
+        tmp = np.array(item)
+        scores_avg = np.multiply(np.mean(tmp, axis=0), 100).tolist()
+        scores_std = np.multiply(np.std(tmp, axis=0), 100).tolist()
 
-#     for item in set2:
-#         avg = "{:.2f}".format((statistics.mean(item)) * 100)
-#         std = "{:.2f}".format((statistics.stdev(item)) * 100)
+        scores_ite = []
 
-#         item_text = avg + "+-" + std
-#         f1s.append(item_text)
+        for i in range(len(scores_avg)):
+            avg = "{:.2f}".format(scores_avg[i])
+            std = "{:.2f}".format(scores_std[i])
 
-#     df_score = pd.DataFrame(data=scores, index=['Precision', 'Recall', 'F1'], columns=CATEGORIES)
-#     df_average = pd.DataFrame(data=f1s, index=['F1 Microaverage', 'F1 Macroaverage'], column=['Scores'])
+            item_text = avg + "+-" + std
+            scores_ite.append(item_text)
 
-#     print(tabulate(df_score, headers='keys', tablefmt='pretty'))
-#     print(tabulate(df_average, headers='keys', tablefmt='pretty'))
+        scores.append(scores_ite)
+
+    for item in set2:
+        avg = "{:.2f}".format((statistics.mean(item)) * 100)
+        std = "{:.2f}".format((statistics.stdev(item)) * 100)
+
+        item_text = avg + "+-" + std
+        f1s.append(item_text)
+
+    df_score = pd.DataFrame(data=scores, index=['Precision', 'Recall', 'F1'], columns=CATEGORIES)
+    df_average = pd.DataFrame(data=f1s, index=['F1 Microaverage', 'F1 Macroaverage'], column=['Scores'])
+
+    print(tabulate(df_score, headers='keys', tablefmt='pretty'))
+    print(tabulate(df_average, headers='keys', tablefmt='pretty'))
 
 # class biLSTM(torch.nn.Module):
 #     def __init__(self, vocab_size, embedding_dim, hidden_dim, output_dim, n_layers, 
@@ -139,13 +151,11 @@ class CNN(torch.nn.Module):
 
 #         return self.predictor(hidden)
 
-def categorical_accuracy(preds, y):
-    top_pred = preds.argmax(1, keepdim = True)
-    correct = top_pred.eq(y.view_as(top_pred)).sum()
-    acc = correct.float() / y.shape[0]
-    return acc
-
 def train(model, iterator, optimizer, loss_function):
+    tr_loss = 0
+    n_correct = 0
+    nb_tr_steps = 0
+    nb_tr_examples = 0
     
     epoch_loss = 0
     epoch_acc = 0
@@ -153,21 +163,30 @@ def train(model, iterator, optimizer, loss_function):
     model.train()
     
     for batch in iterator:
-        
-        optimizer.zero_grad()
-        
         outputs = model(batch.text)
-        
         loss = loss_function(outputs, batch.label)
-        
+        tr_loss += loss.item()
+
+        big_val, big_idx = torch.max(outputs.data, dim = 1)
+        n_correct += calculate_accuracy(big_idx, batch.label)
+
+        nb_tr_steps += 1
+        nb_tr_examples += batch.label.size(0)
+
         acc = categorical_accuracy(outputs, batch.label)
         
+        optimizer.zero_grad()
         loss.backward()
-        
         optimizer.step()
         
         epoch_loss += loss.item()
         epoch_acc += acc.item()
+    
+    loss_test = tr_loss/nb_tr_steps
+    acc_test = (n_correct * 100) / nb_tr_examples
+
+    print(f"Test Training Loss Epoch: {loss_test}")
+    print(f"Test Training Accuracy Epoch: {acc_test}")
         
     return epoch_loss / len(iterator), epoch_acc / len(iterator)
 
@@ -239,8 +258,6 @@ def test_CNN(json_file, lang):
     PAD_IDX = TEXT.vocab.stoi[TEXT.pad_token]
 
     model = CNN(INPUT_DIM, EMBEDDING_DIM, N_FILTERS, FILTER_SIZES, OUTPUT_DIM, DROPOUT, PAD_IDX)
-
-    #pretrained_embeddings = TEXT.vocab.vectors
 
     UNK_IDX = TEXT.vocab.stoi[TEXT.unk_token]
 
