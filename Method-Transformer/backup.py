@@ -271,8 +271,8 @@ def test_CNN(json_file, lang):
     N_EPOCHS = 5
 
     for epoch in range(N_EPOCHS):
-        train_loss, train_acc = train(model, train_iterator, optimizer, loss_function)
-        print(f'\tTrain Loss: {train_loss:.3f} | Train Acc: {train_acc*100:.2f}%')
+        train(model, train_iterator, optimizer, loss_function)
+        #print(f'\tTrain Loss: {train_loss:.3f} | Train Acc: {train_acc*100:.2f}%')
 
     test_loss, test_acc = evaluate(model, test_iterator, loss_function)
     print(test_acc)
