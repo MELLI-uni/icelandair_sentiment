@@ -187,33 +187,69 @@ def train(model, iterator, optimizer, loss_function):
     print(f"Test Training Loss Epoch: {epoch_loss}")
     print(f"Test Training Accuracy Epoch: {epoch_accu}")
 
-def evaluate(model, iterator, loss_function):
+def valid(model, iterator, loss_function):
+    model.eval()
+
+    n_correct = 0
+    n_wrong = 0
+    total = 0
+    tr_loss = 0
+    nb_tr_steps = 0
+    nb_tr_examples = 0
+
+    actual = []
+    predicted = []
     
     epoch_loss = 0
     epoch_acc = 0
     
-    model.eval()
-    
     with torch.no_grad():
     
-        for batch in iterator:
-
+        for _, batch in tqdm(enumerate(iterator, 0)):
             outputs = model(batch.text)
-            
             loss = loss_function(outputs, batch.label)
+            tr_loss += loss.item()
+            big_val, big_idx = torch.max(outputs.data, dim=1)
+            n_correct += calculate_accuracy(big_idx, batch.label)
             
-            acc = categorical_accuracy(outputs, batch.label)
+            #acc = categorical_accuracy(outputs, batch.label)
 
-            epoch_loss += loss.item()
-            epoch_acc += acc.item()
-        
-    return epoch_loss / len(iterator), epoch_acc / len(iterator)
+            # epoch_loss += loss.item()
+            # epoch_acc += acc.item()
+
+            predicted.extend(big_idx.tolist())
+            actual.extend(batch.label.tolist())
+
+            nb_tr_steps += 1
+            nb_tr_examples += batch.label.size(0)
+
+            if _%5000==0:
+                loss_step = tr_loss/nb_tr_steps
+                accu_step = (n_correct * 100)/nb_tr_examples
+
+                print(f"Validation Loss per 100 Steps: {loss_step}")
+                print(f"Validation Accuracy per 100 Steps: {accu_step}")
+
+    epoch_loss = tr_loss/nb_tr_steps
+    epoch_accu = (n_correct*100)/nb_tr_examples
+
+    print(f"Validation Loss Epoch: {epoch_loss}")
+    print(f"Validation Accuracy Epoch: {epoch_accu}")
+
+    #return epoch_loss / len(iterator), epoch_acc / len(iterator)
+    return accuracy(actual, predicted)
 
 def test_CNN(json_file, lang):
     if lang == "EN":
         print("English")
     elif lang == "IS":
         print("Icelandic")
+
+    precisions = []
+    recalls = []
+    f1_gens = []
+    f1_micros = []
+    f1_macros = []
 
     TEXT = data.Field(
         tokenize = 'spacy',
@@ -274,7 +310,14 @@ def test_CNN(json_file, lang):
         train(model, train_iterator, optimizer, loss_function)
         #print(f'\tTrain Loss: {train_loss:.3f} | Train Acc: {train_acc*100:.2f}%')
 
-    test_loss, test_acc = evaluate(model, test_iterator, loss_function)
-    print(test_acc)
+    precision, recall, f1_gen, f1_micro, f1_macro = valid(model, test_iterator, loss_function)
+    
+    precisions.append(precision)
+    recalls.append(recall)
+    f1_gens.append(f1_gen)
+    f1_micros.append(f1_micro)
+    f1_macros.append(f1_macro)
+
+    display(precisions, recalls, f1_gens, f1_micros, f1_macros)
 
 test_CNN('eng.json', 'EN')
