@@ -62,13 +62,6 @@ class CNN(torch.nn.Module):
 
         return self.fc(cat)
 
-def categorical_accuracy(preds, targets):
-    top_pred = preds.argmax(1, keepdim = True)
-    correct = top_pred.eq(targets.view_as(top_pred)).sum()
-    acc = correct.float() / targets.shape[0]
-
-    return acc
-
 def calculate_accuracy(preds, targets):
     n_correct = (preds==targets).sum().item()
 
@@ -155,40 +148,36 @@ def train(model, iterator, optimizer, loss_function):
     tr_loss = 0
     n_correct = 0
     nb_tr_steps = 0
-    nb_tr_examples = 0
-    
-    epoch_loss = 0
-    epoch_acc = 0
-    
+    nb_tr_examples = 0  
     model.train()
     
-    for batch in iterator:
+    for _, batch in tqdm(enumerate(iterator, 0)):
         outputs = model(batch.text)
         loss = loss_function(outputs, batch.label)
         tr_loss += loss.item()
-
         big_val, big_idx = torch.max(outputs.data, dim = 1)
         n_correct += calculate_accuracy(big_idx, batch.label)
 
         nb_tr_steps += 1
         nb_tr_examples += batch.label.size(0)
 
-        acc = categorical_accuracy(outputs, batch.label)
+        if _%5000==0:
+            loss_step = tr_loss/nb_tr_steps
+            accu_step = (n_correct * 100)/nb_tr_examples
+
+            print(f"Training Loss per 5000 steps: {loss_step}")
+            print(f"Training Accuracy per 5000 steps: {accu_step}")
         
         optimizer.zero_grad()
         loss.backward()
         optimizer.step()
-        
-        epoch_loss += loss.item()
-        epoch_acc += acc.item()
     
-    loss_test = tr_loss/nb_tr_steps
-    acc_test = (n_correct * 100) / nb_tr_examples
+    print(f"The Total Accuracy for Epoch: {(n_correct * 100)/nb_tr_examples}")
 
-    print(f"Test Training Loss Epoch: {loss_test}")
-    print(f"Test Training Accuracy Epoch: {acc_test}")
-        
-    return epoch_loss / len(iterator), epoch_acc / len(iterator)
+    epoch_loss = tr_loss/nb_tr_steps
+    epoch_accu = (n_correct * 100) / nb_tr_examples
+    print(f"Test Training Loss Epoch: {epoch_loss}")
+    print(f"Test Training Accuracy Epoch: {epoch_accu}")
 
 def evaluate(model, iterator, loss_function):
     
