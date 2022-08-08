@@ -312,12 +312,18 @@ def test_CNN(json_file, lang):
 
     precision, recall, f1_gen, f1_micro, f1_macro = valid(model, test_iterator, loss_function)
     
-    precisions.append(precision)
-    recalls.append(recall)
-    f1_gens.append(f1_gen)
-    f1_micros.append(f1_micro)
-    f1_macros.append(f1_macro)
+    # print("Precision: ", precision)
+    # print("Precision: ", recall)
+    print("F1: ", f1_gen)
+    # print("Precision: ", precision)
+    # print("Precision: ", precision)
 
-    display(precisions, recalls, f1_gens, f1_micros, f1_macros)
+    # precisions.append(precision)
+    # recalls.append(recall)
+    # f1_gens.append(f1_gen)
+    # f1_micros.append(f1_micro)
+    # f1_macros.append(f1_macro)
+
+    # display(precisions, recalls, f1_gens, f1_micros, f1_macros)
 
 test_CNN('eng.json', 'EN')
