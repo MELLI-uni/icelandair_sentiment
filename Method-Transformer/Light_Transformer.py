@@ -181,7 +181,7 @@ class biLSTM(torch.nn.Module):
 INPUT_DIM = len(TEXT.vocab)
 EMBEDDING_DIM = 100
 N_FILTERS = 100
-FILTER_SIZES = [2,3,4]
+FILTER_SIZES = [1,2,3]
 OUTPUT_DIM = len(LABEL.vocab)
 DROPOUT = 0.5
 PAD_IDX = TEXT.vocab.stoi[TEXT.pad_token]
