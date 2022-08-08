@@ -16,11 +16,6 @@ SEED = 99
 torch.manual_seed(SEED)
 torch.backends.cudnn.deterministic = True
 
-df_eng = pd.read_pickle('../Data/eng_total.pkl')
-del df_eng['id']
-
-json_eng = df_eng.to_json('eng.json', orient='records', lines=True)
-
 TEXT = data.Field(tokenize = 'spacy',
                   tokenizer_language = 'en_core_web_sm',
                   include_lengths = True)
@@ -29,12 +24,20 @@ LABEL = data.LabelField(dtype = torch.float)
 
 fields = {'answer_freetext_value': ('text', TEXT), 'Sentiment': ('label', LABEL)}
 
-dataset = torchtext.legacy.data.TabularDataset(
-        path='eng.json',
-        format="json",
-        fields=fields)
+# df_eng = pd.read_pickle('../Data/eng_total.pkl')
+# del df_eng['id']
 
-(train_data, test_data) = dataset.split(split_ratio=[0.8,0.2])
+# json_eng = df_eng.to_json('eng.json', orient='records', lines=True)
+# dataset = torchtext.legacy.data.TabularDataset(
+#         path='eng.json',
+#         format="json",
+#         fields=fields)
+
+# (train_data, test_data) = dataset.split(split_ratio=[0.8,0.2])
+
+train_data, test_data = datasets.IMDB.splits(TEXT, LABEL)
+train_data, valid_data = train_data.split(random_state = random.seed(SEED))
+
 
 MAX_VOCAB_SIZE = 25_000
 
@@ -61,7 +64,7 @@ class RNN(nn.Module):
         
         super().__init__()
         
-        self.embedding = nn.Embedding(vocab_size, embedding_dim)
+        self.embedding = nn.Embedding(vocab_size, embedding_dim, padding_idx = pad_idx)
         
         self.rnn = nn.LSTM(embedding_dim, 
                            hidden_dim, 
@@ -74,7 +77,6 @@ class RNN(nn.Module):
         self.dropout = nn.Dropout(dropout)
         
     def forward(self, text, text_lengths):
-        text = text.permute(1, 0)
         embedded = self.dropout(self.embedding(text))
         packed_embedded = nn.utils.rnn.pack_padded_sequence(embedded, text_lengths.to('cpu'))
         
@@ -82,7 +84,6 @@ class RNN(nn.Module):
 
         output, output_lengths = nn.utils.rnn.pad_packed_sequence(packed_output)
         hidden = self.dropout(torch.cat((hidden[-2,:,:], hidden[-1,:,:]), dim = 1))
-
         return self.fc(hidden)
 
 INPUT_DIM = len(TEXT.vocab)
