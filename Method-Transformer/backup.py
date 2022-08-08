@@ -67,6 +67,14 @@ def calculate_accuracy(preds, targets):
 
     return n_correct
 
+### REMOVE
+def categorical_accuracy(preds, y):
+    top_pred = preds.argmax(1, keepdim = True)
+    correct = top_pred.eq(y.view_as(top_pred)).sum()
+    acc = correct.float() / y.shape[0]
+    return acc
+###
+
 def accuracy(list_actual, list_prediction):
     actual = list_actual
     prediction = list_prediction
@@ -241,7 +249,7 @@ def test_CNN(json_file, lang):
     INPUT_DIM = len(TEXT.vocab)
     EMBEDDING_DIM = 100
     N_FILTERS = 100
-    FILTER_SIZES = [2,3,4]
+    FILTER_SIZES = [1,2,3]
     OUTPUT_DIM = len(LABEL.vocab)
     DROPOUT = 0.5
     PAD_IDX = TEXT.vocab.stoi[TEXT.pad_token]
