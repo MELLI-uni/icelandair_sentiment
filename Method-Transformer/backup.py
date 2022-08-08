@@ -91,6 +91,7 @@ class RNN(nn.Module):
         
     def forward(self, text, text_lengths):
         embedded = self.dropout(self.embedding(text))
+        print(text, text_lengths)
         packed_embedded = nn.utils.rnn.pack_padded_sequence(embedded, text_lengths.to('cpu'))
         
         packed_output, (hidden, cell) = self.rnn(packed_embedded)
