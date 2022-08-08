@@ -49,11 +49,11 @@ BATCH_SIZE = 64
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
 train_iterator, test_iterator = data.BucketIterator.splits(
-    (train_data, test_data), 
+    (train_data, test_data),
+    device = device,
     batch_size = BATCH_SIZE,
-    sort_within_batch = True,
     sort_key = lambda x: len(x.text),
-    device = device)
+    sort_within_batch = True)
 
 class RNN(nn.Module):
     def __init__(self, vocab_size, embedding_dim, hidden_dim, output_dim, n_layers, 
@@ -61,7 +61,7 @@ class RNN(nn.Module):
         
         super().__init__()
         
-        self.embedding = nn.Embedding(vocab_size, embedding_dim, padding_idx = pad_idx)
+        self.embedding = nn.Embedding(vocab_size, embedding_dim)
         
         self.rnn = nn.LSTM(embedding_dim, 
                            hidden_dim, 
@@ -74,6 +74,7 @@ class RNN(nn.Module):
         self.dropout = nn.Dropout(dropout)
         
     def forward(self, text, text_lengths):
+        text = text.permute(1, 0)
         embedded = self.dropout(self.embedding(text))
         packed_embedded = nn.utils.rnn.pack_padded_sequence(embedded, text_lengths.to('cpu'))
         
