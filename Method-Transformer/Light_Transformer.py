@@ -4,6 +4,7 @@ import numpy as np
 
 import torch
 import torch.optim as optim
+import torchtext
 from torchtext.legacy import data
 from torchtext.legacy import datasets
 
@@ -21,23 +22,32 @@ CATEGORIES = ['Positive', 'Negative', 'Neutral']
 df_eng = pd.read_pickle('../Data/eng_total.pkl')
 del df_eng['id']
 
-df_train, df_test = train_test_split(df_eng, test_size=0.2, random_state=99)
-json_train = df_train.to_json('train.json', orient='records', lines=True)
-json_test = df_test.to_json('test.json', orient='records', lines=True)
+json_eng = df_eng.to_json('eng.json', orient='records', lines=True)
+# df_train, df_test = train_test_split(df_eng, test_size=0.2)
+# json_train = df_train.to_json('train.json', orient='records', lines=True)
+# json_test = df_test.to_json('test.json', orient='records', lines=True)
 
 TEXT = data.Field(
         tokenize = 'spacy',
-        tokenizer_language = 'en_core_web_sm')
+        tokenizer_language = 'en_core_web_sm',
+        lower = True)
 LABEL = data.LabelField()
 
 fields = {'answer_freetext_value': ('text', TEXT), 'Sentiment': ('label', LABEL)}
 
-train_data, test_data = data.TabularDataset.splits(
-        path = '.',
-        train = 'train.json',
-        test = 'test.json',
-        format = 'json',
-        fields = fields)
+# train_data, test_data = data.TabularDataset.splits(
+#         path = '.',
+#         train = 'train.json',
+#         test = 'test.json',
+#         format = 'json',
+#         fields = fields)
+
+dataset = torchtext.legacy.data.TabularDataset(
+        path="eng.json",
+        format="json",
+        fields=fields)
+
+(train_data, test_data) = dataset.split(split_ratio=[0.8,0.2])
 
 MAX_VOCAB_SIZE = 25_000
 
@@ -50,63 +60,65 @@ TEXT.build_vocab(
 LABEL.build_vocab(
         train_data)
 
-def accuracy(list_actual, list_prediction):
-    actual = list_actual
-    prediction = list_prediction
+# def accuracy(list_actual, list_prediction):
+#     actual = list_actual
+#     prediction = list_prediction
 
-    precision = precision_score(actual, prediction, average=None, zero_division=0).tolist()
-    recall = recall_score(actual, prediction, average=None, zero_division=0).tolist()
+#     precision = precision_score(actual, prediction, average=None, zero_division=0).tolist()
+#     recall = recall_score(actual, prediction, average=None, zero_division=0).tolist()
 
-    f1_gen = f1_score(actual, prediction, average=None, zero_division=0).tolist()
-    f1_micro = f1_score(actual, prediction, average='micro', zero_division=0).tolist()
-    f1_macro = f1_score(actual, prediction, average='macro', zero_division=0).tolist()
+#     f1_gen = f1_score(actual, prediction, average=None, zero_division=0).tolist()
+#     f1_micro = f1_score(actual, prediction, average='micro', zero_division=0).tolist()
+#     f1_macro = f1_score(actual, prediction, average='macro', zero_division=0).tolist()
 
-    return precision, recall, f1_gen, f1_micro, f1_macro
+#     return precision, recall, f1_gen, f1_micro, f1_macro
 
-def display(precisions, recalls, f1_gens, f1_micros, f1_macros):
-    set1 = [precisions, recalls, f1_gens]
-    set2 = [f1_micros, f1_macros]
+# def display(precisions, recalls, f1_gens, f1_micros, f1_macros):
+#     set1 = [precisions, recalls, f1_gens]
+#     set2 = [f1_micros, f1_macros]
 
-    scores = []
-    f1s = []
+#     scores = []
+#     f1s = []
 
-    for item in set1:
-        tmp = np.array(item)
-        scores_avg = np.multiply(np.mean(tmp, axis=0), 100).tolist()
-        scores_std = np.multiply(np.std(tmp, axis=0), 100).tolist()
+#     for item in set1:
+#         tmp = np.array(item)
+#         scores_avg = np.multiply(np.mean(tmp, axis=0), 100).tolist()
+#         scores_std = np.multiply(np.std(tmp, axis=0), 100).tolist()
 
-        scores_ite = []
+#         scores_ite = []
 
-        for i in range(len(scores_avg)):
-            avg = "{:.2f}".format(scores_avg[i])
-            std = "{:.2f}".format(scores_std[i])
+#         for i in range(len(scores_avg)):
+#             avg = "{:.2f}".format(scores_avg[i])
+#             std = "{:.2f}".format(scores_std[i])
 
-            item_text = avg + "+-" + std
-            scores_ite.append(item_text)
+#             item_text = avg + "+-" + std
+#             scores_ite.append(item_text)
 
-        scores.append(scores_ite)
+#         scores.append(scores_ite)
 
-    for item in set2:
-        avg = "{:.2f}".format((statistics.mean(item)) * 100)
-        std = "{:.2f}".format((statistics.stdev(item)) * 100)
+#     for item in set2:
+#         avg = "{:.2f}".format((statistics.mean(item)) * 100)
+#         std = "{:.2f}".format((statistics.stdev(item)) * 100)
 
-        item_text = avg + "+-" + std
-        f1s.append(item_text)
+#         item_text = avg + "+-" + std
+#         f1s.append(item_text)
 
-    df_score = pd.DataFrame(data=scores, index=['Precision', 'Recall', 'F1'], columns=CATEGORIES)
-    df_average = pd.DataFrame(data=f1s, index=['F1 Microaverage', 'F1 Macroaverage'], column=['Scores'])
+#     df_score = pd.DataFrame(data=scores, index=['Precision', 'Recall', 'F1'], columns=CATEGORIES)
+#     df_average = pd.DataFrame(data=f1s, index=['F1 Microaverage', 'F1 Macroaverage'], column=['Scores'])
 
-    print(tabulate(df_score, headers='keys', tablefmt='pretty'))
-    print(tabulate(df_average, headers='keys', tablefmt='pretty'))
+#     print(tabulate(df_score, headers='keys', tablefmt='pretty'))
+#     print(tabulate(df_average, headers='keys', tablefmt='pretty'))
 
 BATCH_SIZE = 64
 
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
 train_iterator, test_iterator = data.BucketIterator.splits(
-    (train_data, test_data), 
-    batch_size = BATCH_SIZE, 
-    device = device)
+    (train_data, test_data),
+    device = device,
+    batch_size = BATCH_SIZE,
+    sort_key = lambda x: len(x.text),
+    sort_within_batch = True)
 
 class CNN(torch.nn.Module):
     def __init__(self, vocab_size, embedding_dim, n_filters, filter_sizes, output_dim, 
@@ -137,6 +149,34 @@ class CNN(torch.nn.Module):
         cat = self.dropout(torch.cat(pooled, dim = 1))
 
         return self.fc(cat)
+
+class biLSTM(torch.nn.Module):
+    def __init__(self, vocab_size, embedding_dim, hidden_dim, output_dim, n_layers, 
+                 bidirectional, dropout, pad_idx):
+        
+        super().__init__()
+
+        self.embedding = torch.nn.Embedding(vocab_size, embedding_dim, padding_idx = pad_idx)
+
+        self.encoder = torch.nn.LSTM(embedding_dim, 
+                               hidden_dim, 
+                               num_layers=n_layers,
+                               bidirectional=bidirectional,
+                               dropout=dropout)
+
+        self.predictor = torch.nn.Linear(hidden_dim*2, output_dim)
+
+        self.dropout = torch.nn.Dropout(dropout)
+      
+    def forward(self, text, text_lengths):
+        embedded = self.dropout(self.embedding(text))    
+        packed_embedded = torch.nn.utils.rnn.pack_padded_sequence(embedded, text_lengths.to('cpu'))
+        packed_output, (hidden, cell) = self.encoder(packed_embedded)
+        output, output_lengths = torch.nn.utils.rnn.pad_packed_sequence(packed_output)
+
+        hidden = self.dropout(torch.cat((hidden[-2,:,:], hidden[-1,:,:]), dim = 1))
+
+        return self.predictor(hidden)
 
 INPUT_DIM = len(TEXT.vocab)
 EMBEDDING_DIM = 100
