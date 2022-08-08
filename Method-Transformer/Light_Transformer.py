@@ -271,3 +271,4 @@ for epoch in range(N_EPOCHS):
     #print(f'\t Val. Loss: {valid_loss:.3f} |  Val. Acc: {valid_acc*100:.2f}%')
 
 test_loss, test_acc = evaluate(model, test_iterator, criterion)
+print(test_acc)
