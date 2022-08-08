@@ -26,9 +26,6 @@ encoding_dict = {
 def sentiment_mapping(df):
     df['Sentiment'] = df.Sentiment.map(encoding_dict)
 
-    # Line will be deleted later
-    del df['id']
-
     return df
 
 TEXT = data.Field(tokenize = 'spacy',
