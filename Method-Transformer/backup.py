@@ -74,7 +74,6 @@ class RNN(nn.Module):
         self.dropout = nn.Dropout(dropout)
         
     def forward(self, text, text_lengths):
-        text = text.permute(1, 0)
         embedded = self.dropout(self.embedding(text))
         packed_embedded = nn.utils.rnn.pack_padded_sequence(embedded, text_lengths.to('cpu'))
         
