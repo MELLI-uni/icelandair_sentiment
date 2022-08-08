@@ -7,6 +7,7 @@ import time
 import pandas as pd
 import numpy as np
 
+import torchtext
 from torchtext.legacy import data
 from torchtext.legacy import datasets
 
@@ -34,9 +35,6 @@ dataset = torchtext.legacy.data.TabularDataset(
         fields=fields)
 
 (train_data, test_data) = dataset.split(split_ratio=[0.8,0.2])
-
-#train_data, test_data = datasets.IMDB.splits(TEXT, LABEL)
-#train_data, valid_data = train_data.split(random_state = random.seed(SEED))
 
 MAX_VOCAB_SIZE = 25_000
 
@@ -75,6 +73,7 @@ class RNN(nn.Module):
         self.dropout = nn.Dropout(dropout)
         
     def forward(self, text, text_lengths):
+        text = text.permute(1, 0)
         embedded = self.dropout(self.embedding(text))
         packed_embedded = nn.utils.rnn.pack_padded_sequence(embedded, text_lengths.to('cpu'))
         
