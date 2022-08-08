@@ -16,15 +16,31 @@ SEED = 99
 torch.manual_seed(SEED)
 torch.backends.cudnn.deterministic = True
 
+encoding_dict = {
+                'positive':0,
+                'neutral':2,
+                'negative':1,
+                'negativa':1
+                }
+
+def sentiment_mapping(df):
+    df['Sentiment'] = df.Sentiment.map(encoding_dict)
+
+    # Line will be deleted later
+    del df['id']
+
+    return df
+
 TEXT = data.Field(tokenize = 'spacy',
                   tokenizer_language = 'en_core_web_sm',
                   include_lengths = True)
 
-LABEL = data.LabelField()
+LABEL = data.LabelField(dtype = torch.float)
 
 fields = {'answer_freetext_value': ('text', TEXT), 'Sentiment': ('label', LABEL)}
 
 df_eng = pd.read_pickle('../Data/eng_total.pkl')
+df_eng = sentiment_mapping(df_eng)
 del df_eng['id']
 
 json_eng = df_eng.to_json('eng.json', orient='records', lines=True)
