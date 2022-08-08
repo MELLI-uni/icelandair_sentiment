@@ -88,7 +88,7 @@ def categorical_accuracy(preds, y):
     acc = correct.float() / y.shape[0]
     return acc
 
-def CNN_train(model, iterator, optimizer, criterion):
+def CNN_train(model, iterator, optimizer, loss_function):
     
     epoch_loss = 0
     epoch_acc = 0
@@ -99,11 +99,11 @@ def CNN_train(model, iterator, optimizer, criterion):
         
         optimizer.zero_grad()
         
-        predictions = model(batch.text)
+        outputs = model(batch.text)
         
-        loss = criterion(predictions, batch.label)
+        loss = loss_function(outputs, batch.label)
         
-        acc = categorical_accuracy(predictions, batch.label)
+        acc = categorical_accuracy(outputs, batch.label)
         
         loss.backward()
         
@@ -114,7 +114,7 @@ def CNN_train(model, iterator, optimizer, criterion):
         
     return epoch_loss / len(iterator), epoch_acc / len(iterator)
 
-def CNN_evaluate(model, iterator, criterion):
+def CNN_evaluate(model, iterator, loss_function):
     
     epoch_loss = 0
     epoch_acc = 0
@@ -125,11 +125,11 @@ def CNN_evaluate(model, iterator, criterion):
     
         for batch in iterator:
 
-            predictions = model(batch.text)
+            outputs = model(batch.text)
             
-            loss = criterion(predictions, batch.label)
+            loss = loss_function(outputs, batch.label)
             
-            acc = categorical_accuracy(predictions, batch.label)
+            acc = categorical_accuracy(outputs, batch.label)
 
             epoch_loss += loss.item()
             epoch_acc += acc.item()
@@ -196,18 +196,18 @@ def test_CNN(json_file, lang):
 
     optimizer = optim.Adam(model.parameters())
 
-    criterion = torch.nn.CrossEntropyLoss()
+    loss_function = torch.nn.CrossEntropyLoss()
 
     model = model.to(device)
-    criterion = criterion.to(device)
+    loss_function = loss_function.to(device)
 
     N_EPOCHS = 5
 
     for epoch in range(N_EPOCHS):
-        train_loss, train_acc = CNN_train(model, train_iterator, optimizer, criterion)
+        train_loss, train_acc = CNN_train(model, train_iterator, optimizer, loss_function)
         print(f'\tTrain Loss: {train_loss:.3f} | Train Acc: {train_acc*100:.2f}%')
 
-    test_loss, test_acc = CNN_evaluate(model, test_iterator, criterion)
+    test_loss, test_acc = CNN_evaluate(model, test_iterator, loss_function)
     print(test_acc)
 
 
@@ -216,14 +216,19 @@ def binary_accuracy(preds, y):
     Returns accuracy per batch, i.e. if you get 8/10 right, this returns 0.8, NOT 8
     """
 
-    #round predictions to the closest integer
+    #round outputs to the closest integer
     rounded_preds = torch.round(torch.sigmoid(preds))
     correct = (rounded_preds == y).float() #convert into float for division 
     acc = correct.sum() / len(correct)
     return acc
 
-def train(model, iterator, optimizer, criterion):
-    
+def train(model, iterator, optimizer, loss_function):
+    tr_loss = 0
+    n_correct = 0
+    nb_tr_steps = 0
+    nb_tr_examples = 0
+
+
     epoch_loss = 0
     epoch_acc = 0
     
@@ -235,11 +240,14 @@ def train(model, iterator, optimizer, criterion):
         
         text, text_lengths = batch.text
         
-        predictions = model(text, text_lengths).squeeze(1)
+        outputs = model(text, text_lengths).squeeze(1)
+        loss = loss_function(outputs, batch.label)
+        tr_loss += loss.item()
         
-        loss = criterion(predictions, batch.label)
-        
-        acc = binary_accuracy(predictions, batch.label)
+        acc = binary_accuracy(outputs, batch.label)
+
+        nb_tr_steps += 1
+        nb_tr_examples += batch.label.size(0)
         
         loss.backward()
         
@@ -250,7 +258,7 @@ def train(model, iterator, optimizer, criterion):
         
     return epoch_loss / len(iterator), epoch_acc / len(iterator)
 
-def evaluate(model, iterator, criterion):
+def evaluate(model, iterator, loss_function):
     
     epoch_loss = 0
     epoch_acc = 0
@@ -263,11 +271,11 @@ def evaluate(model, iterator, criterion):
 
             text, text_lengths = batch.text
             
-            predictions = model(text, text_lengths).squeeze(1)
+            outputs = model(text, text_lengths).squeeze(1)
             
-            loss = criterion(predictions, batch.label)
+            loss = loss_function(outputs, batch.label)
             
-            acc = binary_accuracy(predictions, batch.label)
+            acc = binary_accuracy(outputs, batch.label)
 
             epoch_loss += loss.item()
             epoch_acc += acc.item()
@@ -335,16 +343,16 @@ def test_biLSTM(json_file, lang):
     model.embedding.weight.data[PAD_IDX] = torch.zeros(EMBEDDING_DIM)
 
     optimizer = optim.Adam(model.parameters())
-    criterion = torch.nn.BCEWithLogitsLoss()
+    loss_function = torch.nn.BCEWithLogitsLoss()
 
     model = model.to(device)
-    criterion = criterion.to(device)
+    loss_function = loss_function.to(device)
 
     N_EPOCHS = 5
 
     for epoch in range(N_EPOCHS):       
-        train_loss, train_acc = train(model, train_iterator, optimizer, criterion)
+        train_loss, train_acc = train(model, train_iterator, optimizer, loss_function)
         print(f'\tTrain Loss: {train_loss:.3f} | Train Acc: {train_acc*100:.2f}%')
 
-    test_loss, test_acc = evaluate(model, test_iterator, criterion)
+    test_loss, test_acc = evaluate(model, test_iterator, loss_function)
     print(test_acc)
