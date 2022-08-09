@@ -28,6 +28,8 @@ def sentiment_mapping(df):
 
     return df
 
+
+
 TEXT = data.Field(tokenize = 'spacy',
                   tokenizer_language = 'en_core_web_sm',
                   include_lengths = True)
@@ -36,20 +38,20 @@ LABEL = data.LabelField(dtype = torch.float)
 
 fields = {'answer_freetext_value': ('text', TEXT), 'Sentiment': ('label', LABEL)}
 
-df_eng = pd.read_pickle('../Data/eng_total.pkl')
-df_eng = sentiment_mapping(df_eng)
-del df_eng['id']
+# df_eng = pd.read_pickle('../Data/eng_total.pkl')
+# df_eng = sentiment_mapping(df_eng)
+# del df_eng['id']
 
-json_eng = df_eng.to_json('eng.json', orient='records', lines=True)
-dataset = torchtext.legacy.data.TabularDataset(
-        path='eng.json',
-        format="json",
-        fields=fields)
+# json_eng = df_eng.to_json('eng.json', orient='records', lines=True)
+# dataset = torchtext.legacy.data.TabularDataset(
+#         path='eng.json',
+#         format="json",
+#         fields=fields)
 
-(train_data, test_data) = dataset.split(split_ratio=[0.8,0.2])
+# (train_data, test_data) = dataset.split(split_ratio=[0.8,0.2])
 
-# train_data, test_data = datasets.IMDB.splits(TEXT, LABEL)
-# train_data, valid_data = train_data.split(random_state = random.seed(SEED))
+train_data, test_data = datasets.IMDB.splits(TEXT, LABEL)
+train_data, valid_data = train_data.split(random_state = random.seed(SEED))
 
 
 MAX_VOCAB_SIZE = 25_000
@@ -91,7 +93,7 @@ class RNN(nn.Module):
         
     def forward(self, text, text_lengths):
         embedded = self.dropout(self.embedding(text))
-        print(text, text_lengths)
+        #print(text, text_lengths)
         packed_embedded = nn.utils.rnn.pack_padded_sequence(embedded, text_lengths.to('cpu'))
         
         packed_output, (hidden, cell) = self.rnn(packed_embedded)

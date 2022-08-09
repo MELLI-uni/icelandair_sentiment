@@ -62,6 +62,35 @@ class CNN(torch.nn.Module):
 
         return self.fc(cat)
 
+class biLSTM(torch.nn.Module):
+    def __init__(self, vocab_size, embedding_dim, hidden_dim, output_dim, n_layers, 
+                 bidirectional, dropout, pad_idx):
+        
+        super().__init__()
+        
+        self.embedding = torch.nn.Embedding(vocab_size, embedding_dim, padding_idx = pad_idx)
+        
+        self.rnn = torch.nn.LSTM(embedding_dim, 
+                           hidden_dim, 
+                           num_layers=n_layers, 
+                           bidirectional=bidirectional, 
+                           dropout=dropout)
+        
+        self.fc = torch.nn.Linear(hidden_dim * 2, output_dim)
+        
+        self.dropout = torch.nn.Dropout(dropout)
+        
+    def forward(self, text, text_lengths):
+        embedded = self.dropout(self.embedding(text))
+        #print(text, text_lengths)
+        packed_embedded = torch.nn.utils.rnn.pack_padded_sequence(embedded, text_lengths.to('cpu'))
+        
+        packed_output, (hidden, cell) = self.rnn(packed_embedded)
+
+        output, output_lengths = torch.nn.utils.rnn.pad_packed_sequence(packed_output)
+        hidden = self.dropout(torch.cat((hidden[-2,:,:], hidden[-1,:,:]), dim = 1))
+        return self.fc(hidden)
+
 def calculate_accuracy(preds, targets):
     n_correct = (preds==targets).sum().item()
 
@@ -367,4 +396,93 @@ def test_CNN_5fold(json_file, lang):
 
     display(precisions, recalls, f1_gens, f1_micros, f1_macros)
 
-test_CNN_5fold('eng.json', 'EN')
+def test_biLSTM_5fold(json_file, lang):
+    if lang == "EN":
+        print("English")
+    elif lang == "IS":
+        print("Icelandic")
+
+    precisions = []
+    recalls = []
+    f1_gens = []
+    f1_micros = []
+    f1_macros = []
+
+    TEXT = data.Field(
+        tokenize = 'spacy',
+        tokenizer_language = 'en_core_web_sm',
+        lower = True)
+    LABEL = data.LabelField()
+
+    fields = {'answer_freetext_value': ('text', TEXT), 'Sentiment': ('label', LABEL)}
+
+    dataset = torchtext.legacy.data.TabularDataset(
+            path=json_file,
+            format="json",
+            fields=fields)
+
+    for i in range(5):
+        (train_data, test_data) = dataset.split(split_ratio=[0.8,0.2])
+
+        TEXT.build_vocab(
+                train_data, 
+                max_size = MAX_VOCAB_SIZE, 
+                vectors = 'glove.6B.100d',
+                unk_init = torch.Tensor.normal_)
+
+        LABEL.build_vocab(
+                train_data)
+
+        train_iterator, test_iterator = data.BucketIterator.splits(
+            (train_data, test_data),
+            device = device,
+            batch_size = BATCH_SIZE,
+            sort_key = lambda x: len(x.text),
+            sort_within_batch = True)
+
+        INPUT_DIM = len(TEXT.vocab)
+        EMBEDDING_DIM = 100
+        HIDDEN_DIM = 256
+        OUTPUT_DIM = 1
+        N_LAYERS = 2
+        BIDIRECTIONAL = True
+        DROPOUT = 0.5
+        PAD_IDX = TEXT.vocab.stoi[TEXT.pad_token]
+
+        model = biLSTM(INPUT_DIM, 
+            EMBEDDING_DIM, 
+            HIDDEN_DIM, 
+            OUTPUT_DIM, 
+            N_LAYERS, 
+            BIDIRECTIONAL, 
+            DROPOUT, 
+            PAD_IDX)
+
+        UNK_IDX = TEXT.vocab.stoi[TEXT.unk_token]
+
+        model.embedding.weight.data[UNK_IDX] = torch.zeros(EMBEDDING_DIM)
+        model.embedding.weight.data[PAD_IDX] = torch.zeros(EMBEDDING_DIM)
+
+        optimizer = optim.Adam(model.parameters())
+
+        loss_function = torch.nn.BCEWithLogitsLoss()
+
+        model = model.to(device)
+        loss_function = loss_function.to(device)
+
+        N_EPOCHS = 5
+
+        for epoch in range(N_EPOCHS):
+            train(model, train_iterator, optimizer, loss_function)
+
+        precision, recall, f1_gen, f1_micro, f1_macro = valid(model, test_iterator, loss_function)
+
+        precisions.append(precision)
+        recalls.append(recall)
+        f1_gens.append(f1_gen)
+        f1_micros.append(f1_micro)
+        f1_macros.append(f1_macro)
+
+    display(precisions, recalls, f1_gens, f1_micros, f1_macros)
+
+test_biLSTM_5fold('eng.json', 'EN')
